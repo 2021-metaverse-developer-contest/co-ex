@@ -17,6 +17,7 @@ public class AllCategorySceneManger : MonoBehaviour
     void Start()
     {
         InitialCategoryMain();
+        Debug.Log("AllCategorySceneManager start!");
     }
 
     void Update()
@@ -45,7 +46,8 @@ public class AllCategorySceneManger : MonoBehaviour
             MainItems[i] = Instantiate(MainItem, GameObject.Find("Content").transform);
             MainItems[i].GetComponentInChildren<TextMeshProUGUI>().text = MainItem_List[i].name;
             Texture2D texture = Resources.Load(MainItem_List[i].path, typeof(Texture)) as Texture2D;
-            MainItems[i].transform.Find("Panel_MainCt").transform.Find("Panel_Left").GetComponentInChildren<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+            if (texture != null)
+                MainItems[i].transform.Find("Panel_MainCt").transform.Find("Panel_Left").GetComponentInChildren<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
 
             InitialCategorySub(MainItem_List[i].name);
             for (int j = 0; j < SubItems.Length; j++)

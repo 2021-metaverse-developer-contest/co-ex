@@ -20,7 +20,7 @@ public class StoreSceneManager : MonoBehaviour
     void Start()
     {
         Menu = GameObject.Find("Panel_Menu").gameObject;
-        Debug.Log("StoreName " + storeName);
+        Debug.Log("StoreSceneManager start: StoreName " + storeName);
         InitialContent();
     }
 
@@ -35,12 +35,10 @@ public class StoreSceneManager : MonoBehaviour
 
     void InitialContent()
     {
-        Debug.Log("Not In??");
         string query = "Select * from Stores Where name = '" + storeName + "'";
         if (categorySub != "")
             query += "AND categorySub = '" + categorySub + "'";
 
-        Debug.Log("Store Info " + query);
         store = getDBData.getStoresData(query);
 
         GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text = store[0].name;
@@ -54,6 +52,8 @@ public class StoreSceneManager : MonoBehaviour
         string path = store[0].logoPath;
         path = path.Substring(0, path.Length - 4);
         Texture2D texture = Resources.Load(path, typeof(Texture2D)) as Texture2D;
+        if (texture == null)
+            texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
         img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
         Debug.Log("name is " + store[0].name);
         InitialMenu(store[0].name);
@@ -98,12 +98,12 @@ public class StoreSceneManager : MonoBehaviour
         if (beforeScene)
         {
             SceneManager.LoadScene("StoreListScene");
-            StoreListSceneManager.categorySub = categorySub;
+            //StoreListSceneManager.categorySub = categorySub;
         }
         else
         {
             SceneManager.LoadScene("SearchScene");
-            SearchSceneManager.searchStr = searchStr;
+            //SearchSceneManager.searchStr = searchStr;
         }
     }
 
