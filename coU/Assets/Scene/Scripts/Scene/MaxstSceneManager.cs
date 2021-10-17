@@ -10,6 +10,13 @@ using TMPro; // public TextMeshProUGUI 쓰기위함 -> InputField-TextMeshPro
 
 public class MaxstSceneManager : MonoBehaviour
 {
+	// navi 기능을 위해서 추가함
+	public static string naviStoreName = "";
+	public static string naviStoreCategorySub = "";
+	public TextMeshProUGUI storeNameTextBox;
+	public TextMeshProUGUI storeFloorTextBox;
+	//
+
 	private CameraBackgroundBehaviour cameraBackgroundBehaviour = null;
 	private GameObject arCamera = null;
 	private VPSStudioController vPSStudioController = null;
@@ -252,8 +259,6 @@ public class MaxstSceneManager : MonoBehaviour
 				return ("outdoor");
 		}
 	}
-	public TextMeshProUGUI storeName;
-	public TextMeshProUGUI storeFloor;
 	public Vector3 getNavigationLocation(string name, string floor = "") //현재는 B1 층 밖에 안되니까
 	{
 		print(name);
@@ -284,8 +289,29 @@ public class MaxstSceneManager : MonoBehaviour
 
 	public void OnClickNavigation()
 	{
-		NavigationDest navigationDest = new NavigationDest(storeName.text, storeFloor.text);
-		Vector3 dest = getNavigationLocation(navigationDest.name, navigationDest.floor);
+		NavigationDest navigationDest;
+		Vector3 dest;
+		string categorySub;
+		string storeName;
+		if (MaxstSceneManager.naviStoreName != "" && MaxstSceneManager.naviStoreCategorySub != "")
+		{
+			//string categorySub;
+			//string storeName;
+			string query = "Select name, floor, modifiedX, modifiedY from Stores Where name = '" + MaxstSceneManager.naviStoreName + "'";
+			if (MaxstSceneManager.naviStoreCategorySub != "")
+				query += "AND categorySub = '" + MaxstSceneManager.naviStoreCategorySub + "'";
+			//naviStore = getDBData.getStoresData(query);
+			storeName = MaxstSceneManager.naviStoreName;
+			categorySub = MaxstSceneManager.naviStoreCategorySub;
+
+		}
+		else
+        {
+			storeName = storeNameTextBox.text;
+			categorySub = storeFloorTextBox.text;
+        }
+		navigationDest = new NavigationDest(storeNameTextBox.text, storeFloorTextBox.text);
+		dest = getNavigationLocation(navigationDest.name, navigationDest.floor);
 
 		if (currentLocalizerLocation != null)
 		{

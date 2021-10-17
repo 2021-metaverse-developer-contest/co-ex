@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StoreSceneBtnClick : MonoBehaviour
 {
@@ -24,5 +25,9 @@ public class StoreSceneBtnClick : MonoBehaviour
     }
 
     public void NaviBtnOnClick()
-    { }
+    {
+        SceneManager.LoadScene("MaxstScene");
+        MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
+        MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
+    }
 }
