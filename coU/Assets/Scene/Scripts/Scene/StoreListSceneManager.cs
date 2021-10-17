@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,24 +29,42 @@ public class StoreListSceneManager : MonoBehaviour
         b1 = GameObject.Find("ScrollView_B1").gameObject;
         b2 = GameObject.Find("ScrollView_B2").gameObject;
 
+        Debug.Log("StoreListSceneManager start: categorySub " + categorySub);
+
         FillContent();
-        f1.SetActive(false);
-        b1.SetActive(false);
-        b2.SetActive(false);
+
         if (b1_items.Length > f1_items.Length)
         {
             if (b1_items.Length < b2_items.Length)
-                b2.SetActive(true);
+                StoreListClick.clickFloor = "B2";
             else
-                b1.SetActive(true);
+                StoreListClick.clickFloor = "B1";
         }
         else
         {
             if (f1_items.Length < b2_items.Length)
-                b2.SetActive(true);
+                StoreListClick.clickFloor = "B2";
             else
-                f1.SetActive(true);
+                StoreListClick.clickFloor = "F1";
         }
+        StoreListClick.FloorBtnOnClick();
+        //f1.SetActive(false);
+        //b1.SetActive(false);
+        //b2.SetActive(false);
+        //if (b1_items.Length > f1_items.Length)
+        //{
+        //    if (b1_items.Length < b2_items.Length)
+        //        b2.SetActive(true);
+        //    else
+        //        b1.SetActive(true);
+        //}
+        //else
+        //{
+        //    if (f1_items.Length < b2_items.Length)
+        //        b2.SetActive(true);
+        //    else
+        //        f1.SetActive(true);
+        //}
     }
 
     // Update is called once per frame
@@ -58,6 +77,7 @@ public class StoreListSceneManager : MonoBehaviour
     void FillContent()
     {
         int i;
+        string defaultLogoPath = "default_logo";
         string query = "Select * from Stores where categorySub = '" + categorySub + "'";
         query += " AND floor = '";
 
@@ -75,17 +95,19 @@ public class StoreListSceneManager : MonoBehaviour
             Image img = f1_items[i].transform.Find("Panel_Icon").Find("Img_Icon").GetComponent<Image>();
             Debug.Log("path is " + f1_list[i].logoPath.Substring(0, f1_list[i].logoPath.Length - 4));
             Texture2D texture = Resources.Load(f1_list[i].logoPath.Substring(0, f1_list[i].logoPath.Length - 4), typeof(Texture2D)) as Texture2D;
-            if (texture != null)
-                img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+            if (texture == null)
+                texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
+            img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             f1_items[i].transform.Find("Panel_Name").GetComponentInChildren<TextMeshProUGUI>().text = f1_list[i].name;
         }
         for (i = 0; i < b1_items.Length; i++)
         {
             b1_items[i] = Instantiate(item, b1.transform.Find("Viewport").Find("Content"));
             Image img = b1_items[i].transform.Find("Panel_Icon").Find("Img_Icon").GetComponent<Image>();
-            if (img == null)
-                Debug.Log("Image is null");
+
             Texture2D texture = Resources.Load(b1_list[i].logoPath.Substring(0, b1_list[i].logoPath.Length - 4), typeof(Texture2D)) as Texture2D;
+            if (texture == null)
+                texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b1_items[i].transform.Find("Panel_Name").GetComponentInChildren<TextMeshProUGUI>().text = b1_list[i].name;
         }
@@ -94,6 +116,8 @@ public class StoreListSceneManager : MonoBehaviour
             b2_items[i] = Instantiate(item, b2.transform.Find("Viewport").Find("Content"));
             Image img = b2_items[i].transform.Find("Panel_Icon").Find("Img_Icon").GetComponent<Image>();
             Texture2D texture = Resources.Load(b2_list[i].logoPath.Substring(0, b2_list[i].logoPath.Length - 4), typeof(Texture2D)) as Texture2D;
+            if (texture == null)
+                texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b2_items[i].transform.Find("Panel_Name").GetComponentInChildren<TextMeshProUGUI>().text = b2_list[i].name;
         }

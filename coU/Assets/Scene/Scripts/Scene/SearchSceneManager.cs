@@ -35,6 +35,8 @@ public class SearchSceneManager : MonoBehaviour
         inputOuter.onEndEdit.AddListener(delegate { ShowList(inputOuter.text); });
         inputOuter.onSelect.AddListener(delegate { FocusInputField(); });
         btnSearch.onClick.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
+
+        Debug.Log("SearchSceneManager start: beforeSceneIndex " + beforeScene.ToString());
         if (searchStr != "")
         {
             SearchBtnOnClick(searchStr);
@@ -83,7 +85,7 @@ public class SearchSceneManager : MonoBehaviour
         results = new GameObject[stores.ToArray().Length];
         for (int i = 0; i < results.Length; i++)
         {
-            results[i] = Instantiate(itemResult, GameObject.Find("Content_Result").transform);
+            results[i] = Instantiate(itemResult,GameObject.Find("Content_Result").transform);
             results[i].transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text = stores[i].name;
             results[i].transform.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = stores[i].floor;
 
@@ -94,6 +96,8 @@ public class SearchSceneManager : MonoBehaviour
             imgPath = imgPath.Substring(0, imgPath.Length - 4);
             print("imgPath = " + imgPath);
             Texture2D texture = Resources.Load(imgPath, typeof(Texture2D)) as Texture2D;
+            if (texture == null)
+                texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
         }
     }

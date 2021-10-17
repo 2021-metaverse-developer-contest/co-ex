@@ -7,34 +7,41 @@ using UnityEngine.SceneManagement;
 
 public class StoreListClick : MonoBehaviour
 {
-    public void FloorBtnOnClick()
+    public static string clickFloor = "";
+    public static void FloorBtnOnClick()
     {
         GameObject click = EventSystem.current.currentSelectedGameObject;
+        if (click != null)
+            clickFloor = EventSystem.current.currentSelectedGameObject.name;
         GameObject parent = GameObject.Find("Panel_List").gameObject;
         GameObject F1Content = parent.transform.Find("ScrollView_F1").gameObject;
         GameObject B1Content = parent.transform.Find("ScrollView_B1").gameObject;
         GameObject B2Content = parent.transform.Find("ScrollView_B2").gameObject;
 
-        if (click.name.Contains("F1"))
+        if (clickFloor.Contains("F1"))
         {
             F1Content.SetActive(true);
             B1Content.SetActive(false);
             B2Content.SetActive(false);
+            clickFloor = "F1";
         }
-        else if (click.name.Contains("B1"))
+        else if (clickFloor.Contains("B1"))
         {
             F1Content.SetActive(false);
             B1Content.SetActive(true);
             B2Content.SetActive(false);
+            clickFloor = "B1";
         }
-        else if (click.name.Contains("B2"))
+        else if (clickFloor.Contains("B2"))
         {
             F1Content.SetActive(false);
             B1Content.SetActive(false);
             B2Content.SetActive(true);
+            clickFloor = "B2";
         }
         else
             Debug.Log("Click Error");
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("Btn_" + clickFloor).gameObject);
     }
 
     public void StoreOnClick()
