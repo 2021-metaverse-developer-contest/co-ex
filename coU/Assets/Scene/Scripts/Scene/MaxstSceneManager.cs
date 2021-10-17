@@ -291,8 +291,9 @@ public class MaxstSceneManager : MonoBehaviour
 	{
 		NavigationDest navigationDest;
 		Vector3 dest;
-		string categorySub;
 		string storeName;
+		string categorySub;
+		string floor = "";
 		if (MaxstSceneManager.naviStoreName != "" && MaxstSceneManager.naviStoreCategorySub != "")
 		{
 			//string categorySub;
@@ -308,9 +309,11 @@ public class MaxstSceneManager : MonoBehaviour
 		else
         {
 			storeName = storeNameTextBox.text;
-			categorySub = storeFloorTextBox.text;
-        }
-		navigationDest = new NavigationDest(storeNameTextBox.text, storeFloorTextBox.text);
+			print(storeName);
+			floor = storeFloorTextBox.text;
+			print(floor);
+		}
+		navigationDest = new NavigationDest(storeName, floor);
 		dest = getNavigationLocation(navigationDest.name, navigationDest.floor);
 
 		if (currentLocalizerLocation != null)

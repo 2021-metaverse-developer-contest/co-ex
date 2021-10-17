@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Scenes/SearchScene.unity
     guid: e765f7750cd0b43aaa1b5a1777883c5b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scene/Scenes/MaxstScene.unity
     guid: af750092252ef46bb8c76abf06dfb255
   m_configObjects: {}
