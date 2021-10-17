@@ -89,3 +89,125 @@ Enter Tracking thread
 VPSFusionLogic::_initialize
 Send Image To Server For VPS
 VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+Send Image To Server For VPS
+VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+Send Image To Server For VPS
+No Position
+Verify Count : 3
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+VPS Stop
+VPS Start
+Enter Tracking thread
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+Send Image To Server For VPS
+VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+VPS Stop
+VPS Start
+Enter Tracking thread
+Send Image To Server For VPS
+Send Image To Server For VPS
+VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+Send Image To Server For VPS
+No Position
+Verify Count : 3
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+Send Image To Server For VPS
+No Position
+Verify Count : 3
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+Send Image To Server For VPS
+No Position
+Verify Count : -1
+Send Image To Server For VPS
+Send Image To Server For VPS
+No Position
+Verify Count : 1
+Send Image To Server For VPS
+No Position
+Verify Count : 2
+VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+VPS Stop
