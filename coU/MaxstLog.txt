@@ -84,3 +84,8 @@ No Position
 Verify Count : -1
 Send Image To Server For VPS
 VPS Stop
+VPS Start
+Enter Tracking thread
+VPSFusionLogic::_initialize
+Send Image To Server For VPS
+VPS Stop

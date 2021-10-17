@@ -46,6 +46,8 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = store[0].floor;
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
+        StoreSceneManager.storeName = store[0].name;
+        StoreSceneManager.categorySub = store[0].categoryMain;
 
         //이미지 띄우는 부분
         Image img = GameObject.Find("Img_Logo").gameObject.GetComponent<Image>();
