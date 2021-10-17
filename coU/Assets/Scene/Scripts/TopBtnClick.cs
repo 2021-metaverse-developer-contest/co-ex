@@ -32,4 +32,5 @@ public class TopBtnClick : MonoBehaviour
                 SceneManager.LoadScene("StoreListScene");
         }
     }
+
 }
