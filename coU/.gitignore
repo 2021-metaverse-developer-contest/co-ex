@@ -14,7 +14,7 @@
 !/[Aa]ssets/**/*.meta
 
 # Assets/Resources/* 에 있는 모든 파일에 대해서는 .meta 데이터를 remote에 올리지 않는 것으로
-/[Aa]ssets/**/*.meta
+# /[Aa]ssets/**/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
