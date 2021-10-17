@@ -21,34 +21,13 @@ public class SubCtSceneManager : MonoBehaviour
         print("categoryMain" + categoryMain);
 
         string query = "Select distinct categorySub from Stores where categoryMain = '" + categoryMain + "'";
-        IDbConnection dbConn = new SqliteConnection(DBConnect.GetDBFilePath());
-        dbConn.Open();
-        IDbCommand dbCmd = dbConn.CreateCommand();
-        dbCmd.CommandText = query;
-        IDataReader reader = dbCmd.ExecuteReader();
-        while (reader.Read())
+        List<Stores> stores = getDBData.getStoresData(query);
+        foreach (Stores store in stores)
         {
             GameObject categorySub = Instantiate(subCtFactory, GameObject.Find("Content").transform);
-            categorySub.GetComponentInChildren<TextMeshProUGUI>().text = reader["categorySub"].ToString();
+            categorySub.GetComponentInChildren<TextMeshProUGUI>().text = store.categorySub;
         }
-        reader.Dispose();
-        dbCmd.Dispose();
-        dbConn.Dispose();
         print("Done SubCategory");
-        //string dbPath = Application.streamingAssetsPath + "/stores_v1.db";
-        //var db = new SQLiteConnection(dbPath);
-        //List<SQLiteConnection.ColumnInfo> storesDB = db.GetTableInfo("Stores");
-
-        //var items = db.Query<Stores>("Select distinct categorySub from Stores where categoryMain = '" + categoryMain + "'");
-        //numOfSubCt = items.Count;
-        //print("numOfSubCt = " + numOfSubCt.ToString());
-        //foreach (var item in items)
-        //{
-        //    print(item.categorySub);
-        //    GameObject categorySub = Instantiate(subCtFactory, GameObject.Find("Content").transform);
-        //    categorySub.GetComponentInChildren<Text>().text = item.categorySub;
-        //}
-        //db.Close();
     }
 
     // Update is called once per frame

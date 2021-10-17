@@ -35,7 +35,7 @@ public class putMarkerManager : MonoBehaviour
     {
         try
         {
-            List<Stores> stores = DBConnect.CustomExcuteQuery("Select * from Stores S Where S.floor =\"B1\"");
+            List<Stores> stores = getDBData.getStoresData("Select * from Stores S Where S.floor =\"B1\"");
             StartCoroutine(drawStore(stores, "B1"));
         }
         catch (Exception e)
