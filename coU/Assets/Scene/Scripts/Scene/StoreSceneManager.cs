@@ -42,7 +42,7 @@ public class StoreSceneManager : MonoBehaviour
         store = getDBData.getStoresData(query);
 
         GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text = store[0].name;
-        GameObject.Find("TMP_CtMain").GetComponent<TextMeshProUGUI>().text = store[0].categoryMain;
+        GameObject.Find("TMP_CtMain").GetComponent<TextMeshProUGUI>().text = store[0].categoryMain + "/" + store[0].categorySub;
         GameObject.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = store[0].floor;
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;

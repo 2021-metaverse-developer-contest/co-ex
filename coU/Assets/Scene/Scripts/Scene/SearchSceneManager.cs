@@ -11,23 +11,20 @@ public class SearchSceneManager : MonoBehaviour
     public GameObject itemList;
     public GameObject itemResult;
     GameObject inputObject;
-    //GameObject inputText;
     TMP_InputField inputOuter;
-    //TextMeshProUGUI inputInner;
     Button btnSearch;
 
     GameObject[] items;
     GameObject[] results;
     public static string searchStr = "";
     public static int beforeScene;
+    public static string beforeItem = "";
 
     // Start is called before the first frame update
     void Start()
     {
         inputObject = GameObject.Find("InputTMP_Search").gameObject;
         inputOuter = inputObject.GetComponent<TMP_InputField>();
-        //inputText = GameObject.Find("TMP_Input");
-        //inputInner = inputText.GetComponent<TextMeshProUGUI>();
         btnSearch = GameObject.Find("Btn_Search").GetComponent<Button>();
 
         inputOuter.onSubmit.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
@@ -52,9 +49,15 @@ public class SearchSceneManager : MonoBehaviour
     }
 
     void backBtnClick()
-    {
-        //SceneManager.LoadScene("CategoryScene");
+    { 
+        if (beforeItem != ""
+                && SceneUtility.GetScenePathByBuildIndex(beforeScene).Contains("StoreScene"))
+        {
+            StoreSceneManager.beforeScene = true;
+            StoreSceneManager.storeName = beforeItem;
+        }
         SceneManager.LoadScene(beforeScene);
+        searchStr = "";
     }
 
     public void ShowList(string inputText)

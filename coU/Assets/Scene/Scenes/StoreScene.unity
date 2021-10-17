@@ -6107,8 +6107,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 880751195}
   m_HandleRect: {fileID: 880751194}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1.0000004
+  m_Size: 0.7394399
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6660,7 +6660,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1935894178}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 215757343}
+        m_TargetAssemblyTypeName: TopBtnClick, Assembly-CSharp
+        m_MethodName: BackBtnOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1935894178
 MonoBehaviour:
   m_ObjectHideFlags: 0
