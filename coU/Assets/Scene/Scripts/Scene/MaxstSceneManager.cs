@@ -13,6 +13,8 @@ public class MaxstSceneManager : MonoBehaviour
 	// navi 기능을 위해서 추가함
 	public static string naviStoreName = "";
 	public static string naviStoreCategorySub = "";
+	public static string naviStoreFloor = "";
+
 	public TextMeshProUGUI storeNameTextBox;
 	public TextMeshProUGUI storeFloorTextBox;
 	//
@@ -259,52 +261,61 @@ public class MaxstSceneManager : MonoBehaviour
 				return ("outdoor");
 		}
 	}
-	public Vector3 getNavigationLocation(string name, string floor = "") //현재는 B1 층 밖에 안되니까
+	public Vector3 getNavigationLocation(string name, string floor, bool substringNeed) //현재는 B1 층 밖에 안되니까
 	{
-		print(name);
-		print(name.Length);
-		print(floor);
-		print(floor.Length);
-		name = name.Substring(0, name.Length - 1);
-		floor = floor.Substring(0, floor.Length - 1);
+		print("---getNavigationLocation---");
+		if (substringNeed == true)
+        {
+			name = name.Substring(0, name.Length - 1);
+			floor = floor.Substring(0, floor.Length - 1);
+        }
+		print($"{name}:{name.Length}");
+		print($"{floor}:{floor.Length}");
 
-		// GameObject destObject = GameObject.Find(name); Refactoring 부탁
-		GameObject destObject = Instantiate(GameObject.Find(floor).transform.Find(name).gameObject); // 다른 방법 없나  Refactoring 부탁
-		if (destObject == null)
-		{
-			print("Can't find Gameobject name = " + name);
+		Vector3 destVector = new Vector3();
+		GameObject destTemp = GameObject.Find(floor).transform.Find(name).gameObject;
+		if (destTemp == null)
+        {
 			return Vector3.forward;
 		}
-
-		//Transform dest = GameObject.Find(floor).transform.Find(name).GetComponent<Transform>();
-		Transform dest = destObject.GetComponent<Transform>();
-		print("---getNavigationLocation---");
-		print(name);
-		print(floor);
-		Destroy(destObject);
-		return (dest.transform.position);
+		else
+        {
+			Transform destTransform = destTemp.GetComponentInChildren<Transform>(); // null 일 가능성 배제
+			//print(destTransform.transform.position);
+			//print(destTransform.transform.localPosition);
+			destVector = destTransform.transform.position;
+		}
+		return (destVector);
 	}
 
 
 
 	public void OnClickNavigation()
 	{
+		print("OnClickNavigation()");
+		print(MaxstSceneManager.naviStoreName);
+		print(MaxstSceneManager.naviStoreFloor);
+		print("============================");
+
 		NavigationDest navigationDest;
 		Vector3 dest;
 		string storeName;
-		string categorySub;
-		string floor = "";
+		string floor;
+		bool substringNeed = false;
 		if (MaxstSceneManager.naviStoreName != "" && MaxstSceneManager.naviStoreCategorySub != "")
 		{
-			//string categorySub;
-			//string storeName;
+			/*
+			 * Query 날리는 구간
 			string query = "Select name, floor, modifiedX, modifiedY from Stores Where name = '" + MaxstSceneManager.naviStoreName + "'";
 			if (MaxstSceneManager.naviStoreCategorySub != "")
 				query += "AND categorySub = '" + MaxstSceneManager.naviStoreCategorySub + "'";
-			//naviStore = getDBData.getStoresData(query);
-			storeName = MaxstSceneManager.naviStoreName;
-			categorySub = MaxstSceneManager.naviStoreCategorySub;
+            List<Stores> naviStore = getDBData.getStoresData(query);
+            floor = naviStore[0].floor;
+			*/
 
+			storeName = MaxstSceneManager.naviStoreName;
+			floor = MaxstSceneManager.naviStoreFloor;
+			substringNeed = false;
 		}
 		else
         {
@@ -312,9 +323,10 @@ public class MaxstSceneManager : MonoBehaviour
 			print(storeName);
 			floor = storeFloorTextBox.text;
 			print(floor);
+			substringNeed = true;
 		}
 		navigationDest = new NavigationDest(storeName, floor);
-		dest = getNavigationLocation(navigationDest.name, navigationDest.floor);
+		dest = getNavigationLocation(navigationDest.name, navigationDest.floor, substringNeed);
 
 		if (currentLocalizerLocation != null)
 		{
@@ -331,6 +343,8 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 			}
 
+			//Vector3 temp = new Vector3()
+				
 			if (trackingObject != null)
 			{
 				NavigationController navigationController = GetComponent<NavigationController>();
