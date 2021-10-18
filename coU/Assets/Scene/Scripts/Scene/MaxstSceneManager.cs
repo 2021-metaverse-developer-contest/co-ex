@@ -289,7 +289,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	}
 
-	Action resetNaviValue = () =>
+	static Action resetNaviValue = () =>
 	{
 		naviStoreName = "";
 		naviStoreFloor = "";
