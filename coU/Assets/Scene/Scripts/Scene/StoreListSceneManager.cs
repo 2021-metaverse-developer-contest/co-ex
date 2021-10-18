@@ -20,18 +20,21 @@ public class StoreListSceneManager : MonoBehaviour
     GameObject[] f1_items;
     GameObject[] b1_items;
     GameObject[] b2_items;
+    GameObject PanelFloor;
 
     void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
+
         GameObject.Find("TMP_SubCategory").GetComponent<TextMeshProUGUI>().text = categorySub;
         f1 = GameObject.Find("ScrollView_F1").gameObject;
         b1 = GameObject.Find("ScrollView_B1").gameObject;
         b2 = GameObject.Find("ScrollView_B2").gameObject;
-
+        PanelFloor = GameObject.Find("Panel_Floor").gameObject;
         Debug.Log("StoreListSceneManager start: categorySub " + categorySub);
 
         FillContent();
-
+        ChkNoDataFloor();
         if (b1_items.Length > f1_items.Length)
         {
             if (b1_items.Length < b2_items.Length)
@@ -71,6 +74,16 @@ public class StoreListSceneManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneManager.LoadScene("AllCategoryScene");
+    }
+
+    void ChkNoDataFloor()
+    {
+        if (b1_items.Length == 0)
+            PanelFloor.transform.Find("Btn_B1").gameObject.SetActive(false);
+        if (f1_items.Length == 0)
+            PanelFloor.transform.Find("Btn_F1").gameObject.SetActive(false);
+        if (b2_items.Length == 0)
+            PanelFloor.transform.Find("Btn_B2").gameObject.SetActive(false);
     }
 
     void FillContent()
