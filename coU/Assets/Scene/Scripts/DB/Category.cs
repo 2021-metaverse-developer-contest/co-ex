@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SQLite4Unity3d;
 
-[Table("Category")]
+[Table("Categories")]
 public class Category : MonoBehaviour
 {
     [Column("name")]

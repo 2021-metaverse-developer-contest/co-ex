@@ -4,7 +4,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 
 [Table("Stores")]
-public class Stores : MonoBehaviour
+public class Store : MonoBehaviour
 {
     [Column("index")]
     public int index { get; set; }

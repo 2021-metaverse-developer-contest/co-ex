@@ -4,7 +4,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 using System.IO;
 
-public class getDBData : MonoBehaviour
+public class GetDBData : MonoBehaviour
 {
     public static string dbName = "Starfield.db";
     public static List<Total> getClassData(string query)
@@ -26,20 +26,20 @@ public class getDBData : MonoBehaviour
 
     }
 
-    public static List<Stores> getStoresData(string query)
+    public static List<Store> getStoresData(string query)
     {
         string persistentDBTotalPath = Path.Combine(Application.persistentDataPath, dbName);
         SQLiteConnection db = new SQLiteConnection(persistentDBTotalPath);
-        List<Stores> getClass = db.Query<Stores>(query);
+        List<Store> getClass = db.Query<Store>(query);
         db.Dispose();
         return getClass;
     }
 
-    public static List<Items> getItemsData(string query)
+    public static List<Item> getItemsData(string query)
     {
         string persistentDBTotalPath = Path.Combine(Application.persistentDataPath, dbName);
         SQLiteConnection db = new SQLiteConnection(persistentDBTotalPath);
-        List<Items> getClass = db.Query<Items>(query);
+        List<Item> getClass = db.Query<Item>(query);
         db.Dispose();
         return getClass;
     }
