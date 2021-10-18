@@ -11,6 +11,7 @@ public class StoreSceneManager : MonoBehaviour
     public static string categorySub = "";
     public static bool beforeScene = true; //어느 경로로 왔는지에 따라 달라짐 true-categorySubScene, false-SearchScene
     public static string searchStr = "";
+    public static string floor = "";
 
     List<Store> store;
     List<Item> item_List;
@@ -48,6 +49,9 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = store[0].floor;
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
+        StoreSceneManager.storeName = store[0].name;
+        StoreSceneManager.categorySub = store[0].categoryMain;
+        StoreSceneManager.floor = store[0].floor;
 
         //이미지 띄우는 부분
         Image img = GameObject.Find("Img_Logo").gameObject.GetComponent<Image>();
