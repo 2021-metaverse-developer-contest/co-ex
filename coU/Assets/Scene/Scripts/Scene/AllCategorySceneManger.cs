@@ -16,6 +16,7 @@ public class AllCategorySceneManger : MonoBehaviour
 
     void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
         InitialCategoryMain();
         Debug.Log("AllCategorySceneManager start!");
     }

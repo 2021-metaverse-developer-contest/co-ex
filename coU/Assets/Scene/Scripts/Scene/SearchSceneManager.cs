@@ -23,6 +23,8 @@ public class SearchSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
+
         inputObject = GameObject.Find("InputTMP_Search").gameObject;
         inputOuter = inputObject.GetComponent<TMP_InputField>();
         btnSearch = GameObject.Find("Btn_Search").GetComponent<Button>();

@@ -19,6 +19,8 @@ public class StoreSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
+
         Menu = GameObject.Find("Panel_Menu").gameObject;
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         InitialContent();
