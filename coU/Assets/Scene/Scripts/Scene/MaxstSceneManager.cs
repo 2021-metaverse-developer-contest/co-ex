@@ -377,7 +377,7 @@ public class MaxstSceneManager : MonoBehaviour
 		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.floor == "") == false)
 		{
 			/*
-			 * Query 날리는 구간
+			 * Query를 쓴다면 여기서 쓰자!
 			string query = "Select name, floor, modifiedX, modifiedY from Stores Where name = '" + MaxstSceneManager.naviStoreName + "'";
 			if (MaxstSceneManager.naviStoreCategorySub != "")
 				query += "AND categorySub = '" + MaxstSceneManager.naviStoreCategorySub + "'";
@@ -394,18 +394,12 @@ public class MaxstSceneManager : MonoBehaviour
 		}
 
 		
-		GameObject temp = new GameObject();
+		GameObject location = new GameObject();
 		GameObject parent = GameObject.Find(naviDest.floor);
-		//GameObject parent = GameObject.Find(naviDest.floor + "_Parent");
-        GameObject location = Instantiate(temp, parent.transform);
+		location.transform.parent = parent.transform;
 		location.transform.localPosition = naviDest.getNavigationLocation();
-
-		print(location.transform.position.ToString());
-		print(location.transform.localPosition.ToString());
-
-		//location.transform.TransformVector ㅅㅏ용하기
-		//parent.transform.TransformVector(location.transform.localPosition);
-
+		//print(location.transform.position.ToString());
+		//print(location.transform.localPosition.ToString());
 
 		if (currentLocalizerLocation != null)
 		{
