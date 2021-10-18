@@ -12,7 +12,7 @@ public class SearchItemClick : MonoBehaviour
         GameObject cur = EventSystem.current.currentSelectedGameObject;
         
         StoreSceneManager.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
-        StoreSceneManager.categorySub = "";
+        //StoreSceneManager.categorySub = "";
         StoreSceneManager.beforeScene = false;
         StoreSceneManager.searchStr = SearchSceneManager.searchStr;
         SceneManager.LoadScene("StoreScene");
@@ -23,7 +23,7 @@ public class SearchItemClick : MonoBehaviour
         GameObject cur = EventSystem.current.currentSelectedGameObject;
 
         StoreSceneManager.storeName = cur.transform.Find("TMP_List").GetComponent<TextMeshProUGUI>().text;
-        StoreSceneManager.categorySub = "";
+        //StoreSceneManager.categorySub = "";
         StoreSceneManager.beforeScene = false;
         StoreSceneManager.searchStr = StoreSceneManager.storeName;
         SceneManager.LoadScene("StoreScene");
