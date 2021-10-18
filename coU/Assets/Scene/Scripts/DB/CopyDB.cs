@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class copyDB : MonoBehaviour
+public class CopyDB : MonoBehaviour
 {
     private static string dbName = "Starfield.db";
     private static int count = 0;
