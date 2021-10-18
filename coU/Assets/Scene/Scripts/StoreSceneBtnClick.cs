@@ -29,5 +29,6 @@ public class StoreSceneBtnClick : MonoBehaviour
         SceneManager.LoadScene("MaxstScene");
         MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
         MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
+        MaxstSceneManager.naviStoreFloor = StoreSceneManager.floor;
     }
 }
