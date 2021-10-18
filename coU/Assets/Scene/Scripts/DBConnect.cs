@@ -21,7 +21,7 @@ public class DBConnect : MonoBehaviour
         }
         else
         {
-            str = "URI=file:" + Application.dataPath + "/" + dbName;
+			str = "URI=file:" + Application.persistentDataPath + "/" + dbName;//IOS는 Data Source=로 시작한다고 함.
             print("dbName " + dbName);
             //str = "Data Source=" + Application.dataPath + "/" + dbName;
         }
