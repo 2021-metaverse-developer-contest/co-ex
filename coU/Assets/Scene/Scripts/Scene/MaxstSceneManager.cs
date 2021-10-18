@@ -17,6 +17,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	public TextMeshProUGUI storeNameTextBox;
 	public TextMeshProUGUI storeFloorTextBox;
+	public GameObject marker;
 	//
 
 	private CameraBackgroundBehaviour cameraBackgroundBehaviour = null;
@@ -242,13 +243,22 @@ public class MaxstSceneManager : MonoBehaviour
 
 	public class NavigationDest
 	{
+		public string name { get; set; }
+		public string floor { get; set; }
+		public string categorySub { get; set; }
+
+		public NavigationDest(string name, string floor, string categorySub)
+		{
+			this.name = name;
+			this.floor = floor;
+			this.categorySub = categorySub;
+		}
 		public NavigationDest(string name, string floor)
 		{
 			this.name = name;
 			this.floor = floor;
+			this.categorySub = "";
 		}
-		public string name { get; set; }
-		public string floor { get; set; }
 		public string getEndLocation()
 		{
 			if (floor == "B1")
@@ -260,7 +270,30 @@ public class MaxstSceneManager : MonoBehaviour
 			else
 				return ("outdoor");
 		}
+		public Vector3 getNavigationLocation()
+        {
+			Vector3 destVector = new Vector3();
+			string query = String.Format($"Select modifiedX, modifiedY FROM Stores AS S WHERE S.name = '{this.name}' AND S.floor = '{this.floor}'");
+			print("query: " + query);
+			List<Store> Stores = GetDBData.getStoresData(query);
+			print(Stores.ToArray().Length);
+			destVector.x = ((float)Stores[0].modifiedX);
+			destVector.y = ((float)Stores[0].modifiedY);
+			print(destVector.x);
+			print(destVector.y);
+			return destVector;
+        }
+
 	}
+
+	Action resetNaviValue = () =>
+	{
+		naviStoreName = "";
+		naviStoreFloor = "";
+		naviStoreCategorySub = "";
+		return;
+	};
+
 	public Vector3 getNavigationLocation(string name, string floor, bool substringNeed) //현재는 B1 층 밖에 안되니까
 	{
 		print("---getNavigationLocation---");
@@ -285,6 +318,7 @@ public class MaxstSceneManager : MonoBehaviour
 			//print(destTransform.transform.localPosition);
 			destVector = destTransform.transform.position;
 		}
+		resetNaviValue();
 		return (destVector);
 	}
 
@@ -297,12 +331,9 @@ public class MaxstSceneManager : MonoBehaviour
 		print(MaxstSceneManager.naviStoreFloor);
 		print("============================");
 
-		NavigationDest navigationDest;
-		Vector3 dest;
-		string storeName;
-		string floor;
-		bool substringNeed = false;
-		if (MaxstSceneManager.naviStoreName != "" && MaxstSceneManager.naviStoreCategorySub != "")
+
+		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
+		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.floor == "") == false)
 		{
 			/*
 			 * Query 날리는 구간
@@ -312,21 +343,28 @@ public class MaxstSceneManager : MonoBehaviour
             List<Stores> naviStore = getDBData.getStoresData(query);
             floor = naviStore[0].floor;
 			*/
-
-			storeName = MaxstSceneManager.naviStoreName;
-			floor = MaxstSceneManager.naviStoreFloor;
-			substringNeed = false;
 		}
 		else
         {
-			storeName = storeNameTextBox.text;
-			print(storeName);
-			floor = storeFloorTextBox.text;
-			print(floor);
-			substringNeed = true;
+			// Textbox에 있는 값으로 재할당
+			string tempName = storeNameTextBox.text.Substring(0, storeNameTextBox.text.Length - 1);
+			string tempFloor = storeFloorTextBox.text.Substring(0, storeFloorTextBox.text.Length - 1);
+			naviDest = new NavigationDest(tempName, tempFloor);
 		}
-		navigationDest = new NavigationDest(storeName, floor);
-		dest = getNavigationLocation(navigationDest.name, navigationDest.floor, substringNeed);
+
+		
+		GameObject temp = new GameObject();
+		GameObject parent = GameObject.Find(naviDest.floor);
+		//GameObject parent = GameObject.Find(naviDest.floor + "_Parent");
+        GameObject location = Instantiate(temp, parent.transform);
+		location.transform.localPosition = naviDest.getNavigationLocation();
+
+		print(location.transform.position.ToString());
+		print(location.transform.localPosition.ToString());
+
+		//location.transform.TransformVector ㅅㅏ용하기
+		//parent.transform.TransformVector(location.transform.localPosition);
+
 
 		if (currentLocalizerLocation != null)
 		{
@@ -343,13 +381,11 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 			}
 
-			//Vector3 temp = new Vector3()
-				
 			if (trackingObject != null)
 			{
 				NavigationController navigationController = GetComponent<NavigationController>();
 
-				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, navigationDest.getEndLocation(), dest, vPSTrackablesList.ToArray(),
+				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, naviDest.getEndLocation(), location.transform.position, vPSTrackablesList.ToArray(),
 				() =>
 				{
 					Debug.Log("No Path");
