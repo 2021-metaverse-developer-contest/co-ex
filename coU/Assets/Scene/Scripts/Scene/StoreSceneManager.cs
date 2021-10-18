@@ -24,6 +24,7 @@ public class StoreSceneManager : MonoBehaviour
 
         Menu = GameObject.Find("Panel_Menu").gameObject;
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
+        Debug.Log("StoreSceneManager start: categorySub " + categorySub);
         InitialContent();
     }
 
@@ -39,7 +40,7 @@ public class StoreSceneManager : MonoBehaviour
     void InitialContent()
     {
         string query = "Select * from Stores Where name = '" + storeName + "'";
-        if (categorySub != "")
+        if (beforeScene)
             query += "AND categorySub = '" + categorySub + "'";
 
         store = GetDBData.getStoresData(query);
@@ -50,7 +51,7 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
         StoreSceneManager.storeName = store[0].name;
-        StoreSceneManager.categorySub = store[0].categoryMain;
+        //StoreSceneManager.categorySub = store[0].categoryMain;
         StoreSceneManager.floor = store[0].floor;
 
         //이미지 띄우는 부분

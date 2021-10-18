@@ -21,12 +21,14 @@ public class MaxstSceneManager : MonoBehaviour
 	//
 
 	private CameraBackgroundBehaviour cameraBackgroundBehaviour = null;
-	private GameObject arCamera = null;
+	//hyojlee private GameObject arCamera = null;
+	private static GameObject arCamera = null;
 	private VPSStudioController vPSStudioController = null;
 
 	public List<GameObject> disableObjects = new List<GameObject>();
 	public List<GameObject> occlusionObjects = new List<GameObject>();
-	private List<VPSTrackable> vPSTrackablesList = new List<VPSTrackable>();
+	private static List<VPSTrackable> vPSTrackablesList = new List<VPSTrackable>();
+	//hyojlee private List<VPSTrackable> vPSTrackablesList = new List<VPSTrackable>();
 
 	public Material buildingMaterial;
 	public Material runtimeBuildingMaterial;
@@ -34,7 +36,8 @@ public class MaxstSceneManager : MonoBehaviour
 	public GameObject maxstLogObject;
 
 	public bool isOcclusion = true;
-	private string currentLocalizerLocation = "";
+	private static string currentLocalizerLocation = "";
+	//hyojlee private string currentLocalizerLocation = "";
 
 	private string serverName = "";
 
@@ -294,7 +297,7 @@ public class MaxstSceneManager : MonoBehaviour
 		return;
 	};
 
-	public Vector3 getNavigationLocation(string name, string floor, bool substringNeed) //현재는 B1 층 밖에 안되니까
+	public static Vector3 getNavigationLocation(string name, string floor, bool substringNeed) //현재는 B1 층 밖에 안되니까
 	{
 		print("---getNavigationLocation---");
 		if (substringNeed == true)
@@ -322,7 +325,45 @@ public class MaxstSceneManager : MonoBehaviour
 		return (destVector);
 	}
 
+	public static void StartNavigation(string storeName, string categorySub, string floor)
+	{
+		NavigationDest navigationDest;
+		Vector3 dest;
+		bool substringNeed = false;
+		
+		navigationDest = new NavigationDest(storeName, floor);
+		dest = getNavigationLocation(navigationDest.name, navigationDest.floor, substringNeed);
 
+		if (currentLocalizerLocation != null)
+		{
+			GameObject trackingObject = null;
+			foreach (VPSTrackable eachTrackable in vPSTrackablesList)
+			{
+				foreach (string eachLocation in eachTrackable.localizerLocation)
+				{
+					if (currentLocalizerLocation == eachLocation)
+					{
+						trackingObject = eachTrackable.gameObject;
+						break;
+					}
+				}
+			}
+
+			//Vector3 temp = new Vector3()
+
+			if (trackingObject != null)
+			{
+				NavigationController navigationController = GameObject.Find("SceneManager").GetComponent<NavigationController>();
+
+				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, navigationDest.getEndLocation(), dest, vPSTrackablesList.ToArray(),
+				() =>
+				{
+					Debug.Log("No Path");
+				});
+				//}, "coex_outdoor");
+			}
+		}
+	}
 
 	public void OnClickNavigation()
 	{
