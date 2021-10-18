@@ -24,44 +24,14 @@ public class Store : MonoBehaviour
     public string logoPath { get; set; }
     [Column("tntSeq")]
     public string tntSeq { get; set; }
-    //[Column("x")]
-    //public double x { get; set; }
-    //[Column("y")]
-    //public double y { get; set; }
+    [Column("x")]
+    public double x { get; set; }
+    [Column("y")]
+    public double y { get; set; }
     [Column("modifiedX")]
     public double modifiedX { get; set; }
-    [Column("modifiedy")]
+    [Column("modifiedY")]
     public double modifiedY { get; set; }
     [Column("mapKey")]
     public string mapKey { get; set; }
-
-    // Temporary value
-    private float X;
-    [Column("x")]
-    public float x
-    {
-        get
-        {
-            //return (X);
-            return (X / 100f);
-        }
-        set
-        {
-            X = value;
-        }
-    }
-    private float Y;
-    [Column("y")]
-    public float y
-    {
-        get
-        {
-            //return (Y);
-            return (Y / 100f);
-        }
-        set
-        {
-            Y = value;
-        }
-    }
 }
