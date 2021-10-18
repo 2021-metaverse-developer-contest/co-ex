@@ -55,20 +55,23 @@ public class putMarkerManager : MonoBehaviour
             yValue = 2.5f;
         else if (floor == "B2")
             yValue = -5.0f;
-        else if (floor == "B1")
-            yValue = 10.0f;
+        else if (floor == "1F")
+            yValue = 2.5f;
         else
-            yValue = 0f;
+            yValue = 2.5f;
 
         foreach (var it in stores)
         {
             GameObject parent = GameObject.Find(floor);
             GameObject tempCircle = Instantiate(marker, parent.transform);
-            
-            Vector3 rawLocation = new Vector3(
-                                        (LinearTransform.zeroPointAdjustionX + it.x + LinearTransform.marginX),
-                                        (LinearTransform.zeroPointAdjustionY - it.y + LinearTransform.marginY),
-                                        0);
+
+            Vector3 rawLocation = new Vector3(((float)it.modifiedX), ((float)it.modifiedY), 0);
+            /* Legacy code
+            //Vector3 rawLocation = new Vector3(
+            //                            (LinearTransform.zeroPointAdjustionX + it.x / 100.0f + LinearTransform.marginX),
+            //                            (LinearTransform.zeroPointAdjustionY - it.y / 100.0f + LinearTransform.marginY),
+            //                            0);
+            */
 
             tempCircle.transform.localPosition = rawLocation;
             tempCircle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
