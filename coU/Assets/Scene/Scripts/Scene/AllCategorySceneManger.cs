@@ -38,7 +38,7 @@ public class AllCategorySceneManger : MonoBehaviour
 
     void InitialCategoryMain()
     {
-        string query = "Select distinct categoryMain as name, path from Stores, Category where Stores.categoryMain = Category.name";
+        string query = "Select distinct categoryMain as name, path from Stores, Categories where Stores.categoryMain = Category.name";
         MainItem_List = GetDBData.getCategoryData(query);
 
         MainItems = new GameObject[MainItem_List.ToArray().Length];
