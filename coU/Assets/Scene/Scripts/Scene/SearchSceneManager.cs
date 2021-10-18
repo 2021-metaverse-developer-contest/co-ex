@@ -70,7 +70,7 @@ public class SearchSceneManager : MonoBehaviour
             DestroyImmediate(items[i]);
         string query = "Select * from Stores where name like '%" + inputText.Trim() + "%'";
         query += "group by name order by name ASC";
-        List<Stores> stores = DBConnect.CustomExcuteQuery(query);
+        List<Stores> stores = getDBData.getStoresData(query);
         items = new GameObject[stores.ToArray().Length];
         print("items number = " + items.Length);
         for (int i = 0; i < items.Length; i++)
@@ -86,7 +86,8 @@ public class SearchSceneManager : MonoBehaviour
             DestroyImmediate(results[i]);
         string query = "Select * from Stores where name like '%" + inputText.Trim() + "%'";
         query += "group by name order by name ASC";
-        List<Stores> stores = DBConnect.CustomExcuteQuery(query);
+
+        List<Stores> stores = getDBData.getStoresData(query);
         results = new GameObject[stores.ToArray().Length];
         for (int i = 0; i < results.Length; i++)
         {

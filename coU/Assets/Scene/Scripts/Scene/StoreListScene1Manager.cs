@@ -18,33 +18,13 @@ public class StoreListScene1Manager : MonoBehaviour
     void Start()
     {
         string query = "Select * from Stores where categorySub = '" + categorySub + "'";
-        IDbConnection conn = new SqliteConnection(DBConnect.GetDBFilePath());
-        conn.Open();
-        IDbCommand cmd = conn.CreateCommand();
-        cmd.CommandText = query;
-        IDataReader reader = cmd.ExecuteReader();
-        while (reader.Read())
+        List<Stores> stores = getDBData.getStoresData(query);
+        foreach(Stores store in stores)
         {
-            categoryMain = reader["categoryMain"].ToString();
-            GameObject store = Instantiate(storeFactory, GameObject.Find("Content").transform);
-            store.GetComponentInChildren<TextMeshProUGUI>().text = reader["name"].ToString();
+            categoryMain = store.categoryMain;
+            GameObject name = Instantiate(storeFactory, GameObject.Find("Content").transform);
+            name.GetComponentInChildren<TextMeshProUGUI>().text = store.name;
         }
-        reader.Dispose();
-        cmd.Dispose();
-        conn.Dispose();
-
-        //string dbPath = Application.streamingAssetsPath + "/stores_v1.db";
-        //var db = new SQLiteConnection(dbPath);
-        //List<SQLiteConnection.ColumnInfo> storesDB = db.GetTableInfo("Stores");
-
-        //var items = db.Query<Stores>("Select * from Stores where categorySub = '" + categorySub+ "'");
-        //foreach (var item in items)
-        //{
-        //    print(item.name);
-        //    GameObject category = Instantiate(storeFactory, GameObject.Find("Content").transform);
-        //    category.GetComponentInChildren<Text>().text = item.name + "\t\t" + item.floor;
-        //}
-        //db.Close();
     }
 
     // Update is called once per frame
