@@ -41,6 +41,10 @@ public class MaxstSceneManager : MonoBehaviour
 
 	private string serverName = "";
 
+	//뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
+	int backCount = 0;
+	ShowToastMessage toast = new ShowToastMessage();
+
 	void Awake()
 	{
 		QualitySettings.vSyncCount = 0;
@@ -148,6 +152,22 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+        {
+			toast.OnGUI();
+			backCount++;
+			if (!IsInvoking("backBtnOnClick"))
+				Invoke("backBtnOnClick", 1.0f);
+        }
+		else if (backCount == 2)
+        {
+			CancelInvoke("backBtnOnClick");
+			Application.Quit();
+#if !UNITY_EDITOR
+	System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
+		}
+
 		TrackerManager.GetInstance().UpdateFrame();
 
 		ARFrame arFrame = TrackerManager.GetInstance().GetARFrame();
@@ -202,7 +222,12 @@ public class MaxstSceneManager : MonoBehaviour
 		}
 	}
 
-	void OnApplicationPause(bool pause)
+    void backBtnOnClick()
+    {
+		backCount = 0;
+    }
+
+    void OnApplicationPause(bool pause)
 	{
 		if (pause)
 		{
