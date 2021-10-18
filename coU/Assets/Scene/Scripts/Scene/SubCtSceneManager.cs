@@ -21,8 +21,8 @@ public class SubCtSceneManager : MonoBehaviour
         print("categoryMain" + categoryMain);
 
         string query = "Select distinct categorySub from Stores where categoryMain = '" + categoryMain + "'";
-        List<Stores> stores = getDBData.getStoresData(query);
-        foreach (Stores store in stores)
+        List<Store> stores = GetDBData.getStoresData(query);
+        foreach (Store store in stores)
         {
             GameObject categorySub = Instantiate(subCtFactory, GameObject.Find("Content").transform);
             categorySub.GetComponentInChildren<TextMeshProUGUI>().text = store.categorySub;

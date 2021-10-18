@@ -9,7 +9,7 @@ public class StoreSceneBtnClick : MonoBehaviour
     {
         string query = "Select * from Stores Where name = '"
                         + GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text + "'";
-        List<Stores> store = getDBData.getStoresData(query);
+        List<Store> store = GetDBData.getStoresData(query);
         string mapLink = "https://m.starfield.co.kr/coexmall/tenant/tenantDetail/"
                         + store[0].tntSeq + "?maps=" + store[0].mapKey;
         Debug.Log("mapLink " + store[0].mapKey);

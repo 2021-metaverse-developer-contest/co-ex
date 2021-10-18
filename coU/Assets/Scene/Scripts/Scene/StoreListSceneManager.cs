@@ -13,9 +13,9 @@ public class StoreListSceneManager : MonoBehaviour
     GameObject f1;
     GameObject b1;
     GameObject b2;
-    List<Stores> f1_list;
-    List<Stores> b1_list;
-    List<Stores> b2_list;
+    List<Store> f1_list;
+    List<Store> b1_list;
+    List<Store> b2_list;
 
     GameObject[] f1_items;
     GameObject[] b1_items;
@@ -93,9 +93,9 @@ public class StoreListSceneManager : MonoBehaviour
         string query = "Select * from Stores where categorySub = '" + categorySub + "'";
         query += " AND floor = '";
 
-        f1_list = getDBData.getStoresData(query + "1F'");
-        b1_list = getDBData.getStoresData(query + "B1'");
-        b2_list = getDBData.getStoresData(query + "B2'");
+        f1_list = GetDBData.getStoresData(query + "1F'");
+        b1_list = GetDBData.getStoresData(query + "B1'");
+        b2_list = GetDBData.getStoresData(query + "B2'");
 
         f1_items = new GameObject[f1_list.ToArray().Length];
         b1_items = new GameObject[b1_list.ToArray().Length];

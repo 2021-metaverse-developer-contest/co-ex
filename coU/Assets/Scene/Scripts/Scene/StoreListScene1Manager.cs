@@ -18,8 +18,8 @@ public class StoreListScene1Manager : MonoBehaviour
     void Start()
     {
         string query = "Select * from Stores where categorySub = '" + categorySub + "'";
-        List<Stores> stores = getDBData.getStoresData(query);
-        foreach(Stores store in stores)
+        List<Store> stores = GetDBData.getStoresData(query);
+        foreach(Store store in stores)
         {
             categoryMain = store.categoryMain;
             GameObject name = Instantiate(storeFactory, GameObject.Find("Content").transform);

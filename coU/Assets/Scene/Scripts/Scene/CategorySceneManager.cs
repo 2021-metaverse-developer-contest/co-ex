@@ -21,9 +21,9 @@ public class CategorySceneManager : MonoBehaviour
         GameObject.Find("Panel_Quit").gameObject.SetActive(false);
 
         string query = "Select distinct categoryMain from Stores;";
-        List<Stores>stores= getDBData.getStoresData(query);
+        List<Store>stores= GetDBData.getStoresData(query);
 
-        foreach (Stores store in stores)
+        foreach (Store store in stores)
         {
             GameObject category = Instantiate(categoryFactory, GameObject.Find("Content").transform);
             category.GetComponentInChildren<TextMeshProUGUI>().text = store.categoryMain;

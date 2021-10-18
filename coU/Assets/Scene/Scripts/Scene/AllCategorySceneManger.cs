@@ -12,7 +12,7 @@ public class AllCategorySceneManger : MonoBehaviour
     GameObject[] MainItems;
     GameObject[] SubItems;
     List<Category> MainItem_List;
-    List<Stores> SubItem_List;
+    List<Store> SubItem_List;
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class AllCategorySceneManger : MonoBehaviour
     void InitialCategorySub(string categoryMain)
     {
         string query = "Select distinct categorySub from Stores where categoryMain = '" + categoryMain + "'";
-        SubItem_List = getDBData.getStoresData(query);
+        SubItem_List = GetDBData.getStoresData(query);
         SubItem_List.Distinct().ToList();
 
         SubItems = new GameObject[SubItem_List.ToArray().Length];
@@ -39,7 +39,7 @@ public class AllCategorySceneManger : MonoBehaviour
     void InitialCategoryMain()
     {
         string query = "Select distinct categoryMain as name, path from Stores, Category where Stores.categoryMain = Category.name";
-        MainItem_List = getDBData.getCategoryData(query);
+        MainItem_List = GetDBData.getCategoryData(query);
 
         MainItems = new GameObject[MainItem_List.ToArray().Length];
         for (int i = 0; i < MainItems.Length; i++)

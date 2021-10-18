@@ -12,8 +12,8 @@ public class StoreSceneManager : MonoBehaviour
     public static bool beforeScene = true; //어느 경로로 왔는지에 따라 달라짐 true-categorySubScene, false-SearchScene
     public static string searchStr = "";
 
-    List<Stores> store;
-    List<Items> item_List;
+    List<Store> store;
+    List<Item> item_List;
     GameObject Menu;
 
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class StoreSceneManager : MonoBehaviour
         if (categorySub != "")
             query += "AND categorySub = '" + categorySub + "'";
 
-        store = getDBData.getStoresData(query);
+        store = GetDBData.getStoresData(query);
 
         GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text = store[0].name;
         GameObject.Find("TMP_CtMain").GetComponent<TextMeshProUGUI>().text = store[0].categoryMain + "/" + store[0].categorySub;
@@ -69,7 +69,7 @@ public class StoreSceneManager : MonoBehaviour
                 "and stores.name = '" + store[0].name + "' " +
                 "group by (itemTitle) " +
                 "order by `index`";
-        item_List = getDBData.getItemsData(query);
+        item_List = GetDBData.getItemsData(query);
 
         if (item_List.ToArray().Length < 1)
             Menu.SetActive(false);

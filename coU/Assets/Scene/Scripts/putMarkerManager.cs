@@ -35,7 +35,7 @@ public class putMarkerManager : MonoBehaviour
     {
         try
         {
-            List<Stores> stores = getDBData.getStoresData("Select * from Stores S Where S.floor =\"B1\"");
+            List<Store> stores = GetDBData.getStoresData("Select * from Stores S Where S.floor =\"B1\"");
             StartCoroutine(drawStore(stores, "B1"));
         }
         catch (Exception e)
@@ -46,7 +46,7 @@ public class putMarkerManager : MonoBehaviour
 
 
 
-    IEnumerator drawStore(List<Stores> stores, string floor)
+    IEnumerator drawStore(List<Store> stores, string floor)
     {
         //int modifyX = -240;
         //int modifyY = 360;
