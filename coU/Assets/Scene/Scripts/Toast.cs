@@ -30,15 +30,12 @@
 //#endif
 //    }
 //}
-
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class ShowToastMessage : MonoBehaviour
+public class Toast : MonoBehaviour
 {
-    public void OnGUI()
+    public void ShowToastMessage()
     {
 #if UNITY_ANDROID
         AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
