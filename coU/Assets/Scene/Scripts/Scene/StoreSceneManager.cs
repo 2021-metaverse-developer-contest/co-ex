@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class StoreSceneManager : MonoBehaviour
 {
     public static string storeName = "사봉";
-    public static string categorySub = "";
+    public static string categorySub = "바디&향수";
     public static bool beforeScene = true; //어느 경로로 왔는지에 따라 달라짐 true-categorySubScene, false-SearchScene
     public static string searchStr = "";
     public static string floor = "";
