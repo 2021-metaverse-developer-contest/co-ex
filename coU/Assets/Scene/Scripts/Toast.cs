@@ -35,13 +35,29 @@ using UnityEngine;
 
 public class Toast : MonoBehaviour
 {
-    public void ShowToastMessage()
+    private static Toast _toast = null;
+
+    public static Toast Instance
+    {
+        get {
+            if (_toast == null)
+                _toast = new Toast();
+            return _toast;
+        }
+    }
+
+    /// <summary>
+    /// Show toast Message
+    /// </summary>
+    /// <param name="message">Showing message</param>
+    /// <param name="showTime">Time to show(milliseconds)</param>
+    public void ShowToastMessage(string message, int showTime)
     {
 #if UNITY_ANDROID
         AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, "한 번 더 누르시면 종료됩니다.", 0);
+        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 0);
 
         if (unityActivity != null)
         {
@@ -49,7 +65,7 @@ public class Toast : MonoBehaviour
             {
                 toast.Call("show");
             }));
-            Thread.Sleep(250);
+            Thread.Sleep(showTime);
             unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
             {
                 toast.Call("cancel");
