@@ -43,7 +43,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	//뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
-	ShowToastMessage toast = new ShowToastMessage();
+	Toast toast = new Toast();
 
 	void Awake()
 	{
@@ -152,22 +152,24 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Update()
 	{
+		// 2021/10/18 hyojlee
+		// MaxstScene에서 뒤로가기 연속 클릭 시 앱 종료하는 부분
+		// 한 번 누르면 종료하지 않고 안드로이드의 토스트 메시지 뜨도록 함
 		if (Input.GetKeyDown(KeyCode.Escape))
-        {
-			toast.OnGUI();
+		{
 			backCount++;
 			if (!IsInvoking("backBtnOnClick"))
 				Invoke("backBtnOnClick", 1.0f);
-        }
-		else if (backCount == 2)
-        {
-			CancelInvoke("backBtnOnClick");
-			Application.Quit();
+			if (backCount == 2)
+			{
+				CancelInvoke("backBtnOnClick");
+				Application.Quit();
 #if !UNITY_EDITOR
 	System.Diagnostics.Process.GetCurrentProcess().Kill();
 #endif
+			}
+			toast.ShowToastMessage();
 		}
-
 		TrackerManager.GetInstance().UpdateFrame();
 
 		ARFrame arFrame = TrackerManager.GetInstance().GetARFrame();

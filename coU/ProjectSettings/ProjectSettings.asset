@@ -154,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.maxst.vpssdk
+    Android: com.maxst.vpssdk1
     iPhone: com.maxst.vpssdk
   buildNumber:
     Standalone: 0
