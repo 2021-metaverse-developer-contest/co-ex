@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 215757339}
   - component: {fileID: 215757342}
   - component: {fileID: 215757343}
+  - component: {fileID: 215757344}
   m_Layer: 0
   m_Name: EventSystem_StoreScene
   m_TagString: Untagged
@@ -425,6 +426,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c182d5ba03c3a4b6582085bdaa4b160f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &215757344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215757338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4758b545714ce39c92888d8d0c2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &244875360
@@ -6939,8 +6952,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215757342}
-        m_TargetAssemblyTypeName: StoreSceneBtnClick, Assembly-CSharp
+      - m_Target: {fileID: 215757344}
+        m_TargetAssemblyTypeName: ShareBtnClick, Assembly-CSharp
         m_MethodName: ShareBtnOnClick
         m_Mode: 1
         m_Arguments:
