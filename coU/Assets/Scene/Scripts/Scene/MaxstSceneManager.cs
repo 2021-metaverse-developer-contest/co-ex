@@ -43,7 +43,7 @@ public class MaxstSceneManager : MonoBehaviour
 	//hyojlee 2021/10/18
     //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
-	Toast toast = new Toast();
+	//Toast toast = new Toast(); //싱글톤으로 만.
 	//2021/10/19 길안내(false)를 통한 씬 로드인지, 처음 시작(true)에 의한 씬 로드인지
 	public static bool isStart = true;
 
@@ -177,7 +177,7 @@ public class MaxstSceneManager : MonoBehaviour
 	System.Diagnostics.Process.GetCurrentProcess().Kill();
 #endif
 			}
-			toast.ShowToastMessage();
+			Toast.Instance.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
 		}
 		TrackerManager.GetInstance().UpdateFrame();
 
