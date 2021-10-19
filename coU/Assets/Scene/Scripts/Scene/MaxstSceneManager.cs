@@ -40,9 +40,12 @@ public class MaxstSceneManager : MonoBehaviour
 
 	private string serverName = "";
 
-	//뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
+	//hyojlee 2021/10/18
+    //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
 	Toast toast = new Toast();
+	//2021/10/19 길안내(false)를 통한 씬 로드인지, 처음 시작(true)에 의한 씬 로드인지
+	public static bool isStart = true;
 
 	void Awake()
 	{
@@ -107,6 +110,13 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Start()
 	{
+		//hyojlee 2021/10/19
+		GameObject panelAnimation = GameObject.Find("Panel_Animation").gameObject;
+		if (isStart)
+			panelAnimation.SetActive(true);
+		else
+			panelAnimation.SetActive(false);
+
 		if (isOcclusion)
 		{
 			foreach (GameObject eachGameObject in occlusionObjects)
