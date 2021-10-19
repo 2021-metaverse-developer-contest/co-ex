@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class StoreSceneManager : MonoBehaviour
 {
     public static string storeName = "사봉";
+    public static string categoryMain = "뷰티";
     public static string categorySub = "바디&향수";
     public static bool beforeScene = true; //어느 경로로 왔는지에 따라 달라짐 true-categorySubScene, false-SearchScene
     public static string searchStr = "";
@@ -51,7 +52,8 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
         StoreSceneManager.storeName = store[0].name;
-        //StoreSceneManager.categorySub = store[0].categoryMain;
+        StoreSceneManager.categoryMain = store[0].categoryMain;
+        StoreSceneManager.categorySub = store[0].categorySub;
         StoreSceneManager.floor = store[0].floor;
 
         //이미지 띄우는 부분
