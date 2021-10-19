@@ -49,7 +49,7 @@ public class Toast : MonoBehaviour
             {
                 toast.Call("show");
             }));
-            Thread.Sleep(150);
+            Thread.Sleep(250);
             unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
             {
                 toast.Call("cancel");

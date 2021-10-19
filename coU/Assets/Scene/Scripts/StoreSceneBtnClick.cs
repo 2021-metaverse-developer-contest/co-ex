@@ -25,6 +25,11 @@ public class StoreSceneBtnClick : MonoBehaviour
         Application.OpenURL("tel:" + phone);
     }
 
+    public void ShareBtnOnClick()
+    {
+
+    }
+
     public void NaviBtnOnClick()
     {
         SceneManager.LoadScene("MaxstScene");
