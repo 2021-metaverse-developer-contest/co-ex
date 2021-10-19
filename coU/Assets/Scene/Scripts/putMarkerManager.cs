@@ -78,6 +78,7 @@ public class putMarkerManager : MonoBehaviour
             List<Item> items = GetDBData.getItemsData("Select * from items where tntSeq = '" + it.tntSeq + "'");
             if (items.ToArray().Length != 0)
             {
+                menuParent.parent.gameObject.SetActive(true);
                 int num = menuName.Length < items.ToArray().Length ? menuName.Length : items.ToArray().Length;
                 for (int i = 0; i < num; i++)
                 {
