@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 public class ProcessDeepLinkMngr : MonoBehaviour
 {
     public static ProcessDeepLinkMngr Instance { get; private set; }
-    public string deeplinkURL;
+    private string deeplinkURL;
     public static bool validScene = true;
+
     private void Awake()
     {
         if (Instance == null)
