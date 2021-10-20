@@ -7,12 +7,15 @@ public class ShareBtnClick : MonoBehaviour
 	public void ShareBtnOnClick()
 	{
 		string subject = "42_coU";
-		string scene = "StoreScene";
+		// string scene = "StoreScene";
 		string name = StoreSceneManager.storeName;
 		string categoryMain = StoreSceneManager.categoryMain;
 		string categorySub = StoreSceneManager.categorySub;
-		string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?scene={0}&name={1}&categoryMain={2}&categorySub={3}",
-							scene, name, categoryMain, categorySub);
+		// 카테고리메인에 "레스토랑&카페", 카테고리서브 "카페/디저트" &, / 쓰는 것을 조심해야함.
+		// string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?scene={0}&name={1}&categoryMain={2}&categorySub={3}",
+		// 					scene, name, categoryMain, categorySub);
+		string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",
+		name, categoryMain, categorySub);
 		print(subject);
 		print(uri);
 #if UNITY_ANDROID && !UNITY_EDITOR
