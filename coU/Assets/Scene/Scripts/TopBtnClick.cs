@@ -15,12 +15,12 @@ public class TopBtnClick : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
 
+        SceneManager.LoadScene("SearchScene");
         if (currentScene.name == "StoreScene" && StoreSceneManager.beforeScene)
             SearchSceneManager.beforeItem = GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text;
         else if (currentScene.name != "StoreScene")
             SearchSceneManager.beforeItem = "";
         SearchSceneManager.beforeScene = currentScene.buildIndex;
-        SceneManager.LoadScene("SearchScene");
     }
 
     public void BackBtnOnClick()
@@ -29,6 +29,7 @@ public class TopBtnClick : MonoBehaviour
 
         if (activeScene.Contains("Search"))
         {
+            SceneManager.LoadScene(SearchSceneManager.beforeScene);
             if (SearchSceneManager.beforeItem != ""
                 && SceneUtility.GetScenePathByBuildIndex(SearchSceneManager.beforeScene).Contains("StoreScene")) 
             {
@@ -36,7 +37,6 @@ public class TopBtnClick : MonoBehaviour
                 StoreSceneManager.storeName = SearchSceneManager.beforeItem;
             }
             SearchSceneManager.searchStr = "";
-            SceneManager.LoadScene(SearchSceneManager.beforeScene);
         }
         else if (activeScene.Contains("StoreList"))
             SceneManager.LoadScene("AllCategoryScene");
@@ -46,8 +46,8 @@ public class TopBtnClick : MonoBehaviour
                 SceneManager.LoadScene("StoreListScene");
             else
             {
-                SearchSceneManager.beforeScene = SceneManager.GetActiveScene().buildIndex;
                 SceneManager.LoadScene("SearchScene");
+                SearchSceneManager.beforeScene = SceneManager.GetActiveScene().buildIndex;
             }
         }
     }
