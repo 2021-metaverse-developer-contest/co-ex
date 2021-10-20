@@ -71,10 +71,10 @@ public class ProcessDeepLinkMngr : MonoBehaviour
 
         if (validScene == true)
         {
+            SceneManager.LoadScene(pk.scene);
             StoreSceneManager.storeName = pk.name;
 			StoreSceneManager.categoryMain = pk.categoryMain;
             StoreSceneManager.categorySub = pk.categorySub;
-            SceneManager.LoadScene(pk.scene);
 
             /*
              * StoreSceneManager에 있는 static 변수명
