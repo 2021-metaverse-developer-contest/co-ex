@@ -46,21 +46,24 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         // In this example, the app expects a link formatted like this:
         // unitydl://mylink?scene1
         // 42://coU?scene=scene1&name=""&categoryMain=""&categorySub=""
+		
+		string sceneName = "StoreScene";
+		// 현재 방식
+		// ("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",name,categoryMain,categorySub);
         string query = url.Split("?"[0])[1];
         PrimaryKeys pk = new PrimaryKeys();
-        string[] parameters = query.Split("&"[0]);
-        if (parameters.Length != 4)
+        string[] parameters = query.Split(","[0]);
+        if (parameters.Length != 3)
         {
             print("잘못된 URL Scheme 입니다." + "파라미터 갯수를 확인해주세요");
             // 이런 메세지가 toast로 나오도록 해야함.
             // toast에 마음대로 호출할 수 있는 함수를 만드는 것도 고려사항임
-
             Application.Quit();
             // 기기 별로 종료함수가 다른 것도 함수로 만들어놔야함.
         }
         else
         {
-            pk.scene = parameters[0];
+            pk.scene = sceneName;
             pk.name = parameters[1];
             pk.categoryMain = parameters[2];
             pk.categorySub = parameters[3];
@@ -69,6 +72,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         if (validScene == true)
         {
             StoreSceneManager.storeName = pk.name;
+			StoreSceneManager.categoryMain = pk.categoryMain;
             StoreSceneManager.categorySub = pk.categorySub;
             SceneManager.LoadScene(pk.scene);
 
