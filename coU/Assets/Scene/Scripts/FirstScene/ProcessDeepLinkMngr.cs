@@ -1,15 +1,17 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Net;
 
 public class ProcessDeepLinkMngr : MonoBehaviour
 {
     public static ProcessDeepLinkMngr Instance { get; private set; }
-    private string deeplinkURL;
+    public string deeplinkURL;
     public static bool validScene = true;
 
     private void Awake()
     {
+        print("Awake함수 호출");
         if (Instance == null)
         {
             Instance = this;
@@ -20,7 +22,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
                 onDeepLinkActivated(Application.absoluteURL);
             }
             // Initialize DeepLink Manager global variable.
-            else deeplinkURL = "[none]";
+            else deeplinkURL = "maxst://vpssdk?아쿠아리움,엔터테인먼트,아쿠아리움";
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -40,18 +42,21 @@ public class ProcessDeepLinkMngr : MonoBehaviour
 
     private void onDeepLinkActivated(string url) // 저절러 들어옴
     {
+        print("onDeepLinkActivated 호출");
         // Update DeepLink Manager global variable, so URL can be accessed from anywhere.
-        deeplinkURL = url;
+
+        // 안정장치를 해야하나?
+        //Awake();
+
         // Decode the URL to determine action. 
-        // https://velog.io/@pear/Query-String-%EC%BF%BC%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%A7%81%EC%9D%B4%EB%9E%80
-        // In this example, the app expects a link formatted like this:
-        // unitydl://mylink?scene1
-        // 42://coU?scene=scene1&name=""&categoryMain=""&categorySub=""
-		
-		string sceneName = "StoreScene";
+        print(url);
+        deeplinkURL = WebUtility.UrlDecode(url);
+        print(deeplinkURL);
+
+        string sceneName = "StoreScene";
 		// 현재 방식
 		// ("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",name,categoryMain,categorySub);
-        string query = url.Split("?"[0])[1];
+        string query = deeplinkURL.Split("?"[0])[1];
         PrimaryKeys pk = new PrimaryKeys();
         string[] parameters = query.Split(","[0]);
         if (parameters.Length != 3)
@@ -65,9 +70,9 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         else
         {
             pk.scene = sceneName;
-            pk.name = parameters[1];
-            pk.categoryMain = parameters[2];
-            pk.categorySub = parameters[3];
+            pk.name = parameters[0];
+            pk.categoryMain = parameters[1];
+            pk.categorySub = parameters[2];
         }
 
         if (validScene == true)
@@ -76,7 +81,6 @@ public class ProcessDeepLinkMngr : MonoBehaviour
             StoreSceneManager.storeName = pk.name;
 			StoreSceneManager.categoryMain = pk.categoryMain;
             StoreSceneManager.categorySub = pk.categorySub;
-
             /*
              * StoreSceneManager에 있는 static 변수명
             public static string storeName = "사봉";
@@ -85,7 +89,6 @@ public class ProcessDeepLinkMngr : MonoBehaviour
             public static string searchStr = "";
             public static string floor = "";
              */
-
         }
     }
 }
