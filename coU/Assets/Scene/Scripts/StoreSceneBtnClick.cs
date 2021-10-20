@@ -33,6 +33,5 @@ public class StoreSceneBtnClick : MonoBehaviour
         MaxstSceneManager.naviStoreFloor = StoreSceneManager.floor;
 
         MaxstSceneManager.StartNavigation(StoreSceneManager.storeName, StoreSceneManager.categorySub, StoreSceneManager.floor);
-        MaxstSceneManager.isStart = false;
     }
 }

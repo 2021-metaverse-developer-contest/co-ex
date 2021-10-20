@@ -44,9 +44,7 @@ public class MaxstSceneManager : MonoBehaviour
 	//hyojlee 2021/10/18
     //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
-	//Toast toast = new Toast(); //싱글톤으로 만.
-	//2021/10/19 길안내(false)를 통한 씬 로드인지, 처음 시작(true)에 의한 씬 로드인지
-	public static bool isStart = true;
+	GameObject panelBackground;
 
 	void Awake()
 	{
@@ -112,12 +110,8 @@ public class MaxstSceneManager : MonoBehaviour
 	void Start()
 	{
 		//hyojlee 2021/10/19
-		GameObject panelAnimation = GameObject.Find("Panel_Animation").gameObject;
-		if (isStart)
-			panelAnimation.SetActive(true);
-		else
-			panelAnimation.SetActive(false);
-
+		panelBackground = GameObject.Find("Panel_Background").gameObject;
+		
 		if (isOcclusion)
 		{
 			foreach (GameObject eachGameObject in occlusionObjects)
@@ -217,6 +211,10 @@ public class MaxstSceneManager : MonoBehaviour
 						if (currentLocalizerLocation == eachLocation)
 						{
 							isLocationInclude = true;
+
+							// hyojlee 2021/10/20
+							// 공간 인식이 완료된 시점이면 애니메이션이 꺼져야함.
+							panelBackground.SetActive(false);
 							break;
 						}
 					}
@@ -228,6 +226,9 @@ public class MaxstSceneManager : MonoBehaviour
 		{
 			foreach (VPSTrackable eachTrackable in vPSTrackablesList)
 			{
+				// hyojlee 2021/10/20
+				// 공간 인식이 완료된 시점이면 애니메이션이 꺼져야함.
+				panelBackground.SetActive(true);
 				eachTrackable.gameObject.SetActive(false);
 			}
 			currentLocalizerLocation = "";
