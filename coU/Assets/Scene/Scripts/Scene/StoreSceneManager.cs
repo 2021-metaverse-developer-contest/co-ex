@@ -10,9 +10,13 @@ public class StoreSceneManager : MonoBehaviour
     public static string storeName = "사봉";
     public static string categoryMain = "뷰티";
     public static string categorySub = "바디&향수";
-    public static bool beforeScene = true; //어느 경로로 왔는지에 따라 달라짐 true-categorySubScene, false-SearchScene
+    public static bool beforeScene = false; //어느 경로로 왔는지에 따라 달라짐 true-StoreListScene, false-SearchScene
     public static string searchStr = "";
     public static string floor = "";
+
+    //hyojlee 2021/10/21
+    //위치공유 시 링크 눌렀을 때 StoreScene이 제일 먼저 실행되므로 이를 확인하기 위해서
+    public static bool isMaxst = true;
 
     List<Store> store;
     List<Item> item_List;
@@ -26,6 +30,7 @@ public class StoreSceneManager : MonoBehaviour
         Menu = GameObject.Find("Panel_Menu").gameObject;
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
+        Debug.Log("StoreSceneManager before: " + beforeScene.ToString());
         InitialContent();
     }
 
@@ -42,7 +47,8 @@ public class StoreSceneManager : MonoBehaviour
     {
         string query = "Select * from Stores Where name = '" + storeName + "'";
         if (beforeScene)
-            query += "AND categorySub = '" + categorySub + "'";
+            query += " AND categorySub = '" + categorySub + "'";
+        Debug.Log("StoreSceneManager query = " + query);
 
         store = GetDBData.getStoresData(query);
 
@@ -104,15 +110,17 @@ public class StoreSceneManager : MonoBehaviour
 
     void backBtnClick()
     {
-        if (beforeScene)
+        if (isMaxst)
         {
-            SceneManager.LoadScene("StoreListScene");
-            //StoreListSceneManager.categorySub = categorySub;
+            isMaxst = false;
+            SceneManager.LoadScene("MaxstScene");
         }
         else
         {
-            SceneManager.LoadScene("SearchScene");
-            //SearchSceneManager.searchStr = searchStr;
+            if (beforeScene)
+                SceneManager.LoadScene("StoreListScene");
+            else
+                SceneManager.LoadScene("SearchScene");
         }
     }
 

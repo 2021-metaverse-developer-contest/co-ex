@@ -27,5 +27,6 @@ public class MaxstBtnClick : MonoBehaviour
         //TextMeshProUGUI storeName = clickObj.transform.Find("Panel_StoreInfo").Find("TMP_StoreName").GetComponent<TextMeshProUGUI>();
         SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = storeName.text;
+        StoreSceneManager.isMaxst = true;
     }
 }
