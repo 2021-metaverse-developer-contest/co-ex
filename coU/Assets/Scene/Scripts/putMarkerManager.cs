@@ -8,11 +8,15 @@ using SQLite4Unity3d;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using maxstAR;
 
 public class putMarkerManager : MonoBehaviour
 {
     public GameObject marker;
-
+	private ARManager arManagr;
+    [SerializeField]
+    private float distanceRadius = 20.0f;
+    private List<GameObject> canvasList;
 
     class LinearTransform
     {
@@ -22,14 +26,17 @@ public class putMarkerManager : MonoBehaviour
         public const float zeroPointAdjustionY = 17.19f;
     }
 
-    void Start()
+    void Awake()
     {
-        DBConnection();
+        arManagr = FindObjectOfType<ARManager>();
+        canvasList = new List<GameObject>();
+        DBConnection(); // Start보다 윗단에 두어봄(찾지 못하는 문제 생기지 않도록)
     }
 
-    void Update()
+    void Start()
     {
-
+        //DBConnection();
+        StartCoroutine(activeStore());
     }
 
     public void DBConnection() //DB연결 상태 확인 코드
@@ -42,6 +49,32 @@ public class putMarkerManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log(e);
+        }
+    }
+
+    private bool isValidDistance(Vector3 storePosition)
+    {
+        Transform arTransform = getARTransform();
+        if (Vector3.Distance(arTransform.position, storePosition) < distanceRadius)
+            return (true);
+        else
+            return (false);
+    }
+
+    IEnumerator activeStore()
+    {
+        while (true)
+        {
+            List<GameObject> tempCanvasList = new List<GameObject>(canvasList);
+            foreach (GameObject canvas in tempCanvasList)
+            {
+                if (isValidDistance(canvas.transform.position) == true)
+                {
+                    canvas.SetActive(true);
+                }
+                //yield return new WaitForSeconds(0.01f);
+                yield return null;
+            }
         }
     }
 
@@ -65,6 +98,7 @@ public class putMarkerManager : MonoBehaviour
         {
             GameObject parent = GameObject.Find(floor);
             GameObject canvas = Instantiate(marker, parent.transform);
+            canvasList.Add(canvas);
             Transform infoParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreInfo");
             Transform menuParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreMenu").Find("Panel_Menu");
 
@@ -99,12 +133,27 @@ public class putMarkerManager : MonoBehaviour
             //                            0);
             */
 
+            
+            Transform arTransform = getARTransform();
             canvas.transform.localPosition = rawLocation;
-            canvas.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
             canvas.name = it.name;
+            #region 거리계산
+            canvas.SetActive(false);
+            
+            #endregion
+
             yield return null;
         }
     }
+
+    private Transform getARTransform()
+    {
+        GameObject arObject = arManagr.gameObject;
+        Transform arTransform = arObject.transform;
+        return (arTransform);
+    }
+
     //IEnumerator drawStore(List<Store> stores, string floor)
     //{
     //    //int modifyX = -240;
