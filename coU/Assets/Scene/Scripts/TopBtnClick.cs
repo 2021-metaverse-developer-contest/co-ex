@@ -8,7 +8,7 @@ public class TopBtnClick : MonoBehaviour
 {
     public void HomeBtnOnClick()
     {
-        SceneManager.LoadScene("MaxstScene");
+        SceneManager.LoadScene("AllCategoryScene");
     }
 
     public void SearchBtnOnClick()
@@ -42,14 +42,26 @@ public class TopBtnClick : MonoBehaviour
             SceneManager.LoadScene("AllCategoryScene");
         else if (activeScene.Contains("Store"))
         {
-            if (StoreSceneManager.beforeScene)
-                SceneManager.LoadScene("StoreListScene");
+            if (StoreSceneManager.isMaxst)
+            {
+                SceneManager.LoadScene("MaxstScene");
+                StoreSceneManager.isMaxst = false;
+            }
             else
             {
-                SceneManager.LoadScene("SearchScene");
-                SearchSceneManager.beforeScene = SceneManager.GetActiveScene().buildIndex;
+                if (StoreSceneManager.beforeScene)
+                    SceneManager.LoadScene("StoreListScene");
+                else
+                {
+                    SceneManager.LoadScene("SearchScene");
+                    SearchSceneManager.beforeScene = SceneManager.GetActiveScene().buildIndex;
+                }
             }
         }
     }
 
+    public void ARBtnOnClick()
+    {
+        SceneManager.LoadScene("MaxstScene");
+    }
 }
