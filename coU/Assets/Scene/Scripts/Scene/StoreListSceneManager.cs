@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -50,30 +51,17 @@ public class StoreListSceneManager : MonoBehaviour
                 StoreListClick.clickFloor = "F1";
         }
         StoreListClick.FloorBtnOnClick();
-        //f1.SetActive(false);
-        //b1.SetActive(false);
-        //b2.SetActive(false);
-        //if (b1_items.Length > f1_items.Length)
-        //{
-        //    if (b1_items.Length < b2_items.Length)
-        //        b2.SetActive(true);
-        //    else
-        //        b1.SetActive(true);
-        //}
-        //else
-        //{
-        //    if (f1_items.Length < b2_items.Length)
-        //        b2.SetActive(true);
-        //    else
-        //        f1.SetActive(true);
-        //}
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene("AllCategoryScene");
+            BackBtnOnClick();
+    }
+
+    void BackBtnOnClick()
+    {
+        SceneManager.LoadScene("AllCategoryScene");
     }
 
     void ChkNoDataFloor()
