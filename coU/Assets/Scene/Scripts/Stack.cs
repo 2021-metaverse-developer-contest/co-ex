@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Stack : MonoBehaviour
 {
-    private static List<SceneInfo> stack = null;
     private static Stack _stack = null;
+    private static Stack<SceneInfo> stack = new Stack<SceneInfo>();
 
     public static Stack Instance {
         get {
@@ -17,22 +17,21 @@ public class Stack : MonoBehaviour
 
     public void Push(SceneInfo element)
     {
-        if (stack == null)
-            stack = new List<SceneInfo>();
-        stack.Add(element);
+        stack.Push(element);
     }
 
     public SceneInfo Pop()
     {
-        int lastIdx = stack.ToArray().Length;
-        SceneInfo ret = stack[lastIdx];
-
-        stack.RemoveAt(lastIdx);
-        return (ret);
+        return (stack.Pop());
     }
 
     public void Clear()
     {
-        stack = null;
+        stack.Clear();
+    }
+
+    public int Count()
+    {
+        return (stack.Count);
     }
 }

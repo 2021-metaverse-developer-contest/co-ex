@@ -27,11 +27,12 @@ public class StoreSceneBtnClick : MonoBehaviour
 
     public void NaviBtnOnClick()
     {
-        SceneManager.LoadScene("MaxstScene");
         MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
         MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
         MaxstSceneManager.naviStoreFloor = StoreSceneManager.floor;
-
+        //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub));
+        Stack.Instance.Clear(); // MaxstScene에서는 언제나 바로 종료되므로
+        SceneManager.LoadScene("MaxstScene");
         MaxstSceneManager.StartNavigation(StoreSceneManager.storeName, StoreSceneManager.categorySub, StoreSceneManager.floor);
     }
 }

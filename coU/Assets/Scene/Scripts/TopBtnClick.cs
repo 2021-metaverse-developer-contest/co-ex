@@ -8,60 +8,48 @@ public class TopBtnClick : MonoBehaviour
 {
     public void HomeBtnOnClick()
     {
+        Stack.Instance.Clear();
         SceneManager.LoadScene("AllCategoryScene");
     }
 
     public void SearchBtnOnClick()
     {
         Scene currentScene = SceneManager.GetActiveScene();
+        SceneInfo curInfo;
 
+        if (currentScene.name.Contains("StoreScene"))
+            curInfo = new SceneInfo(currentScene.buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub);
+        else if (currentScene.name.Contains("StoreListScene"))
+            curInfo = new SceneInfo(currentScene.buildIndex, StoreListSceneManager.categorySub, false);
+        else
+            curInfo = new SceneInfo(currentScene.buildIndex);
+        Stack.Instance.Push(curInfo);
+        SearchSceneManager.searchStr = "";
         SceneManager.LoadScene("SearchScene");
-        if (currentScene.name == "StoreScene" && StoreSceneManager.beforeScene)
-            SearchSceneManager.beforeItem = GameObject.Find("TMP_Name").GetComponent<TextMeshProUGUI>().text;
-        else if (currentScene.name != "StoreScene")
-            SearchSceneManager.beforeItem = "";
-        SearchSceneManager.beforeScene = currentScene.buildIndex;
     }
 
     public void BackBtnOnClick()
     {
-        string activeScene = SceneManager.GetActiveScene().name;
+        SceneInfo before = Stack.Instance.Pop();
+        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
 
-        if (activeScene.Contains("Search"))
+        if (beforePath.Contains("StoreScene"))
         {
-            SceneManager.LoadScene(SearchSceneManager.beforeScene);
-            if (SearchSceneManager.beforeItem != ""
-                && SceneUtility.GetScenePathByBuildIndex(SearchSceneManager.beforeScene).Contains("StoreScene")) 
-            {
-                StoreSceneManager.beforeScene = true;
-                StoreSceneManager.storeName = SearchSceneManager.beforeItem;
-            }
-            SearchSceneManager.searchStr = "";
+            StoreSceneManager.storeName = before.storeName;
+            StoreSceneManager.categorySub = before.categorySub;
         }
-        else if (activeScene.Contains("StoreList"))
-            SceneManager.LoadScene("AllCategoryScene");
-        else if (activeScene.Contains("Store"))
-        {
-            if (StoreSceneManager.isMaxst)
-            {
-                SceneManager.LoadScene("MaxstScene");
-                StoreSceneManager.isMaxst = false;
-            }
-            else
-            {
-                if (StoreSceneManager.beforeScene)
-                    SceneManager.LoadScene("StoreListScene");
-                else
-                {
-                    SceneManager.LoadScene("SearchScene");
-                    SearchSceneManager.beforeScene = SceneManager.GetActiveScene().buildIndex;
-                }
-            }
-        }
+        else if (beforePath.Contains("StoreListScene"))
+            StoreListSceneManager.categorySub = before.categorySub;
+        else if (beforePath.Contains("SearchScene"))
+            SearchSceneManager.searchStr = before.storeName;
+        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+            Stack.Instance.Clear();
+        SceneManager.LoadScene(before.beforeScene);
     }
 
     public void ARBtnOnClick()
     {
+        Stack.Instance.Clear();
         SceneManager.LoadScene("MaxstScene");
     }
 }
