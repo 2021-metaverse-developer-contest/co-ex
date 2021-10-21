@@ -219,6 +219,7 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
+				disableRenderer(currentLocalizerLocation);
 			}
 		}
 		else
@@ -233,6 +234,34 @@ public class MaxstSceneManager : MonoBehaviour
 			currentLocalizerLocation = "";
 		}
 	}
+
+	static class FloorConstants
+	{
+		public const string COEX_B1 = "landmark_coex_b1";
+		public const string COEX_B2 = "landmark_coex_b2";
+		public const string COEX_1 = "landmark_coex_f1";
+		public const string COEX_OUTDOOR = "outdoor";
+	}
+
+	private void disableRenderer(string localizerLocation)
+	{
+		string parentName = null;
+		if (localizerLocation.EndsWith(FloorConstants.COEX_B1))
+			parentName = nameof(FloorConstants.COEX_B1);
+		if (localizerLocation.EndsWith(FloorConstants.COEX_B2))
+			parentName = nameof(FloorConstants.COEX_B2);
+		if (localizerLocation.EndsWith(FloorConstants.COEX_1))
+			parentName = nameof(FloorConstants.COEX_1);
+		if (localizerLocation.EndsWith(FloorConstants.COEX_OUTDOOR))
+			parentName = nameof(FloorConstants.COEX_OUTDOOR);
+
+		GameObject parent = GameObject.Find(parentName);
+		Renderer[] renders = parent.GetComponentsInChildren<Renderer>();
+		foreach (Renderer it in renders)
+        {
+			it.enabled = false;
+        }
+    }
 
     void backBtnOnClick()
     {
