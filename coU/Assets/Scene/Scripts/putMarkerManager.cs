@@ -72,6 +72,10 @@ public class putMarkerManager : MonoBehaviour
                 {
                     canvas.SetActive(true);
                 }
+                else
+                {
+                    canvas.SetActive(false);
+                }
                 //yield return new WaitForSeconds(0.01f);
                 yield return null;
             }
