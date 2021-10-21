@@ -17,10 +17,7 @@ public class SearchSceneManager : MonoBehaviour
     GameObject[] items;
     GameObject[] results;
     public static string searchStr = "";
-    public static int beforeScene;
-    public static string beforeItem = "";
 
-    // Start is called before the first frame update
     void Start()
     {
         Screen.orientation = ScreenOrientation.Portrait;
@@ -35,7 +32,6 @@ public class SearchSceneManager : MonoBehaviour
         inputOuter.onSelect.AddListener(delegate { FocusInputField(); });
         btnSearch.onClick.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
 
-        Debug.Log("SearchSceneManager start: beforeSceneIndex " + beforeScene.ToString());
         if (searchStr != "")
         {
             SearchBtnOnClick(searchStr);
@@ -43,23 +39,29 @@ public class SearchSceneManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            backBtnClick();
+            BackBtnOnClick();
     }
 
-    void backBtnClick()
-    { 
-        if (beforeItem != ""
-                && SceneUtility.GetScenePathByBuildIndex(beforeScene).Contains("StoreScene"))
+    void BackBtnOnClick()
+    {
+        SceneInfo before = Stack.Instance.Pop();
+        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+
+        if (beforePath.Contains("StoreScene"))
         {
-            StoreSceneManager.beforeScene = true;
-            StoreSceneManager.storeName = beforeItem;
+            StoreSceneManager.storeName = before.storeName;
+            StoreSceneManager.categorySub = before.categorySub;
         }
-        SceneManager.LoadScene(beforeScene);
-        searchStr = "";
+        else if (beforePath.Contains("StoreListScene"))
+        {
+            StoreListSceneManager.categorySub = before.categorySub;
+        }
+        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+            Stack.Instance.Clear();
+        SceneManager.LoadScene(before.beforeScene);
     }
 
     public void ShowList(string inputText)
@@ -85,7 +87,7 @@ public class SearchSceneManager : MonoBehaviour
         for (int i = 0; results != null && i < results.Length; i++)
             DestroyImmediate(results[i]);
         string query = "Select * from Stores where name like '%" + inputText.Trim() + "%'";
-        query += "group by name order by name ASC";
+        query += " group by name order by name ASC";
 
         List<Store> stores = GetDBData.getStoresData(query);
         results = new GameObject[stores.ToArray().Length];
@@ -110,7 +112,7 @@ public class SearchSceneManager : MonoBehaviour
 
     public void FocusInputField()
     {
-        print("Focus is changed");
+        Debug.Log("Focus is changed");
         inputOuter.ActivateInputField();
         inputOuter.Select();
         GameObject.Find("Panel_List").transform.Find("ScrollView_List").gameObject.SetActive(true);

@@ -48,13 +48,11 @@ public class StoreListClick : MonoBehaviour
     {
         GameObject click = EventSystem.current.currentSelectedGameObject;
         string storeName = click.transform.Find("Panel_Name").GetComponentInChildren<TextMeshProUGUI>().text;
-        //string categorySub = GameObject.Find("TMP_SubCategory").GetComponent<TextMeshProUGUI>().text;
         string categorySub = StoreListSceneManager.categorySub;
 
-        SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = storeName;
         StoreSceneManager.categorySub = categorySub;
-        StoreSceneManager.beforeScene = true;
-        StoreSceneManager.isMaxst = false;
+        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, storeName, categorySub));
+        SceneManager.LoadScene("StoreScene");
     }
 }
