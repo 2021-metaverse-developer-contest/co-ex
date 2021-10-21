@@ -16,7 +16,7 @@ public class StoreSceneManager : MonoBehaviour
 
     //hyojlee 2021/10/21
     //위치공유 시 링크 눌렀을 때 StoreScene이 제일 먼저 실행되므로 이를 확인하기 위해서
-    public static bool isMaxst = false;
+    public static bool isMaxst = true;
 
     List<Store> store;
     List<Item> item_List;
