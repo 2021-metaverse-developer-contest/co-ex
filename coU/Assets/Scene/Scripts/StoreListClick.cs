@@ -55,5 +55,6 @@ public class StoreListClick : MonoBehaviour
         StoreSceneManager.storeName = storeName;
         StoreSceneManager.categorySub = categorySub;
         StoreSceneManager.beforeScene = true;
+        StoreSceneManager.isMaxst = false;
     }
 }
