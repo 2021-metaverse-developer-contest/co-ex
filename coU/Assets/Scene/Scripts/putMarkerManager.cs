@@ -38,9 +38,23 @@ public class putMarkerManager : MonoBehaviour
         print("end awake()");
     }
 
-    void Start()
+    private void Update()
     {
-        StartCoroutine(activeStore());
+        print($"갯수: {canvasList.ToArray().Length}");
+        //List<GameObject> tempCanvasList = canvasList;
+        foreach (GameObject canvas in canvasList)
+        {
+            if (isValidDistance(canvas.transform.position) == true)
+            {
+                canvas.SetActive(true);
+                Transform arTransform = getARTransform();
+                canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
+            }
+            else
+            {
+                canvas.SetActive(false);
+            }
+        }
     }
 
     private bool isValidDistance(Vector3 storePosition)
@@ -51,32 +65,6 @@ public class putMarkerManager : MonoBehaviour
         else
             return (false);
     }
-
-    IEnumerator activeStore()
-    {
-        while (true)
-        {
-            print($"갯수: {canvasList.ToArray().Length}");
-            //List<GameObject> tempCanvasList = canvasList;
-            foreach (GameObject canvas in canvasList)
-            {
-                if (isValidDistance(canvas.transform.position) == true)
-                {
-                    canvas.SetActive(true);
-                    Transform arTransform = getARTransform();
-                    canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
-                }
-                else
-                {
-                    canvas.SetActive(false);
-                }
-                // yield return new WaitForSeconds(0.01f);
-                yield return null;
-            }
-        }
-    }
-
-
 
     void drawStore(List<Store> stores, string floor)
     {
@@ -138,10 +126,7 @@ public class putMarkerManager : MonoBehaviour
             canvas.transform.localPosition = rawLocation;
             canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
             canvas.name = it.name;
-            #region 거리계산
             canvas.SetActive(false);
-            
-            #endregion
         }
     }
 
@@ -151,38 +136,4 @@ public class putMarkerManager : MonoBehaviour
         Transform arTransform = arObject.transform;
         return (arTransform);
     }
-
-    //IEnumerator drawStore(List<Store> stores, string floor)
-    //{
-    //    //int modifyX = -240;
-    //    //int modifyY = 360;
-    //    float yValue = 0f;
-    //    if (floor == "B1")
-    //        yValue = 2.5f;
-    //    else if (floor == "B2")
-    //        yValue = -5.0f;
-    //    else if (floor == "1F")
-    //        yValue = 2.5f;
-    //    else
-    //        yValue = 2.5f;
-
-    //    foreach (var it in stores)
-    //    {
-    //        GameObject parent = GameObject.Find(floor);
-    //        GameObject tempCircle = Instantiate(marker, parent.transform);
-
-    //        Vector3 rawLocation = new Vector3(((float)it.modifiedX), ((float)it.modifiedY), 0);
-    //        /* Legacy code
-    //        //Vector3 rawLocation = new Vector3(
-    //        //                            (LinearTransform.zeroPointAdjustionX + it.x / 100.0f + LinearTransform.marginX),
-    //        //                            (LinearTransform.zeroPointAdjustionY - it.y / 100.0f + LinearTransform.marginY),
-    //        //                            0);
-    //        */
-
-    //        tempCircle.transform.localPosition = rawLocation;
-    //        tempCircle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-    //        tempCircle.name = it.name;
-    //        yield return null;
-    //    }
-    //}
 }
