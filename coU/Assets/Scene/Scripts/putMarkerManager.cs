@@ -14,9 +14,12 @@ public class putMarkerManager : MonoBehaviour
 {
     public GameObject marker;
 	private ARManager arManagr;
+
     [SerializeField]
     private float distanceRadius = 20.0f;
-    private List<GameObject> canvasList;
+    public string floor = "B1"; // TODO: Trackable에서 인식하는 층수가 들어가야 함.
+    private List<GameObject> canvasList = null;
+
 
     class LinearTransform
     {
@@ -30,26 +33,14 @@ public class putMarkerManager : MonoBehaviour
     {
         arManagr = FindObjectOfType<ARManager>();
         canvasList = new List<GameObject>();
-        DBConnection(); // Start보다 윗단에 두어봄(찾지 못하는 문제 생기지 않도록)
+        List<Store> stores = GetDBData.getStoresData("Select * from Stores S Where S.floor =\"" + floor + "\"");
+        drawStore(stores, floor);
+        print("end awake()");
     }
 
     void Start()
     {
-        //DBConnection();
         StartCoroutine(activeStore());
-    }
-
-    public void DBConnection() //DB연결 상태 확인 코드
-    {
-        try
-        {
-            List<Store> stores = GetDBData.getStoresData("Select * from Stores S Where S.floor =\"B1\"");
-            StartCoroutine(drawStore(stores, "B1"));
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
     }
 
     private bool isValidDistance(Vector3 storePosition)
@@ -65,18 +56,21 @@ public class putMarkerManager : MonoBehaviour
     {
         while (true)
         {
-            List<GameObject> tempCanvasList = new List<GameObject>(canvasList);
-            foreach (GameObject canvas in tempCanvasList)
+            print($"갯수: {canvasList.ToArray().Length}");
+            //List<GameObject> tempCanvasList = canvasList;
+            foreach (GameObject canvas in canvasList)
             {
                 if (isValidDistance(canvas.transform.position) == true)
                 {
                     canvas.SetActive(true);
+                    Transform arTransform = getARTransform();
+                    canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
                 }
                 else
                 {
                     canvas.SetActive(false);
                 }
-                //yield return new WaitForSeconds(0.01f);
+                // yield return new WaitForSeconds(0.01f);
                 yield return null;
             }
         }
@@ -84,7 +78,7 @@ public class putMarkerManager : MonoBehaviour
 
 
 
-    IEnumerator drawStore(List<Store> stores, string floor)
+    void drawStore(List<Store> stores, string floor)
     {
         //int modifyX = -240;
         //int modifyY = 360;
@@ -98,9 +92,11 @@ public class putMarkerManager : MonoBehaviour
         else
             yValue = 2.5f;
 
+
         foreach (var it in stores)
         {
-            GameObject parent = GameObject.Find(floor);
+            string parentOfStores = floor + "_Stores";
+            GameObject parent = GameObject.Find(parentOfStores);
             GameObject canvas = Instantiate(marker, parent.transform);
             canvasList.Add(canvas);
             Transform infoParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreInfo");
@@ -146,8 +142,6 @@ public class putMarkerManager : MonoBehaviour
             canvas.SetActive(false);
             
             #endregion
-
-            yield return null;
         }
     }
 
