@@ -213,15 +213,12 @@ public class MaxstSceneManager : MonoBehaviour
 						if (currentLocalizerLocation == eachLocation)
 						{
 							isLocationInclude = true;
-
-							// hyojlee 2021/10/20
-							// 공간 인식이 완료된 시점이면 애니메이션이 꺼져야함.
-							panelBackground.SetActive(false);
 							break;
 						}
 					}
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
+				panelBackground.SetActive(false);
 			}
 		}
 		else
