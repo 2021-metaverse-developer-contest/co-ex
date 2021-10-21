@@ -48,6 +48,8 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Awake()
 	{
+		if (vPSTrackablesList == null)
+			vPSTrackablesList = new List<VPSTrackable>();
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = 60;
 
@@ -488,5 +490,10 @@ public class MaxstSceneManager : MonoBehaviour
 			maxstLogObject.transform.position = vHit.point;
 			maxstLogObject.transform.rotation = Quaternion.FromToRotation(Vector3.forward, vHit.normal) * Quaternion.Euler(-90.0f, 0.0f, 0.0f);
 		}
+	}
+
+    private void OnDisable()
+    {
+		vPSTrackablesList = null;
 	}
 }
