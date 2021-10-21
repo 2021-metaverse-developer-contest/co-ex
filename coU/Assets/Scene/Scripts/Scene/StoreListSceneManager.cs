@@ -78,7 +78,7 @@ public class StoreListSceneManager : MonoBehaviour
     {
         int i;
         string defaultLogoPath = "default_logo";
-        string query = "Select * from Stores where categorySub like '" + categorySub + "'";
+        string query = "Select * from Stores where categorySub = '" + categorySub + "'";
         query += " AND floor = '";
 
         f1_list = GetDBData.getStoresData(query + "1F'");
