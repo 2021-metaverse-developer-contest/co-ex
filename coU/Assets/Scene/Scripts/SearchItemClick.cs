@@ -11,23 +11,19 @@ public class SearchItemClick : MonoBehaviour
     {
         GameObject cur = EventSystem.current.currentSelectedGameObject;
         
-        SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
-        //StoreSceneManager.categorySub = "";
-        StoreSceneManager.beforeScene = false;
-        StoreSceneManager.searchStr = SearchSceneManager.searchStr;
-        StoreSceneManager.isMaxst = false;
+        StoreSceneManager.categorySub = "";
+        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, SearchSceneManager.searchStr, true));
+        SceneManager.LoadScene("StoreScene");
     }
 
     public void ListItemOnClick()
     {
         GameObject cur = EventSystem.current.currentSelectedGameObject;
 
-        SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = cur.transform.Find("TMP_List").GetComponent<TextMeshProUGUI>().text;
-        //StoreSceneManager.categorySub = "";
-        StoreSceneManager.beforeScene = false;
-        StoreSceneManager.searchStr = StoreSceneManager.storeName;
-        StoreSceneManager.isMaxst = false;
+        StoreSceneManager.categorySub = "";
+        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, StoreSceneManager.storeName, true));
+        SceneManager.LoadScene("StoreScene");
     }
 }

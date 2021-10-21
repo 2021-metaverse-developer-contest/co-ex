@@ -24,7 +24,13 @@ public class AllCategorySceneManger : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            backBtnClick();
+            BackBtnClick();
+    }
+
+    void BackBtnClick()
+    {
+        Stack.Instance.Clear();
+        SceneManager.LoadScene("MaxstScene");
     }
 
     void InitialCategorySub(string categoryMain)
@@ -57,10 +63,5 @@ public class AllCategorySceneManger : MonoBehaviour
                 SubItems[j].GetComponentInChildren<TextMeshProUGUI>().text = SubItem_List[j].categorySub;
             }
         }
-    }
-
-    void backBtnClick()
-    {
-        SceneManager.LoadScene("MaxstScene");
     }
 }

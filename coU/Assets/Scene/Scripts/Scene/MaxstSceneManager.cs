@@ -57,7 +57,13 @@ public class MaxstSceneManager : MonoBehaviour
 		if (result[0] == AndroidRuntimePermissions.Permission.Granted && result[1] == AndroidRuntimePermissions.Permission.Granted)
 			Debug.Log("We have all the permissions!");
 		else
+		{
 			Debug.Log("Some permission(s) are not granted...");
+			Toast.Instance.ShowToastMessage("권한을 허용해주세요!", 500);
+			AndroidRuntimePermissions.RequestPermissions("android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION");
+		}
+		//else
+		//	Debug.Log("Some permission(s) are not granted...");
 
 		ARManager arManagr = FindObjectOfType<ARManager>();
 		if (arManagr == null)
@@ -164,11 +170,11 @@ public class MaxstSceneManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			backCount++;
-			if (!IsInvoking("backBtnOnClick"))
-				Invoke("backBtnOnClick", 1.0f);
+			if (!IsInvoking("ResetBackCount"))
+				Invoke("ResetBackCount", 1.0f);
 			if (backCount == 2)
 			{
-				CancelInvoke("backBtnOnClick");
+				CancelInvoke("ResetBackCount");
 				Application.Quit();
 #if !UNITY_EDITOR
 	System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -263,7 +269,7 @@ public class MaxstSceneManager : MonoBehaviour
         }
     }
 
-    void backBtnOnClick()
+    void ResetBackCount()
     {
 		backCount = 0;
     }

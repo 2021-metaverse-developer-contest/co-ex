@@ -10,44 +10,59 @@ public class StoreSceneManager : MonoBehaviour
     public static string storeName = "사봉";
     public static string categoryMain = "뷰티";
     public static string categorySub = "바디&향수";
-    public static bool beforeScene = false; //어느 경로로 왔는지에 따라 달라짐 true-StoreListScene, false-SearchScene
-    public static string searchStr = "";
     public static string floor = "";
-
-    //hyojlee 2021/10/21
-    //위치공유 시 링크 눌렀을 때 StoreScene이 제일 먼저 실행되므로 이를 확인하기 위해서
-    public static bool isMaxst = true;
 
     List<Store> store;
     List<Item> item_List;
     GameObject Menu;
+    int backCount = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         Screen.orientation = ScreenOrientation.Portrait;
 
+        if (Stack.Instance.Count() == 0)
+            GameObject.Find("Btn_Back").SetActive(false);
+
         Menu = GameObject.Find("Panel_Menu").gameObject;
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
-        Debug.Log("StoreSceneManager before: " + beforeScene.ToString());
         InitialContent();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            backBtnClick();
+            if (Stack.Instance.Count() > 0)
+                BackBtnOnClick();
+            else
+            {
+                backCount++;
+                if (!IsInvoking("ResetBackCount"))
+                    Invoke("ResetBackCount", 1.0f);
+                if (backCount == 2)
+                {
+                    CancelInvoke("ResetBackCount");
+                    Application.Quit();
+#if !UNITY_EDITOR
+	System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
+                }
+                Toast.Instance.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
+            }
         }
+    }
+
+    void ResetBackCount()
+    {
+        backCount = 0;
     }
 
     void InitialContent()
     {
         string query = "Select * from Stores Where name = '" + storeName + "'";
-        if (beforeScene)
-            query += " AND categorySub = '" + categorySub + "'";
+        query += " AND categorySub like '%" + categorySub + "%'"; //빈 문자열일 수도 있으니까
         Debug.Log("StoreSceneManager query = " + query);
 
         store = GetDBData.getStoresData(query);
@@ -57,10 +72,10 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = store[0].floor;
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
-        StoreSceneManager.storeName = store[0].name;
-        StoreSceneManager.categoryMain = store[0].categoryMain;
-        StoreSceneManager.categorySub = store[0].categorySub;
-        StoreSceneManager.floor = store[0].floor;
+        storeName = store[0].name;
+        categoryMain = store[0].categoryMain;
+        categorySub = store[0].categorySub;
+        floor = store[0].floor;
 
         //이미지 띄우는 부분
         Image img = GameObject.Find("Img_Logo").gameObject.GetComponent<Image>();
@@ -108,49 +123,17 @@ public class StoreSceneManager : MonoBehaviour
         }
     }
 
-    void backBtnClick()
+    void BackBtnOnClick()
     {
-        if (isMaxst)
-        {
-            isMaxst = false;
-            SceneManager.LoadScene("MaxstScene");
-        }
-        else
-        {
-            if (beforeScene)
-                SceneManager.LoadScene("StoreListScene");
-            else
-                SceneManager.LoadScene("SearchScene");
-        }
+        SceneInfo before = Stack.Instance.Pop();
+        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+
+        SceneManager.LoadScene(before.beforeScene);
+        if (beforePath.Contains("SearchScene"))
+            SearchSceneManager.searchStr = before.storeName;
+        else if (beforePath.Contains("StoreListScene"))
+            StoreListSceneManager.categorySub = before.categorySub;
+        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+            Stack.Instance.Clear();
     }
-
-    //public void MapBtnOnClick()
-    //{
-    //    // General:m.starfield.co.kr/coexmall/tenant/tenantDetail/TN201904161630148787?maps=eyJzaG93VHlwZSI6MCwiZGV0YWlsIjp7InRudF9zZXEiOiJUTjIwMTkwNDE2MTYzMDE0ODc4NyIsIm1hcF9pZCI6IlBPLXVnQmxRc1RRQTUwNDYifSwiZmxvb3IiOiJCMSJ9
-    //    // Possible:m.starfield.co.kr/coexmall/?maps=
-    //    string query = "Select * from Stores Where name = '" + storeName + "'";
-    //    if (categorySub != "")
-    //        query += " AND categorySub = '" + categorySub + "'";
-    //    IDbConnection conn = new SqliteConnection(DBConnect.GetDBFilePath());
-    //    conn.Open();
-    //    IDbCommand cmd = conn.CreateCommand();
-    //    cmd.CommandText = query;
-    //    IDataReader reader = cmd.ExecuteReader();
-    //    reader.Read();
-    //    // 별마당도서관의 reader["mapKey"] = null 이기때문에 예외처리가 필요함.
-    //    string MapdeepLink = "https://m.starfield.co.kr/coexmall/tenant/tenantDetail/" + reader["tntSeq"].ToString() + "?maps=" + reader["mapKey"].ToString();
-    //    Application.OpenURL(MapdeepLink);
-    //    reader.Dispose();
-    //    cmd.Dispose();
-    //    conn.Dispose();
-    //}
-
-    //public void PhoneBtnOnclick()
-    //{
-    //    GameObject clickObj = EventSystem.current.currentSelectedGameObject;
-    //    string phone = clickObj.GetComponentInParent<TextMeshProUGUI>().text.Trim() ;
-
-    //    Application.OpenURL("tel:" + phone);
-    //    print("tel:" + phone);
-    //}
 }

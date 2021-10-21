@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class SceneInfo : MonoBehaviour
 {
-    private int beforeScene;
-    private string storeName;
-    private string categoryMain;
-    private string categorySub;
-    private string floor;
+    public int beforeScene { get; }
+    public string storeName { get; }
+    public string categorySub { get; }
 
-    SceneInfo(int beforeScene, string storeName, string categoryMain, string categorySub)
+    public SceneInfo(int beforeScene)
     {
         this.beforeScene = beforeScene;
-        this.storeName = storeName;
-        this.categoryMain = categoryMain;
-        this.categorySub = categorySub;
-        this.floor = null;
+        this.storeName = "";
+        this.categorySub = "";
     }
 
-    SceneInfo(int beforeScene, string storeName, string categoryMain, string categorySub, string floor)
+    public SceneInfo(int beforeScene, string str, bool isName)
+    {
+        this.beforeScene = beforeScene;
+        if (isName)
+        {
+            this.storeName = str;
+            this.categorySub = "";
+        }
+        else
+        {
+            this.storeName = "";
+            this.categorySub = str;
+        }
+    }
+
+    public SceneInfo(int beforeScene, string storeName, string categorySub)
     {
         this.beforeScene = beforeScene;
         this.storeName = storeName;
-        this.categoryMain = categoryMain;
         this.categorySub = categorySub;
-        this.floor = floor;
     }
 }
