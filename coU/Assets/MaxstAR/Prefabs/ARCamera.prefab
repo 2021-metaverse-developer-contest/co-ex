@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 124000010088712984}
   - component: {fileID: 81000012307344688}
   - component: {fileID: 114000010340955834}
-  - component: {fileID: 2750532666562130382}
-  - component: {fileID: 527727096035446157}
   - component: {fileID: 5904898214174749577}
   m_Layer: 0
   m_Name: ARCamera
@@ -114,35 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12707c4687010654c8967b632f0ecde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2750532666562130382
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010562872518}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &527727096035446157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010562872518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EventMask:
-    serializedVersion: 2
-    m_Bits: 279
-  m_MaxRayIntersections: 0
 --- !u!223 &5904898214174749577
 Canvas:
   m_ObjectHideFlags: 0
