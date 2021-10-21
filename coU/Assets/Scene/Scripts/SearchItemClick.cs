@@ -13,8 +13,10 @@ public class SearchItemClick : MonoBehaviour
         
         SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
+        //StoreSceneManager.categorySub = "";
         StoreSceneManager.beforeScene = false;
         StoreSceneManager.searchStr = SearchSceneManager.searchStr;
+        StoreSceneManager.isMaxst = false;
     }
 
     public void ListItemOnClick()
@@ -26,5 +28,6 @@ public class SearchItemClick : MonoBehaviour
         //StoreSceneManager.categorySub = "";
         StoreSceneManager.beforeScene = false;
         StoreSceneManager.searchStr = StoreSceneManager.storeName;
+        StoreSceneManager.isMaxst = false;
     }
 }
