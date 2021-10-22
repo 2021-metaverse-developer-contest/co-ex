@@ -13,7 +13,8 @@ public class CopyDB : MonoBehaviour
     private static string persistentDBTotalPath;
     private static string streamingAssetsDBTotalPath;
 
-    public string homeSceneName;
+    [SerializeField]
+    private string homeSceneName;
 
     private void Awake()
     {

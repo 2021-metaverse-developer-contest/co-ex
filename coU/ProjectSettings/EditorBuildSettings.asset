@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/FirstScene.unity
     guid: f3e9b53197ed84522a01e5764abb3a81
   - enabled: 1
+    path: Assets/Scene/Scenes/MaxstScene.unity
+    guid: af750092252ef46bb8c76abf06dfb255
+  - enabled: 1
     path: Assets/Scene/Scenes/AllCategoryScene.unity
     guid: cc1850e88fd2e47cfa99948fe681a0c3
   - enabled: 1
@@ -20,7 +23,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Scenes/SearchScene.unity
     guid: e765f7750cd0b43aaa1b5a1777883c5b
-  - enabled: 1
-    path: Assets/Scene/Scenes/MaxstScene.unity
-    guid: af750092252ef46bb8c76abf06dfb255
   m_configObjects: {}
