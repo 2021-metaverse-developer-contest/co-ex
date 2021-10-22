@@ -8,12 +8,14 @@ using SQLite4Unity3d;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using maxstAR;
 
 public class putMarkerManager : MonoBehaviour
 {
     public GameObject marker;
 	private ARManager arManagr;
+    private float initAlpha;
 
     [SerializeField]
     private float distanceRadius = 20.0f;
@@ -34,6 +36,7 @@ public class putMarkerManager : MonoBehaviour
         canvasList = new List<GameObject>();
         List<Store> stores = GetDBData.getStoresData("Select * from Stores S Where S.floor =\"" + floor + "\"");
         drawStore(stores, floor);
+        initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
         print("end awake()");
     }
 
@@ -54,7 +57,31 @@ public class putMarkerManager : MonoBehaviour
             {
                 canvas.SetActive(true);
                 Transform arTransform = getARTransform();
-                canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
+				canvas.transform.forward = arTransform.forward;
+
+                float distance = Vector3.Distance(arTransform.position, canvas.transform.position);
+                if (distance > (distanceRadius / 2))
+                {
+                    Func<float,float,float> transAlpha= (alpha, distance) => alpha + ((0 - alpha) / (distanceRadius / 2)) * (distance - distanceRadius/2);
+                    Func<Color, float, float, Color> transColor = (src, alpha, distance) =>
+                    {
+                        Color tempColor = src;
+                        tempColor.a = transAlpha(alpha, distance);
+                        src = tempColor;
+                        return (tempColor);
+                    };
+
+                    Image[] images = canvas.GetComponentsInChildren<Image>();
+                    TextMeshProUGUI[] textmeshes = canvas.GetComponentsInChildren<TextMeshProUGUI>();
+                    foreach (Image it in images)
+                    {
+                        it.color = transColor(it.color, initAlpha, distance);
+                    }
+                    foreach (TextMeshProUGUI it in textmeshes)
+                    {
+                        it.color = transColor(it.color, initAlpha, distance);
+                    }
+                }
             }
             else
             {
@@ -62,6 +89,10 @@ public class putMarkerManager : MonoBehaviour
             }
         }
     }
+    /*
+     * 0 = 50, a = 25
+     
+     */
 
     private bool isValidDistance(Vector3 storePosition)
     {
@@ -134,7 +165,7 @@ public class putMarkerManager : MonoBehaviour
             
             Transform arTransform = getARTransform();
             canvas.transform.localPosition = rawLocation;
-            canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
+			canvas.transform.forward = arTransform.forward;
             canvas.name = it.name;
             canvas.SetActive(false);
         }
