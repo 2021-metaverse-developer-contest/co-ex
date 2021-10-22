@@ -7,6 +7,7 @@ using System.IO;
 using System;
 
 using TMPro; // public TextMeshProUGUI 쓰기위함 -> InputField-TextMeshPro
+using UnityEngine.SceneManagement;
 
 public class MaxstSceneManager : MonoBehaviour
 {
@@ -167,7 +168,7 @@ public class MaxstSceneManager : MonoBehaviour
 		// 2021/10/18 hyojlee
 		// MaxstScene에서 뒤로가기 연속 클릭 시 앱 종료하는 부분
 		// 한 번 누르면 종료하지 않고 안드로이드의 토스트 메시지 뜨도록 함
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
 		{
 			backCount++;
 			if (!IsInvoking("ResetBackCount"))
