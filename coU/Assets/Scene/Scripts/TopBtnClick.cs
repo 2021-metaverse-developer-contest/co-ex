@@ -30,9 +30,18 @@ public class TopBtnClick : MonoBehaviour
 
     public void BackBtnOnClick()
     {
+        string curScene = SceneManager.GetActiveScene().name;
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
 
+        //if (curScene.Contains("StoreScene") && beforePath.Contains("MaxstScene"))
+        if (curScene.Contains("MaxstScene") && beforePath.Contains("MaxstScene"))
+        {
+            Stack.Instance.Clear();
+            SceneManager.UnloadSceneAsync("StoreScene");
+             return;
+        }
+        
         if (beforePath.Contains("StoreScene"))
         {
             StoreSceneManager.storeName = before.storeName;
@@ -45,6 +54,7 @@ public class TopBtnClick : MonoBehaviour
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
             Stack.Instance.Clear();
         SceneManager.LoadScene(before.beforeScene);
+
     }
 
     public void ARBtnOnClick()

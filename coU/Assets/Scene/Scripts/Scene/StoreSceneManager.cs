@@ -23,7 +23,6 @@ public class StoreSceneManager : MonoBehaviour
 
         if (Stack.Instance.Count() == 0)
             GameObject.Find("Btn_Back").SetActive(false);
-
         Menu = GameObject.Find("Panel_Menu").gameObject;
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
@@ -35,7 +34,9 @@ public class StoreSceneManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (Stack.Instance.Count() > 0)
+            {
                 BackBtnOnClick();
+            }
             else
             {
                 backCount++;
@@ -92,13 +93,15 @@ public class StoreSceneManager : MonoBehaviour
     void InitialMenu(string sname)
     {
         string query = "select items.* from items " +
-                "inner join stores " +
-                "where stores.tntSeq = items.tntSeq " +
-                "and stores.name = '" + store[0].name + "' " +
-                "group by (itemTitle) " +
-                "order by `index`";
+                " inner join stores " +
+                " where stores.tntSeq = items.tntSeq " +
+                " and stores.name = '" + store[0].name + "' " +
+                " group by (itemTitle) " +
+                " order by `index`";
+        Debug.Log("StoreScene Menu query " + query);
         item_List = GetDBData.getItemsData(query);
 
+        Debug.Log("StoreScene Number of Menu " + item_List.ToArray().Length.ToString());
         if (item_List.ToArray().Length < 1)
             Menu.SetActive(false);
         else
@@ -127,13 +130,17 @@ public class StoreSceneManager : MonoBehaviour
     {
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
-
-        SceneManager.LoadScene(before.beforeScene);
-        if (beforePath.Contains("SearchScene"))
-            SearchSceneManager.searchStr = before.storeName;
-        else if (beforePath.Contains("StoreListScene"))
-            StoreListSceneManager.categorySub = before.categorySub;
-        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
-            Stack.Instance.Clear();
+        if (beforePath.Contains("MaxstScene"))
+            SceneManager.UnloadSceneAsync("StoreScene");
+        else
+        {
+            if (beforePath.Contains("SearchScene"))
+                SearchSceneManager.searchStr = before.storeName;
+            else if (beforePath.Contains("StoreListScene"))
+                StoreListSceneManager.categorySub = before.categorySub;
+            else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                Stack.Instance.Clear();
+            SceneManager.LoadScene(before.beforeScene);
+        }
     }
 }
