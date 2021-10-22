@@ -57,7 +57,7 @@ public class putMarkerManager : MonoBehaviour
             {
                 canvas.SetActive(true);
                 Transform arTransform = getARTransform();
-                canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
+				canvas.transform.forward = arTransform.forward;
 
                 float distance = Vector3.Distance(arTransform.position, canvas.transform.position);
                 if (distance > (distanceRadius / 2))
@@ -165,7 +165,7 @@ public class putMarkerManager : MonoBehaviour
             
             Transform arTransform = getARTransform();
             canvas.transform.localPosition = rawLocation;
-            canvas.transform.rotation = Quaternion.Euler(-arTransform.forward);
+			canvas.transform.forward = arTransform.forward;
             canvas.name = it.name;
             canvas.SetActive(false);
         }
