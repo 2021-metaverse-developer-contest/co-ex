@@ -14,6 +14,7 @@ public class MaxstSceneManager : MonoBehaviour
 	public static string naviStoreName = "";
 	public static string naviStoreCategorySub = "";
 	public static string naviStoreFloor = "";
+	public static bool naviStart = false;
 
 	public TextMeshProUGUI storeNameTextBox;
 	public TextMeshProUGUI storeFloorTextBox;
@@ -158,7 +159,6 @@ public class MaxstSceneManager : MonoBehaviour
 				TrackerManager.GetInstance().RequestARCoreApk();
 			}
 		}
-
 		TrackerManager.GetInstance().StartTracker();
 	}
 
@@ -226,6 +226,11 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 				panelBackground.SetActive(false);
 				disableRenderer(currentLocalizerLocation);
+				if (naviStart == true)
+				{
+					naviStart = false;
+					StartNavigation(resetNaviValue); // 스토어씬에서 호출된 네비게이션
+				}
 			}
 		}
 		else
@@ -239,6 +244,7 @@ public class MaxstSceneManager : MonoBehaviour
 			}
 			currentLocalizerLocation = "";
 		}
+
 	}
 
 	static class FloorConstants
@@ -361,7 +367,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	}
 
-	static Action resetNaviValue = () =>
+	private Action resetNaviValue = () =>
 	{
 		naviStoreName = "";
 		naviStoreFloor = "";
@@ -369,42 +375,22 @@ public class MaxstSceneManager : MonoBehaviour
 		return;
 	};
 
-	public static Vector3 getNavigationLocation(string name, string floor, bool substringNeed) //현재는 B1 층 밖에 안되니까
+	public void StartNavigation(Action action)
 	{
-		print("---getNavigationLocation---");
-		if (substringNeed == true)
-        {
-			name = name.Substring(0, name.Length - 1);
-			floor = floor.Substring(0, floor.Length - 1);
-        }
-		print($"{name}:{name.Length}");
-		print($"{floor}:{floor.Length}");
-
-		Vector3 destVector = new Vector3();
-		GameObject destTemp = GameObject.Find(floor).transform.Find(name).gameObject;
-		if (destTemp == null)
-        {
-			return Vector3.forward;
+		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
+		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.categorySub == "") == true)
+		{
+			print("세가지 값 중 하나라도 전달되지 않으면 에러");
 		}
-		else
-        {
-			Transform destTransform = destTemp.GetComponentInChildren<Transform>(); // null 일 가능성 배제
-			//print(destTransform.transform.position);
-			//print(destTransform.transform.localPosition);
-			destVector = destTransform.transform.position;
-		}
-		resetNaviValue();
-		return (destVector);
-	}
+		print(naviDest.name);
+		print(naviDest.floor);
+		print(naviDest.categorySub);
+		GameObject location = new GameObject();
+		string parentOfFloor = naviDest.floor + "_Stores";
 
-	public static void StartNavigation(string storeName, string categorySub, string floor)
-	{
-		NavigationDest navigationDest;
-		Vector3 dest;
-		bool substringNeed = false;
-		
-		navigationDest = new NavigationDest(storeName, floor);
-		dest = getNavigationLocation(navigationDest.name, navigationDest.floor, substringNeed);
+		GameObject parent = GameObject.Find(parentOfFloor);
+		location.transform.parent = parent.transform;
+		location.transform.localPosition = naviDest.getNavigationLocation();
 
 		if (currentLocalizerLocation != null)
 		{
@@ -421,13 +407,10 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 			}
 
-			//Vector3 temp = new Vector3()
-
 			if (trackingObject != null)
 			{
-				NavigationController navigationController = GameObject.Find("SceneManager").GetComponent<NavigationController>();
-
-				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, navigationDest.getEndLocation(), dest, vPSTrackablesList.ToArray(),
+				NavigationController navigationController = GameObject.Find("SceneManager").GetComponent<NavigationController>(); ;
+				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, naviDest.getEndLocation(), location.transform.position, vPSTrackablesList.ToArray(),
 				() =>
 				{
 					Debug.Log("No Path");
@@ -435,43 +418,22 @@ public class MaxstSceneManager : MonoBehaviour
 				//}, "coex_outdoor");
 			}
 		}
+		action.Invoke();
 	}
 
 	public void OnClickNavigation()
 	{
 		print("OnClickNavigation()");
-		print(MaxstSceneManager.naviStoreName);
-		print(MaxstSceneManager.naviStoreFloor);
-		print("============================");
-
-
-		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
-		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.floor == "") == false)
-		{
-			/*
-			 * Query를 쓴다면 여기서 쓰자!
-			string query = "Select name, floor, modifiedX, modifiedY from Stores Where name = '" + MaxstSceneManager.naviStoreName + "'";
-			if (MaxstSceneManager.naviStoreCategorySub != "")
-				query += "AND categorySub = '" + MaxstSceneManager.naviStoreCategorySub + "'";
-            List<Stores> naviStore = getDBData.getStoresData(query);
-            floor = naviStore[0].floor;
-			*/
-		}
-		else
-        {
-			// Textbox에 있는 값으로 재할당
-			string tempName = storeNameTextBox.text.Substring(0, storeNameTextBox.text.Length - 1);
-			string tempFloor = storeFloorTextBox.text.Substring(0, storeFloorTextBox.text.Length - 1);
-			naviDest = new NavigationDest(tempName, tempFloor);
-		}
+		// Textbox에 있는 값으로 재할당
+		string tempName = storeNameTextBox.text.Substring(0, storeNameTextBox.text.Length - 1);
+		string tempFloor = storeFloorTextBox.text.Substring(0, storeFloorTextBox.text.Length - 1);
+		NavigationDest naviDest = new NavigationDest(tempName, tempFloor);
 
 		
 		GameObject location = new GameObject();
 		GameObject parent = GameObject.Find(naviDest.floor);
 		location.transform.parent = parent.transform;
 		location.transform.localPosition = naviDest.getNavigationLocation();
-		//print(location.transform.position.ToString());
-		//print(location.transform.localPosition.ToString());
 
 		if (currentLocalizerLocation != null)
 		{
