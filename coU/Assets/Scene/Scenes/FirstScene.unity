@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885a62740ada84c90b368ecdc3b71583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homeSceneName: AllCategoryScene
+  homeSceneName: MaxstScene
 --- !u!1 &1547633465
 GameObject:
   m_ObjectHideFlags: 0
