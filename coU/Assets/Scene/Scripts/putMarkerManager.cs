@@ -40,11 +40,18 @@ public class putMarkerManager : MonoBehaviour
 
     private void Update()
     {
-        print($"갯수: {canvasList.ToArray().Length}");
+        //print($"갯수: {canvasList.ToArray().Length}");
         //List<GameObject> tempCanvasList = canvasList;
+        bool Panel_Background = true;
         foreach (GameObject canvas in canvasList)
         {
-            if (isValidDistance(canvas.transform.position) == true)
+
+            if (Panel_Background == true)
+            {
+                if (GameObject.Find("Canvas_Overlay").transform.Find("Panel_Background").gameObject.active == false)
+                    Panel_Background = false;
+            }
+            if (isValidDistance(canvas.transform.position) == true && Panel_Background == false)
             {
                 canvas.SetActive(true);
                 Transform arTransform = getARTransform();
