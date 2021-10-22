@@ -23,7 +23,17 @@ public class StoreSceneManager : MonoBehaviour
 
         if (Stack.Instance.Count() == 0)
             GameObject.Find("Btn_Back").SetActive(false);
-        Menu = GameObject.Find("Panel_Menu").gameObject;
+        Scene s = SceneManager.GetSceneByName("StoreScene");
+        GameObject[] gameObjects = s.GetRootGameObjects();
+        print(gameObjects.Length);
+        foreach (GameObject it in gameObjects)
+        {
+            print(it.name);
+            if (it.name == "Canvas_Main")
+            {
+                Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Menu").gameObject;
+            }
+        }
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
         InitialContent();
