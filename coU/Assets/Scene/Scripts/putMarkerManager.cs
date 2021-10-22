@@ -20,7 +20,6 @@ public class putMarkerManager : MonoBehaviour
     public string floor = "B1"; // TODO: Trackable에서 인식하는 층수가 들어가야 함.
     private List<GameObject> canvasList = null;
 
-
     class LinearTransform
     {
         public const float marginX = -2.40f;
@@ -93,6 +92,10 @@ public class putMarkerManager : MonoBehaviour
             string parentOfStores = floor + "_Stores";
             GameObject parent = GameObject.Find(parentOfStores);
             GameObject canvas = Instantiate(marker, parent.transform);
+
+            // hyojlee 2021/10/22
+            // 미니 캔버스의 렌더 모드는 world space이므로 이벤트 카메라를 붙여줘야함.
+
             canvasList.Add(canvas);
             Transform infoParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreInfo");
             Transform menuParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreMenu").Find("Panel_Menu");
