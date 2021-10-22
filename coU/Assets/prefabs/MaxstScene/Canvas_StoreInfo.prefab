@@ -2022,7 +2022,7 @@ GameObject:
   - component: {fileID: 350985908157247670}
   - component: {fileID: 350985908157247671}
   - component: {fileID: 350985908157247668}
-  - component: {fileID: 350985908157247669}
+  - component: {fileID: 1865514615794455180}
   m_Layer: 5
   m_Name: Canvas_StoreInfo
   m_TagString: Untagged
@@ -2069,7 +2069,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!114 &350985908157247668
 MonoBehaviour:
@@ -2093,8 +2093,8 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
---- !u!114 &350985908157247669
+  m_PresetInfoIsWorld: 1
+--- !u!114 &1865514615794455180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2103,14 +2103,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 350985908157247666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 15872fbce489a48c5809aaadad10448f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 0
+  m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 279
+    m_Bits: 4294967295
 --- !u!1 &350985908273865367
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class MaxstBtnClick : MonoBehaviour
     public void CategoryBtnOnClick()
     {
         SceneManager.LoadScene("AllCategoryScene");
-        //AllCategoryScene의 이전은 언제나 MaxstScene이므로 스택에 push하지 않음.
     }
 
     public void StoreOnClick()
@@ -25,10 +24,9 @@ public class MaxstBtnClick : MonoBehaviour
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
         TextMeshProUGUI storeName = clickObj.transform.Find("Panel_StoreInfo").GetComponentInChildren<TextMeshProUGUI>();
-        //TextMeshProUGUI storeName = clickObj.transform.Find("Panel_StoreInfo").Find("TMP_StoreName").GetComponent<TextMeshProUGUI>();
         SceneManager.LoadScene("StoreScene");
         StoreSceneManager.storeName = storeName.text;
-        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, storeName.text, true));
-        //StoreSceneManager.isMaxst = true;
+        StoreSceneManager.categorySub = "";
+        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
     }
 }
