@@ -120,7 +120,7 @@ public class MaxstSceneManager : MonoBehaviour
 	{
 		//hyojlee 2021/10/19
 		panelBackground = GameObject.Find("Panel_Background").gameObject;
-		
+
 		if (isOcclusion)
 		{
 			foreach (GameObject eachGameObject in occlusionObjects)
@@ -418,6 +418,7 @@ public class MaxstSceneManager : MonoBehaviour
 				//}, "coex_outdoor");
 			}
 		}
+		ActivePanelChange();
 		action.Invoke();
 	}
 
@@ -464,7 +465,30 @@ public class MaxstSceneManager : MonoBehaviour
 		}
 	}
 
-	void FixedUpdate()
+    // hyojlee 2021.10.22
+    /// <summary>
+    /// If this function is called when Navigation starts or ends,
+    /// active panel changes.
+    /// </summary>
+    public static void ActivePanelChange()
+    {
+        Transform parentTransform = GameObject.Find("Canvas_Overlay").transform;
+        GameObject panelNavi = parentTransform.Find("Panel_Navi").gameObject;
+        GameObject panelOn = parentTransform.Find("Panel_On").gameObject;
+
+        if (panelNavi.active)
+        {
+            panelNavi.SetActive(false);
+            panelOn.SetActive(true);
+        }
+        else
+        {
+            panelNavi.SetActive(true);
+            panelOn.SetActive(false);
+        }
+    }
+
+    void FixedUpdate()
 	{
 		if (Input.GetMouseButtonUp(0))
 		{
