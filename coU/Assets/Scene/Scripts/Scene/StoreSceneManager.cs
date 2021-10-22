@@ -141,7 +141,10 @@ public class StoreSceneManager : MonoBehaviour
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
         if (beforePath.Contains("MaxstScene"))
+        {
+            Stack.Instance.Clear();
             SceneManager.UnloadSceneAsync("StoreScene");
+        }
         else
         {
             if (beforePath.Contains("SearchScene"))

@@ -39,7 +39,7 @@ public class TopBtnClick : MonoBehaviour
         {
             Stack.Instance.Clear();
             SceneManager.UnloadSceneAsync("StoreScene");
-             return;
+            return;
         }
         
         if (beforePath.Contains("StoreScene"))
