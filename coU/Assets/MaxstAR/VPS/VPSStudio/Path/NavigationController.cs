@@ -231,10 +231,11 @@ public class NavigationController : MonoBehaviour
         destination.transform.position = first + new Vector3(0f, 2f, 0f);
         destination.transform.eulerAngles = destination.transform.eulerAngles + Quaternion.LookRotation(vec).eulerAngles ;
         destination.transform.parent = naviGameObject.transform;
-        Vector3 v3 = arrowItems[arrowItems.ToArray().Length - 1].transform.forward;
-        destination.transform.forward = -v3;
+        //Vector3 v3 = arrowItems[arrowItems.ToArray().Length - 1].transform.forward;
+        //destination.transform.forward = -v3;
         destination.transform.rotation *= Quaternion.Euler(new Vector3(-80f, 0f, 0f));
         destination.name = "destination";
+        MaxstSceneManager.chkNavi = true;
         //
 
         return naviGameObject;

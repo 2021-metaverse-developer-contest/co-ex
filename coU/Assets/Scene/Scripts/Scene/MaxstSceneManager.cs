@@ -48,6 +48,10 @@ public class MaxstSceneManager : MonoBehaviour
 	int backCount = 0;
 	GameObject panelBackground;
 
+	//hyojlee 2021.10.23
+	public static bool chkNavi = false;
+	GameObject destination = null;
+
 	void Awake()
 	{
 		if (vPSTrackablesList == null)
@@ -182,6 +186,13 @@ public class MaxstSceneManager : MonoBehaviour
 #endif
 			}
 			Toast.Instance.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
+		}
+
+		//hyojlee 2021.10.23
+		if (chkNavi)
+		{
+			destination = destination == null ? GameObject.Find("destination").gameObject : destination;
+			destination.transform.forward = arCamera.transform.forward;
 		}
 		TrackerManager.GetInstance().UpdateFrame();
 
@@ -479,6 +490,7 @@ public class MaxstSceneManager : MonoBehaviour
 
         if (panelNavi.active)
         {
+			chkNavi = false;
             panelNavi.SetActive(false);
             panelOn.SetActive(true);
 			if (GameObject.Find("Navigation").gameObject != null)
