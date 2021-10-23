@@ -21,6 +21,9 @@ public class NavigationController : MonoBehaviour
     public float arrowPathHeight = -0.5f;
     public GameObject arrowPrefab;
 
+    //hyojlee 2021.10.23
+    public GameObject arrival;
+
     private List<GameObject> pathObjects = new List<GameObject>();
     private List<GameObject> arrowItems = new List<GameObject>();
 
@@ -165,6 +168,8 @@ public class NavigationController : MonoBehaviour
 
     private GameObject MakeArrowPath(PathModel[] paths, VPSTrackable vPSTrackable)
     {
+        int i;
+
         List<Vector3> vectors = new List<Vector3>();
         foreach (PathModel eachModel in paths)
         {
@@ -176,7 +181,7 @@ public class NavigationController : MonoBehaviour
         CalculateMilestones(vectors, positions, directions, arrowPositionDistance, true);
 
         List<Vector3> convertVectorPath = new List<Vector3>();
-        for (int i = 0; i < positions.Count; i++)
+        for (i = 0; i < positions.Count; i++)
         {
             Vector3 eachPath = positions[i];
             Vector3 pathPoint = new Vector3(eachPath.x, eachPath.z, eachPath.y);
@@ -194,13 +199,15 @@ public class NavigationController : MonoBehaviour
 
         Dictionary<GameObject, Dictionary<GameObject, float>> intersectionGameObjects = new Dictionary<GameObject, Dictionary<GameObject, float>>();
 
-
-        for (int i = 1; i < convertVectorPath.Count - 2; i++)
+        Vector3 first;
+        Vector3 second;
+        Vector3 vec;
+        for (i = 1; i < convertVectorPath.Count - 2; i++)
         {
-            Vector3 first = convertVectorPath[i] + new Vector3(0.0f, arrowPathHeight, 0.0f);
-            Vector3 second = convertVectorPath[i + 1] + new Vector3(0.0f, arrowPathHeight, 0.0f);
+            first = convertVectorPath[i] + new Vector3(0.0f, arrowPathHeight, 0.0f);
+            second = convertVectorPath[i + 1] + new Vector3(0.0f, arrowPathHeight, 0.0f);
 
-            Vector3 vec = first - second;
+            vec = first - second;
             vec.Normalize();
             Quaternion q = Quaternion.LookRotation(vec);
 
@@ -212,6 +219,23 @@ public class NavigationController : MonoBehaviour
      
             arrowItems.Add(arrowGameObject);
         }
+
+        //hyojlee 2021.10.23
+        //도착지를 나타낼 곳
+        first = convertVectorPath[i] + new Vector3(0.0f, arrowPathHeight, 0.0f);
+        second = convertVectorPath[i + 1] + new Vector3(0.0f, arrowPathHeight, 0.0f);
+
+        vec = first - second;
+        vec.Normalize();
+        GameObject destination = Instantiate(arrival);
+        destination.transform.position = first + new Vector3(0f, 2f, 0f);
+        destination.transform.eulerAngles = destination.transform.eulerAngles + Quaternion.LookRotation(vec).eulerAngles ;
+        destination.transform.parent = naviGameObject.transform;
+        Vector3 v3 = arrowItems[arrowItems.ToArray().Length - 1].transform.forward;
+        destination.transform.forward = -v3;
+        destination.transform.rotation *= Quaternion.Euler(new Vector3(-80f, 0f, 0f));
+        destination.name = "destination";
+        //
 
         return naviGameObject;
     }
