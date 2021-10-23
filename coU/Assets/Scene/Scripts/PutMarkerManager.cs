@@ -94,12 +94,10 @@ public class PutMarkerManager : MonoBehaviour
         //List<GameObject> tempCanvasList = canvasList;
         if (isfinishDetect == false)
         {
-            print("elel");
             if (GameObject.Find("Canvas_Overlay").transform.Find("Panel_Background").gameObject.active == false)
                 isfinishDetect = true;
             if (isfinishDetect == true)
             {
-                print("2:" + PutMarkerManager.floor);
                 timetoDraw();
             }
         }
