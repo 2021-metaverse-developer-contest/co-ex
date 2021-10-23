@@ -51,6 +51,7 @@ public class MaxstSceneManager : MonoBehaviour
 	//hyojlee 2021.10.23
 	public static bool chkNavi = false;
 	GameObject destination = null;
+	public static string floor;
 
 	void Awake()
 	{
@@ -191,9 +192,15 @@ public class MaxstSceneManager : MonoBehaviour
 		//hyojlee 2021.10.23
 		if (chkNavi)
 		{
-			destination = destination == null ? GameObject.Find("destination").gameObject : destination;
-			destination.transform.forward = arCamera.transform.forward;
+			if (destination == null)
+			{
+				if (GameObject.Find("destination") != null)
+					destination = GameObject.Find("destination").gameObject;
+			}
+			if (destination != null) //else가 아닌 이유: destination 찾자마자 실행되어야하므
+				destination.transform.forward = arCamera.transform.forward;
 		}
+
 		TrackerManager.GetInstance().UpdateFrame();
 
 		ARFrame arFrame = TrackerManager.GetInstance().GetARFrame();
@@ -390,6 +397,7 @@ public class MaxstSceneManager : MonoBehaviour
 	public void StartNavigation(Action action)
 	{
 		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
+		floor = naviDest.floor;
 		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.categorySub == "") == true)
 		{
 			print("세가지 값 중 하나라도 전달되지 않으면 에러");
@@ -432,6 +440,28 @@ public class MaxstSceneManager : MonoBehaviour
 		}
 		ActivePanelChange();
 		action.Invoke();
+	}
+
+	//hyojlee 2021.10.24
+	/// <summary>
+    /// If the floor of the destination and the floor of the current location are different,
+    /// the destination obejct of the current floor is removed.
+    /// </summary>
+	public static void DestroyFakeDestination()
+	{
+		floor = floor == "1F" ? "F1" : floor; 
+		foreach (VPSTrackable elem in vPSTrackablesList)
+		{
+			Debug.Log("Ssssss " + elem.gameObject.name);
+			if (elem.gameObject.transform.Find("Navigation/destination") != null)
+			{
+				if (!elem.gameObject.name.EndsWith(floor.ToLower() + "(Clone)"))
+				{
+					DestroyImmediate(elem.gameObject.transform.Find("Navigation/destination").gameObject);
+					break;
+				}
+			}
+		}
 	}
 
 	public void OnClickNavigation()
@@ -493,8 +523,12 @@ public class MaxstSceneManager : MonoBehaviour
 			chkNavi = false;
             panelNavi.SetActive(false);
             panelOn.SetActive(true);
-			if (GameObject.Find("Navigation").gameObject != null)
-				DestroyImmediate(GameObject.Find("Navigation").gameObject);
+			foreach (VPSTrackable vps in vPSTrackablesList)
+			{
+				Debug.Log("VPSNAME " + vps.gameObject.name);
+				if (vps.gameObject.transform.Find("Navigation") != null)
+					DestroyImmediate(vps.gameObject.transform.Find("Navigation").gameObject);
+			}
         }
         else
         {
