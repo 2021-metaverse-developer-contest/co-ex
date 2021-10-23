@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using maxstAR;
 
-public class putMarkerManager : MonoBehaviour
+public class PutMarkerManager : MonoBehaviour
 {
     public GameObject marker;
 	private ARManager arManagr;
@@ -34,7 +34,8 @@ public class putMarkerManager : MonoBehaviour
     {
         arManagr = FindObjectOfType<ARManager>();
         canvasList = new List<GameObject>();
-        List<Store> stores = GetDBData.getStoresData("Select * from Stores S Where S.floor =\"" + floor + "\"");
+        string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
+        List<Store> stores = GetDBData.getStoresData(query);
         drawStore(stores, floor);
         initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
         print("end awake()");
