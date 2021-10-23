@@ -199,6 +199,7 @@ public class MaxstSceneManager : MonoBehaviour
 			cameraBackgroundBehaviour.UpdateCameraBackgroundImage(trackedImage);
 		}
 
+		//print(ARLocationRecognitionState.ARLocationRecognitionStateNormal); //
 		if (arFrame.GetARLocationRecognitionState() == ARLocationRecognitionState.ARLocationRecognitionStateNormal)
 		{
 			Matrix4x4 targetPose = arFrame.GetTransform();
@@ -208,8 +209,8 @@ public class MaxstSceneManager : MonoBehaviour
 			arCamera.transform.localScale = MatrixUtils.ScaleFromMatrix(targetPose);
 
 			string localizerLocation = arFrame.GetARLocalizerLocation();
-
-			if (currentLocalizerLocation != localizerLocation)
+			//print(localizerLocation);
+            if (currentLocalizerLocation != localizerLocation)
 			{
 				currentLocalizerLocation = localizerLocation;
 				foreach (VPSTrackable eachTrackable in vPSTrackablesList)
@@ -226,6 +227,9 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
+				string nomeaning = "landmark_coex_";
+				putMarkerManager.floor = currentLocalizerLocation.Substring(currentLocalizerLocation.IndexOf(nomeaning) + nomeaning.Length).ToUpper();
+				print("1:"+putMarkerManager.floor);
 				disableRenderer(currentLocalizerLocation);
 				if (naviStart == true)
 				{
