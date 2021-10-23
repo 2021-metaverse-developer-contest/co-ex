@@ -19,8 +19,8 @@ public class PutMarkerManager : MonoBehaviour
 
     [SerializeField]
     private float distanceRadius = 20.0f;
-    public string floor = "B1"; // TODO: Trackable에서 인식하는 층수가 들어가야 함.
-    private List<GameObject> canvasList = null;
+    public static string floor = "B1"; // TODO: Trackable에서 인식하는 층수가 들어가야 함.
+    private List<GameObject> canvasList = new List<GameObject>();
 
     class LinearTransform
     {
@@ -34,36 +34,34 @@ public class PutMarkerManager : MonoBehaviour
     {
         arManagr = FindObjectOfType<ARManager>();
         canvasList = new List<GameObject>();
-        string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
-        List<Store> stores = GetDBData.getStoresData(query);
-        drawStore(stores, floor);
-        initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
-        print("end awake()");
+        floor = floor.Replace("landmark_coex_", "");
     }
 
-    private void Update()
+    void timetoDraw()
     {
-        //print($"갯수: {canvasList.ToArray().Length}");
-        //List<GameObject> tempCanvasList = canvasList;
-        bool Panel_Background = true;
+        if (floor != "OUTDOOR")
+        {
+            string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
+            List<Store> stores = GetDBData.getStoresData(query);
+            drawStore(stores, floor);
+            initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
+        }
+    }
+
+    void drawTransparent()
+    {
         foreach (GameObject canvas in canvasList)
         {
-
-            if (Panel_Background == true)
-            {
-                if (GameObject.Find("Canvas_Overlay").transform.Find("Panel_Background").gameObject.active == false)
-                    Panel_Background = false;
-            }
-            if (isValidDistance(canvas.transform.position) == true && Panel_Background == false)
+            if (isValidDistance(canvas.transform.position) == true)
             {
                 canvas.SetActive(true);
                 Transform arTransform = getARTransform();
-				canvas.transform.forward = arTransform.forward;
+                canvas.transform.forward = arTransform.forward;
 
                 float distance = Vector3.Distance(arTransform.position, canvas.transform.position);
                 if (distance > (distanceRadius / 2))
                 {
-                    Func<float,float,float> transAlpha= (alpha, distance) => alpha + ((0 - alpha) / (distanceRadius / 2)) * (distance - distanceRadius/2);
+                    Func<float, float, float> transAlpha = (alpha, distance) => alpha + ((0 - alpha) / (distanceRadius / 2)) * (distance - distanceRadius / 2);
                     Func<Color, float, float, Color> transColor = (src, alpha, distance) =>
                     {
                         Color tempColor = src;
@@ -90,10 +88,25 @@ public class PutMarkerManager : MonoBehaviour
             }
         }
     }
-    /*
-     * 0 = 50, a = 25
-     
-     */
+
+    private bool isfinishDetect = false;
+
+    private void Update()
+    {
+        //print($"갯수: {canvasList.ToArray().Length}");
+        //List<GameObject> tempCanvasList = canvasList;
+        if (isfinishDetect == false)
+        {
+            if (GameObject.Find("Canvas_Overlay").transform.Find("Panel_Background").gameObject.active == false)
+                isfinishDetect = true;
+            if (isfinishDetect == true)
+            {
+                timetoDraw();
+            }
+        }
+        if (isfinishDetect == true)
+            drawTransparent();
+    }
 
     private bool isValidDistance(Vector3 storePosition)
     {
