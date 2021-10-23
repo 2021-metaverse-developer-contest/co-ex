@@ -20,7 +20,7 @@ public class PutMarkerManager : MonoBehaviour
     [SerializeField]
     private float distanceRadius = 20.0f;
     public static string floor = "B1"; // TODO: Trackable에서 인식하는 층수가 들어가야 함.
-    private List<GameObject> canvasList = null;
+    private List<GameObject> canvasList = new List<GameObject>();
 
     class LinearTransform
     {
@@ -39,10 +39,13 @@ public class PutMarkerManager : MonoBehaviour
 
     void timetoDraw()
     {
-        string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
-        List<Store> stores = GetDBData.getStoresData(query);
-        drawStore(stores, floor);
-        initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
+        if (floor != "OUTDOOR")
+        {
+            string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
+            List<Store> stores = GetDBData.getStoresData(query);
+            drawStore(stores, floor);
+            initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
+        }
     }
 
     void drawTransparent()
