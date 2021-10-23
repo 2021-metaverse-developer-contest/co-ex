@@ -21,6 +21,7 @@ public class MaxstSceneManager : MonoBehaviour
 	public TextMeshProUGUI storeFloorTextBox;
 	public GameObject marker;
 	//
+	public static Vector3 vAR = new Vector3();
 
 	private CameraBackgroundBehaviour cameraBackgroundBehaviour = null;
 	//hyojlee private GameObject arCamera = null;
@@ -121,8 +122,19 @@ public class MaxstSceneManager : MonoBehaviour
 		}
 	}
 
+	private IEnumerator setvAR()
+    {
+		while (true)
+        {
+			vAR = arCamera.transform.position;
+			yield return new WaitForSeconds(5.0f);
+        }
+    }
+
 	void Start()
 	{
+		StartCoroutine(setvAR());
+
 		//hyojlee 2021/10/19
 		panelBackground = GameObject.Find("Panel_Background").gameObject;
 
