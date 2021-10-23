@@ -55,7 +55,7 @@ public class MaxstBtnClick : MonoBehaviour
     public void ArrivalQuitOnClick()
     {
         Debug.Log("Arrival Pop up Quit");
-        EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.SetActive(false);
+        MaxstSceneManager.ActivePanelChange();
     }
 
 }
