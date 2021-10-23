@@ -485,6 +485,8 @@ public class MaxstSceneManager : MonoBehaviour
         {
             panelNavi.SetActive(false);
             panelOn.SetActive(true);
+			if (GameObject.Find("Navigation").gameObject != null)
+				DestroyImmediate(GameObject.Find("Navigation").gameObject);
         }
         else
         {
