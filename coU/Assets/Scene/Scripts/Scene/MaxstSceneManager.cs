@@ -227,8 +227,7 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
-				string nomeaning = "landmark_coex_";
-				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.IndexOf(nomeaning) + nomeaning.Length).ToUpper();
+				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				disableRenderer(currentLocalizerLocation);
 				if (naviStart == true)
