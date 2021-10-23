@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using maxstAR;
 
-public class putMarkerManager : MonoBehaviour
+public class PutMarkerManager : MonoBehaviour
 {
     public GameObject marker;
 	private ARManager arManagr;
@@ -35,12 +35,15 @@ public class putMarkerManager : MonoBehaviour
         arManagr = FindObjectOfType<ARManager>();
         canvasList = new List<GameObject>();
         floor = floor.Replace("landmark_coex_", "");
+		string nomeaning = "landmark_coex_";
+		string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.IndexOf(nomeaning) + nomeaning.Length).ToUpper();
+		putMarkerManager.floor = (substr == "F1") ? "1F" : substr;
     }
 
     void timetoDraw()
     {
-        List<Store> stores = GetDBData.getStoresData("Select DISTINCT name, openHour from Stores S Where S.floor =\"" + floor + "\"");
-        print("count " + stores.Count);
+        string query = "Select * from Stores Where floor = '" + floor + "' group by tntSeq order by `index`";
+        List<Store> stores = GetDBData.getStoresData(query);
         drawStore(stores, floor);
         initAlpha = canvasList[0].GetComponentInChildren<Image>().color.a;
     }
