@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using maxstAR;
 
 public class StoreListSceneManager : MonoBehaviour
 {
@@ -74,6 +75,30 @@ public class StoreListSceneManager : MonoBehaviour
             PanelFloor.transform.Find("Btn_B2").gameObject.SetActive(false);
     }
 
+    private Action<List<Store>> addDistance = (storeList) =>
+    {
+        foreach (Store i in storeList)
+        {
+            Vector2 vStore = new Vector2((float)i.modifiedX, (float)i.modifiedY);
+            Vector3 temp = MaxstSceneManager.vAR;
+            Vector2 vAR = new Vector2((float)temp.x, (float)temp.z);
+            i.distance = Vector2.Distance(vStore, vAR);
+        }
+    };
+
+    Action<int> action = (b) =>
+    {
+        Console.WriteLine(b);
+    };
+
+    int cmp(Store x, Store y)
+    {
+        if (x.distance < y.distance)
+            return -1;
+        else
+            return 1;
+    }
+
     void FillContent()
     {
         int i;
@@ -84,6 +109,15 @@ public class StoreListSceneManager : MonoBehaviour
         f1_list = GetDBData.getStoresData(query + "1F'");
         b1_list = GetDBData.getStoresData(query + "B1'");
         b2_list = GetDBData.getStoresData(query + "B2'");
+
+        // 순회하면서 계산 distance에 값넣기
+        addDistance(f1_list);
+        addDistance(b1_list);
+        addDistance(b2_list);
+        // 넣은 값을 기준으로 정렬하기
+        f1_list.Sort(cmp);
+        b1_list.Sort(cmp);
+        b2_list.Sort(cmp);
 
         f1_items = new GameObject[f1_list.ToArray().Length];
         b1_items = new GameObject[b1_list.ToArray().Length];

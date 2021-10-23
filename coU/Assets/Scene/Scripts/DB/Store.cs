@@ -6,6 +6,10 @@ using SQLite4Unity3d;
 [Table("Stores")]
 public class Store : MonoBehaviour
 {
+    private const float xScaler = 1.0f;
+    private const float yScaler = 1.0f;
+    public float distance { get; set; }
+
     [Column("index")]
     public int index { get; set; }
     [Column("name")]
