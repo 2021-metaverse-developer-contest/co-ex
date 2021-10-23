@@ -35,9 +35,6 @@ public class PutMarkerManager : MonoBehaviour
         arManagr = FindObjectOfType<ARManager>();
         canvasList = new List<GameObject>();
         floor = floor.Replace("landmark_coex_", "");
-		string nomeaning = "landmark_coex_";
-		string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.IndexOf(nomeaning) + nomeaning.Length).ToUpper();
-		putMarkerManager.floor = (substr == "F1") ? "1F" : substr;
     }
 
     void timetoDraw()
@@ -102,7 +99,7 @@ public class PutMarkerManager : MonoBehaviour
                 isfinishDetect = true;
             if (isfinishDetect == true)
             {
-                print("2:" + putMarkerManager.floor);
+                print("2:" + PutMarkerManager.floor);
                 timetoDraw();
             }
         }
