@@ -8,6 +8,7 @@ using System;
 
 using TMPro; // public TextMeshProUGUI 쓰기위함 -> InputField-TextMeshPro
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class MaxstSceneManager : MonoBehaviour
 {
@@ -396,6 +397,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	public void StartNavigation(Action action)
 	{
+		bool noPath = false;
 		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
 		floor = naviDest.floor;
 		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.categorySub == "") == true)
@@ -433,12 +435,15 @@ public class MaxstSceneManager : MonoBehaviour
 				navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, naviDest.getEndLocation(), location.transform.position, vPSTrackablesList.ToArray(),
 				() =>
 				{
+					Debug.Log("No Path2");
+					noPath = PopNoPath();
 					Debug.Log("No Path");
 				});
 				//}, "coex_outdoor");
 			}
 		}
-		ActivePanelChange();
+		if (!noPath)
+			ActivePanelChange();
 		action.Invoke();
 	}
 
@@ -462,6 +467,16 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	bool PopNoPath()
+    {
+		GameObject panel_NoPath = GameObject.Find("Canvas_Navi").transform.Find("Panel_NoPath").gameObject;
+
+		panel_NoPath.SetActive(true);
+		Thread.Sleep(400);
+		panel_NoPath.SetActive(false);
+		return true;
 	}
 
 	public void OnClickNavigation()
