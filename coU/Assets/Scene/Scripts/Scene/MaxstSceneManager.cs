@@ -296,6 +296,7 @@ public class MaxstSceneManager : MonoBehaviour
 		public const string COEX_OUTDOOR = "outdoor";
 	}
 
+	// inspector 체크박스로 렌더링 할지 안할지 결정할 수 있도록 리팩토링하고 싶음(함수명도 적당한 것으로 바꾸고 싶음)
 	private void disableRenderer(string localizerLocation)
 	{
 		string parentName = null;
