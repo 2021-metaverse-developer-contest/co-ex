@@ -131,7 +131,7 @@ public class MaxstSceneManager : MonoBehaviour
 		while (true)
         {
 			vAR = arCamera.transform.position;
-			yield return new WaitForSeconds(5.0f);
+			yield return new WaitForSeconds(0.1f);
         }
     }
 
