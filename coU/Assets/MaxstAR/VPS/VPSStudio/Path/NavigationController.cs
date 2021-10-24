@@ -126,7 +126,7 @@ public class NavigationController : MonoBehaviour
 
 
     public void MakePath(string start_location, Vector3 start_position, string end_location, Vector3 end_position, VPSTrackable[] trackables, Action fail, string serverName = "")
-    {
+    {  
         startPosition = start_position;
         endPosition = end_position;
 
@@ -236,6 +236,7 @@ public class NavigationController : MonoBehaviour
         destination.transform.rotation *= Quaternion.Euler(new Vector3(-80f, 0f, 0f));
         destination.name = "destination";
         MaxstSceneManager.chkNavi = true;
+        MaxstSceneManager.DestroyFakeDestination();
         //
 
         return naviGameObject;
