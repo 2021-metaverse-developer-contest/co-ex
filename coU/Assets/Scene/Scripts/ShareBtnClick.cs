@@ -1,16 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ShareBtnClick : MonoBehaviour
 {
 	public void ShareBtnOnClick()
 	{
 		string subject = "42_coU";
-		// string scene = "StoreScene";
-		string name = StoreSceneManager.storeName;
-		string categoryMain = StoreSceneManager.categoryMain;
-		string categorySub = StoreSceneManager.categorySub;
+		string name;
+		string categoryMain;
+		string categorySub;
+		 string sceneName = SceneManager.GetActiveScene().name;
+		if (sceneName.Contains("StoreScene") || (SceneManager.sceneCount > 1 && sceneName.Contains("MaxstScene")))
+		{
+			name = StoreSceneManager.storeName;
+			categoryMain = StoreSceneManager.categoryMain;
+			categorySub = StoreSceneManager.categorySub;
+		}
+		else
+		{
+			name = EventSystem.current.currentSelectedGameObject.transform.parent.GetComponent<TextMeshProUGUI>().text;
+			List<Store> stores = GetDBData.getStoresData("Select * from Stores where name = '" + name + "'");
+			categoryMain = stores[0].categoryMain;
+			categorySub = stores[0].categorySub;
+		}
 		// 카테고리메인에 "레스토랑&카페", 카테고리서브 "카페/디저트" &, / 쓰는 것을 조심해야함.
 		// string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?scene={0}&name={1}&categoryMain={2}&categorySub={3}",
 		// 					scene, name, categoryMain, categorySub);
