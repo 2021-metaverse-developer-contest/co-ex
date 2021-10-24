@@ -470,14 +470,14 @@ public class MaxstSceneManager : MonoBehaviour
 	public static void DestroyFakeDestination()
 	{
 		floor = floor == "1F" ? "F1" : floor; 
-		foreach (VPSTrackable elem in vPSTrackablesList)
+		foreach (VPSTrackable vpsTrack in vPSTrackablesList)
 		{
-			Debug.Log("Ssssss " + elem.gameObject.name);
-			if (elem.gameObject.transform.Find("Navigation/destination") != null)
+			Debug.Log("Destroy the canvas_arrival of the destination floor " + vpsTrack.gameObject.name);
+			if (vpsTrack.gameObject.transform.Find("Navigation/destination") != null)
 			{
-				if (!elem.gameObject.name.EndsWith(floor.ToLower() + "(Clone)"))
+				if (!vpsTrack.gameObject.name.EndsWith(floor.ToLower() + "(Clone)"))
 				{
-					DestroyImmediate(elem.gameObject.transform.Find("Navigation/destination").gameObject);
+					DestroyImmediate(vpsTrack.gameObject.transform.Find("Navigation/destination").gameObject);
 					break;
 				}
 			}

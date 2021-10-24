@@ -161,7 +161,9 @@ public class PutMarkerManager : MonoBehaviour
                 {
                     menuName[i] = menuParent.Find("Panel_Name").Find("Panel_Name" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
                     menuPrice[i] = menuParent.Find("Panel_Price").Find("Panel_Price" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
-                    menuName[i].text = items[i].itemTitle + "(" + items[i].itemTitleSub + ")";
+                    menuName[i].text = items[i].itemTitle;
+                    if (items[i].itemTitleSub != "" && items[i].itemTitleSub != null)
+                        menuName[i].text += "(" + items[i].itemTitleSub + ")";
                     menuPrice[i].text = string.Format("{0:n0}", items[i].itemPrice) + "원";
                 }
             }
