@@ -202,4 +202,24 @@ public class PutMarkerManager : MonoBehaviour
         Transform arTransform = arObject.transform;
         return (arTransform);
     }
+
+    //bool isPause = false;
+
+    //private void OnApplicationPause(bool pause)
+    //{
+    //    if (pause)
+    //    {
+    //        isPause = true;           
+    //        foreach (var i in GameObject.FindGameObjectsWithTag("minicanvas"))
+    //            Destroy(i);
+    //        canvasList.Clear();
+    //    }
+    //    else
+    //    {
+    //        if (isPause)
+    //            isfinishDetect = false;
+    //        isPause = false;
+    //    }
+
+    //}
 }
