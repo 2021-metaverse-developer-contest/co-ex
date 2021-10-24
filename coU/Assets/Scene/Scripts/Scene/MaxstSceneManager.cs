@@ -135,6 +135,9 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Start()
 	{
+		//화면 꺼지지 않도록 2021.10.24
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
 		StartCoroutine(setvAR());
 
 		//hyojlee 2021/10/19

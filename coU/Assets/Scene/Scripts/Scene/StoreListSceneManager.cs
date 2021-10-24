@@ -133,7 +133,7 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             f1_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = f1_list[i].name;
-            f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((f1_list[i].distance / 10f) * 10) + "m";
+            //f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((f1_list[i].distance / 10f) * 10) + "m";
         }
         for (i = 0; i < b1_items.Length; i++)
         {
@@ -145,7 +145,7 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b1_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = b1_list[i].name;
-            b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b1_list[i].distance / 10f) * 10).ToString() + "m";
+            //b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b1_list[i].distance / 10f) * 10).ToString() + "m";
         }
         for (i = 0; i < b2_items.Length; i++)
         {
@@ -156,7 +156,25 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b2_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = b2_list[i].name;
-            b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b2_list[i].distance / 10f) * 10).ToString() + "m";
+            //b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b2_list[i].distance / 10f) * 10).ToString() + "m";
+        }
+        StartCoroutine(UpdateDistance());
+    }
+    IEnumerator UpdateDistance()
+    {
+        int i;
+
+        while (true)
+        {
+            Debug.Log("Distance Update");
+            for (i = 0; i < f1_items.Length; i++)
+                f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((f1_list[i].distance / 10f) * 10).ToString() + "m";
+            for (i = 0; i < b1_items.Length; i++)
+                b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b1_list[i].distance / 10f) * 10).ToString() + "m";
+            for (i = 0; i < b2_items.Length; i++)
+                b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = Math.Ceiling((b2_list[i].distance / 10f) * 10).ToString() + "m";
+
+            yield return new WaitForSeconds(2f);
         }
     }
 }
