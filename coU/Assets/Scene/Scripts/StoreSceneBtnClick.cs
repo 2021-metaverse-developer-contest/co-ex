@@ -27,6 +27,7 @@ public class StoreSceneBtnClick : MonoBehaviour
 
     public void NaviBtnOnClick()
     {
+        Debug.Log("Navigation Btn click " + StoreSceneManager.floor);
         MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
         MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
         MaxstSceneManager.naviStoreFloor = StoreSceneManager.floor;
