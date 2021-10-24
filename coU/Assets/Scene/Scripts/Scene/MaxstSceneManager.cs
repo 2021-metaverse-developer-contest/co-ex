@@ -49,6 +49,7 @@ public class MaxstSceneManager : MonoBehaviour
     //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
 	GameObject panelBackground;
+	public static bool onceDetectARLocation = false;
 
 	//hyojlee 2021.10.23
 	public static bool chkNavi = false;
@@ -57,6 +58,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Awake()
 	{
+		onceDetectARLocation = false;
 		if (vPSTrackablesList == null)
 			vPSTrackablesList = new List<VPSTrackable>();
 		QualitySettings.vSyncCount = 0;
@@ -261,6 +263,7 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
+				onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				disableRenderer(currentLocalizerLocation);
