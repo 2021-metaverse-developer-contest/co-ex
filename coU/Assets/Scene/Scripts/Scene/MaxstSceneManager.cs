@@ -315,7 +315,7 @@ public class MaxstSceneManager : MonoBehaviour
 		backCount = 0;
     }
 
-    void OnApplicationPause(bool pause)
+	void OnApplicationPause(bool pause)
 	{
 		if (pause)
 		{
