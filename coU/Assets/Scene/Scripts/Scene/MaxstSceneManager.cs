@@ -324,14 +324,6 @@ public class MaxstSceneManager : MonoBehaviour
 		{
 			CameraDevice.GetInstance().Stop();
 			TrackerManager.GetInstance().StopTracker();
-			GameObject[] minicanvas = GameObject.FindGameObjectsWithTag(nameof(minicanvas));
-			if (minicanvas.Length != 0)
-            {
-				foreach(var it in minicanvas)
-                {
-					Destroy(it);
-                }
-            }
 		}
 		else
 		{
