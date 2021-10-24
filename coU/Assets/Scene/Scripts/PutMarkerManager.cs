@@ -157,14 +157,22 @@ public class PutMarkerManager : MonoBehaviour
             {
                 menuParent.parent.gameObject.SetActive(true);
                 int num = menuName.Length < items.ToArray().Length ? menuName.Length : items.ToArray().Length;
-                for (int i = 0; i < num; i++)
+                for (int i = 0; i < menuName.Length; i++)
                 {
-                    menuName[i] = menuParent.Find("Panel_Name").Find("Panel_Name" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
-                    menuPrice[i] = menuParent.Find("Panel_Price").Find("Panel_Price" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
-                    menuName[i].text = items[i].itemTitle;
-                    if (items[i].itemTitleSub != "" && items[i].itemTitleSub != null)
-                        menuName[i].text += "(" + items[i].itemTitleSub + ")";
-                    menuPrice[i].text = string.Format("{0:n0}", items[i].itemPrice) + "원";
+                    if (i < num)
+                    {
+                        menuName[i] = menuParent.Find("Panel_Name").Find("Panel_Name" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
+                        menuPrice[i] = menuParent.Find("Panel_Price").Find("Panel_Price" + (i + 1).ToString()).GetComponentInChildren<TextMeshProUGUI>();
+                        menuName[i].text = items[i].itemTitle;
+                        if (items[i].itemTitleSub != "" && items[i].itemTitleSub != null)
+                            menuName[i].text += "(" + items[i].itemTitleSub + ")";
+                        menuPrice[i].text = string.Format("{0:n0}", items[i].itemPrice) + "원";
+                    }
+                    else
+                    {
+                        menuParent.Find("Panel_Name").Find("Panel_Name" + (i + 1).ToString()).gameObject.SetActive(false);
+                        menuParent.Find("Panel_Price").Find("Panel_Price" + (i + 1).ToString()).gameObject.SetActive(false);
+                    }
                 }
             }
             else
