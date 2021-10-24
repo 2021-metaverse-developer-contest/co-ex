@@ -137,6 +137,7 @@ public class PutMarkerManager : MonoBehaviour
             string parentOfStores = floor + "_Stores";
             GameObject parent = GameObject.Find(parentOfStores);
             GameObject canvas = Instantiate(marker, parent.transform);
+            canvas.tag = "minicanvas";
 
             // hyojlee 2021/10/22
             // 미니 캔버스의 렌더 모드는 world space이므로 이벤트 카메라를 붙여줘야함.
