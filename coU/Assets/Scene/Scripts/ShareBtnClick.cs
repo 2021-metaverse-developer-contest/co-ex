@@ -9,7 +9,7 @@ public class ShareBtnClick : MonoBehaviour
 {
 	public void ShareBtnOnClick()
 	{
-		string subject = "42_coU";
+		string subject = "co-ex 애플리케이션에서 상대방의 위치와 가까운 매장정보를 확인하시겠습니까? 링크를 눌러주세요!";
 		string name;
 		string categoryMain;
 		string categorySub;
