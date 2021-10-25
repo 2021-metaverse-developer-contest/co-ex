@@ -49,6 +49,7 @@ public class MaxstSceneManager : MonoBehaviour
     //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
 	GameObject panelBackground;
+	public static bool onceDetectARLocation = false;
 
 	//hyojlee 2021.10.23
 	public static bool chkNavi = false;
@@ -57,6 +58,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Awake()
 	{
+		onceDetectARLocation = false;
 		if (vPSTrackablesList == null)
 			vPSTrackablesList = new List<VPSTrackable>();
 		QualitySettings.vSyncCount = 0;
@@ -129,7 +131,7 @@ public class MaxstSceneManager : MonoBehaviour
 		while (true)
         {
 			vAR = arCamera.transform.position;
-			yield return new WaitForSeconds(5.0f);
+			yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -261,6 +263,7 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
+				onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				disableRenderer(currentLocalizerLocation);
@@ -293,6 +296,7 @@ public class MaxstSceneManager : MonoBehaviour
 		public const string COEX_OUTDOOR = "outdoor";
 	}
 
+	// inspector 체크박스로 렌더링 할지 안할지 결정할 수 있도록 리팩토링하고 싶음(함수명도 적당한 것으로 바꾸고 싶음)
 	private void disableRenderer(string localizerLocation)
 	{
 		string parentName = null;
