@@ -114,18 +114,21 @@ public class StoreListSceneManager : MonoBehaviour
         string query = "Select * from Stores where categorySub = '" + categorySub + "'";
         query += " AND floor = '";
 
-        f1_list = GetDBData.getStoresData(query + "1F'");
-        b1_list = GetDBData.getStoresData(query + "B1'");
-        b2_list = GetDBData.getStoresData(query + "B2'");
+        f1_list = GetDBData.getStoresData(query + "1F' order by name");
+        b1_list = GetDBData.getStoresData(query + "B1' order by name");
+        b2_list = GetDBData.getStoresData(query + "B2' order by name");
 
         // 순회하면서 계산 distance에 값넣기
         addDistance(f1_list);
         addDistance(b1_list);
         addDistance(b2_list);
-        // 넣은 값을 기준으로 정렬하기
-        f1_list.Sort(cmp);
-        b1_list.Sort(cmp);
-        b2_list.Sort(cmp);
+        if (MaxstSceneManager.onceDetectARLocation)
+        {
+            // 넣은 값을 기준으로 정렬하기
+            f1_list.Sort(cmp);
+            b1_list.Sort(cmp);
+            b2_list.Sort(cmp);
+        }
 
         f1_items = new GameObject[f1_list.ToArray().Length];
         b1_items = new GameObject[b1_list.ToArray().Length];
