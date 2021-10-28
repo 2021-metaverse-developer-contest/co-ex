@@ -9,6 +9,7 @@ using maxstAR;
 
 public class StoreListSceneManager : MonoBehaviour
 {
+    private GameObject parentCriterion = null;
     public GameObject item;
     public static string categorySub = "";
 
@@ -26,6 +27,7 @@ public class StoreListSceneManager : MonoBehaviour
 
     void Start()
     {
+        parentCriterion = GameObject.Find("parentCriterion");
         Screen.orientation = ScreenOrientation.Portrait;
 
         GameObject.Find("TMP_SubCategory").GetComponent<TextMeshProUGUI>().text = categorySub;
@@ -35,7 +37,16 @@ public class StoreListSceneManager : MonoBehaviour
         PanelFloor = GameObject.Find("Panel_Floor").gameObject;
         Debug.Log("StoreListSceneManager start: categorySub " + categorySub);
 
-        FillContent();
+        string query = "Select * from Stores where categorySub = '" + categorySub + "'";
+        query += " AND floor = '";
+        f1_list = GetDBData.getStoresData(query + "1F' order by name");
+        b1_list = GetDBData.getStoresData(query + "B1' order by name");
+        b2_list = GetDBData.getStoresData(query + "B2' order by name");
+        if (MaxstSceneManager.onceDetectARLocation == true)
+            FillContent(true);
+        else
+            FillContent(false);
+
         ChkNoDataFloor();
         if (b1_items.Length > f1_items.Length)
         {
@@ -58,16 +69,6 @@ public class StoreListSceneManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             BackBtnOnClick();
-  //      addDistance(f1_list);
-  //      addDistance(b1_list);
-  //      addDistance(b2_list);
-  //      int i = 0;
-		//for (i = 0; i < f1_items.Length; i++)
-		//	f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((f1_list[i].distance / 10f)) * 10).ToString() + "m";
-		//for (i = 0; i < b1_items.Length; i++)
-		//	b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b1_list[i].distance / 10f)) * 10).ToString() + "m";
-		//for (i = 0; i < b2_items.Length; i++)
-		//	b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b2_list[i].distance / 10f)) * 10).ToString() + "m";
     }
 
     void BackBtnOnClick()
@@ -85,14 +86,23 @@ public class StoreListSceneManager : MonoBehaviour
             PanelFloor.transform.Find("Btn_B2").gameObject.SetActive(false);
     }
 
-    private Action<List<Store>> addDistance = (storeList) =>
+    private void addDistance(List<Store> storeList)
     {
+        GameObject empty = new GameObject();
         foreach (Store i in storeList)
         {
-            Vector3 vStore = new Vector3((float)i.modifiedX, 0f, (float)i.modifiedY);
-            i.distance = Vector3.Distance(vStore, MaxstSceneManager.vAR);
+            GameObject child = Instantiate(empty, parentCriterion.transform);
+            Vector3 rawLocation = new Vector3(((float)i.modifiedX), ((float)i.modifiedY), 0);
+            child.transform.localPosition = rawLocation;
+            print(i.name);
+            print("child.transform.position: " + child.transform.position);
+            print("child.transform.localpostion: " + child.transform.localPosition);
+            print("AR camer: " + MaxstSceneManager.vAR);
+            i.distance = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+            print("-----------");
         }
-    };
+        Destroy(empty);
+    }
 
     Action<int> action = (b) =>
     {
@@ -107,33 +117,25 @@ public class StoreListSceneManager : MonoBehaviour
             return 1;
     }
 
-    void FillContent()
+
+
+    void FillContent(bool withDistance)
     {
-        int i;
-        string defaultLogoPath = "default_logo";
-        string query = "Select * from Stores where categorySub = '" + categorySub + "'";
-        query += " AND floor = '";
-
-        f1_list = GetDBData.getStoresData(query + "1F' order by name");
-        b1_list = GetDBData.getStoresData(query + "B1' order by name");
-        b2_list = GetDBData.getStoresData(query + "B2' order by name");
-
-        // 순회하면서 계산 distance에 값넣기
-        addDistance(f1_list);
-        addDistance(b1_list);
-        addDistance(b2_list);
-        if (MaxstSceneManager.onceDetectARLocation)
+        if (withDistance == true)
         {
-            // 넣은 값을 기준으로 정렬하기
+            addDistance(f1_list);
+            addDistance(b1_list);
+            addDistance(b2_list);
             f1_list.Sort(cmp);
             b1_list.Sort(cmp);
             b2_list.Sort(cmp);
         }
-
         f1_items = new GameObject[f1_list.ToArray().Length];
         b1_items = new GameObject[b1_list.ToArray().Length];
         b2_items = new GameObject[b2_list.ToArray().Length];
 
+        string defaultLogoPath = "default_logo";
+        int i;
         for (i = 0; i < f1_items.Length; i++)
         {
             f1_items[i] = Instantiate(item, f1.transform.Find("Viewport").Find("Content"));
@@ -144,7 +146,10 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             f1_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = f1_list[i].name;
-            f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
+            if (withDistance == true)
+                f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(f1_list[i].distance)).ToString() + "m";
+            else
+                f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
         }
         for (i = 0; i < b1_items.Length; i++)
         {
@@ -156,7 +161,10 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b1_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = b1_list[i].name;
-            b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
+            if (withDistance == true)
+                b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b1_list[i].distance)).ToString() + "m";
+            else
+                b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
         }
         for (i = 0; i < b2_items.Length; i++)
         {
@@ -167,30 +175,36 @@ public class StoreListSceneManager : MonoBehaviour
                 texture = Resources.Load(defaultLogoPath, typeof(Texture2D)) as Texture2D;
             img.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
             b2_items[i].transform.Find("Panel_Name/Tmp_Name").GetComponent<TextMeshProUGUI>().text = b2_list[i].name;
-            b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
-        }
-         StartCoroutine(UpdateDistance());
-    }
-    IEnumerator UpdateDistance()
-    {
-        int i;
-		
-        while (true)
-        {
-            Debug.Log("Distance Update");
-            if (MaxstSceneManager.onceDetectARLocation == true)
-            {
-                addDistance(f1_list);
-                addDistance(b1_list);
-                addDistance(b2_list);
-                for (i = 0; i < f1_items.Length; i++)
-                    f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((f1_list[i].distance / 10f)) * 10).ToString() + "m";
-                for (i = 0; i < b1_items.Length; i++)
-                    b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b1_list[i].distance / 10f)) * 10).ToString() + "m";
-                for (i = 0; i < b2_items.Length; i++)
-                    b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b2_list[i].distance / 10f)) * 10).ToString() + "m";
-            }
-            yield return new WaitForSeconds(1f);
+            if (withDistance == true)
+                b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b2_list[i].distance)).ToString() + "m";
+            else
+                b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = "";
         }
     }
+
+    //IEnumerator UpdateDistance()
+    //{
+    //    int i;
+    //    while (true)
+    //    {
+    //        Debug.Log("Distance Update");
+    //        if (MaxstSceneManager.onceDetectARLocation == true)
+    //        {
+    //            addDistance(f1_list);
+    //            addDistance(b1_list);
+    //            addDistance(b2_list);
+    //            // 이미 f1_items 와 같은 array로 화면에 표시된 순서는 정해져있기때문에, Sort를 쓰면 절대 안된다.
+    //            //f1_list.Sort(cmp);
+    //            //b1_list.Sort(cmp);
+    //            //b2_list.Sort(cmp);
+    //            for (i = 0; i < f1_items.Length; i++)
+    //                f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(f1_list[i].distance)).ToString() + "m";
+    //            for (i = 0; i < b1_items.Length; i++)
+    //                b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b1_list[i].distance)).ToString() + "m";
+    //            for (i = 0; i < b2_items.Length; i++)
+    //                b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b2_list[i].distance)).ToString() + "m";
+    //        }
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //}
 }
