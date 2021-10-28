@@ -172,11 +172,11 @@ public class StoreListSceneManager : MonoBehaviour
                 addDistance(b1_list);
                 addDistance(b2_list);
                 for (i = 0; i < f1_items.Length; i++)
-                    f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((f1_list[i].distance / 10f)) * 10).ToString() + "m";
+                    f1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(f1_list[i].distance)).ToString() + "m";
                 for (i = 0; i < b1_items.Length; i++)
-                    b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b1_list[i].distance / 10f)) * 10).ToString() + "m";
+                    b1_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b1_list[i].distance)).ToString() + "m";
                 for (i = 0; i < b2_items.Length; i++)
-                    b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling((b2_list[i].distance / 10f)) * 10).ToString() + "m";
+                    b2_items[i].transform.Find("Panel_Name/Tmp_Name/Tmp_Distance").GetComponent<TextMeshProUGUI>().text = (Math.Ceiling(b2_list[i].distance)).ToString() + "m";
             }
             yield return new WaitForSeconds(1f);
         }
