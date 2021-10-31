@@ -24,6 +24,9 @@ public class MaxstSceneManager : MonoBehaviour
 	//
 	public static Vector3 vAR = new Vector3();
 
+	[SerializeField]
+	private bool prefabRendering = false;
+
 	private CameraBackgroundBehaviour cameraBackgroundBehaviour = null;
 	//hyojlee private GameObject arCamera = null;
 	private static GameObject arCamera = null;
@@ -266,7 +269,8 @@ public class MaxstSceneManager : MonoBehaviour
 				onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
-				disableRenderer(currentLocalizerLocation);
+				if (prefabRendering == false)
+					disableRenderer(currentLocalizerLocation);
 				if (naviStart == true)
 				{
 					naviStart = false;
