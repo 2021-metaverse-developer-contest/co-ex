@@ -4,19 +4,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StoreListClick : MonoBehaviour
 {
     public static string clickFloor = "";
+
     public static void FloorBtnOnClick()
     {
         GameObject click = EventSystem.current.currentSelectedGameObject;
         if (click != null)
             clickFloor = EventSystem.current.currentSelectedGameObject.name;
+        else
+            click = GameObject.Find("Btn_" + clickFloor).gameObject;
         GameObject parent = GameObject.Find("Panel_List").gameObject;
         GameObject F1Content = parent.transform.Find("ScrollView_F1").gameObject;
         GameObject B1Content = parent.transform.Find("ScrollView_B1").gameObject;
         GameObject B2Content = parent.transform.Find("ScrollView_B2").gameObject;
+
+        click.GetComponent<Image>().color = new Color32(198, 215, 255, 76);
 
         if (clickFloor.Contains("F1"))
         {
@@ -41,7 +47,38 @@ public class StoreListClick : MonoBehaviour
         }
         else
             Debug.Log("Click Error");
-        EventSystem.current.SetSelectedGameObject(GameObject.Find("Btn_" + clickFloor).gameObject);
+        ChangeBtnColor(clickFloor);
+
+    }
+
+    private static void ChangeBtnColor(string selectFloor)
+    {
+        GameObject b1 = GameObject.Find("Btn_B1");
+        GameObject b2 = GameObject.Find("Btn_B2");
+        GameObject f1 = GameObject.Find("Btn_F1");
+
+        if (selectFloor == "F1")
+        {
+            if (b1 != null)
+                b1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            if (b2 != null)
+                b2.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+        else if (selectFloor == "B1")
+        {
+            if (f1 != null)
+                f1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            if (b2 != null)
+                b2.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+        else
+        {
+            if (f1 != null)
+                f1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            if (b1 != null)
+                b1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
     }
 
     public void StoreOnClick()

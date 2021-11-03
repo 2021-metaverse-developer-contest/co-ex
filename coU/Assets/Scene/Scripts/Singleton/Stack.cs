@@ -7,6 +7,8 @@ public class Stack : MonoBehaviour
     private static Stack _stack = null;
     private static Stack<SceneInfo> stack = new Stack<SceneInfo>();
 
+    private Stack() { }
+
     public static Stack Instance {
         get {
             if (_stack == null)
