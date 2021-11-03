@@ -41,7 +41,7 @@ public class SearchSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
             BackBtnOnClick();
     }
 

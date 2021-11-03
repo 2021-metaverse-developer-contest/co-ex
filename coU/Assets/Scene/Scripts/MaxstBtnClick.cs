@@ -8,16 +8,17 @@ using UnityEngine.UI;
 
 public class MaxstBtnClick : MonoBehaviour
 {
-    public void SearchBtnOnClick()
-    {
-        SceneManager.LoadScene("SearchScene");
-        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
-    }
+    //public void SearchBtnOnClick()
+    //{
+    //    SceneManager.LoadScene("SearchScene");
+    //    Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
+    //}
 
-    public void CategoryBtnOnClick()
-    {
-        SceneManager.LoadScene("AllCategoryScene");
-    }
+    //public void MenuBtnOnClick()
+    //{
+    //    //SceneManager.LoadScene("AllCategoryScene");
+    //    SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+    //}
 
     public void StoreOnClick()
     {

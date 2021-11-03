@@ -36,4 +36,9 @@ public class StoreSceneBtnClick : MonoBehaviour
         Stack.Instance.Clear(); // MaxstScene에서는 언제나 바로 종료되므로
         SceneManager.LoadScene("MaxstScene");
     }
+
+    public void UploadBtnOnClick()
+    {
+        SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+    }
 }

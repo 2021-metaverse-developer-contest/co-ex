@@ -30,9 +30,10 @@ public class StoreSceneManager : MonoBehaviour
         {
             print(it.name);
             if (it.name == "Canvas_Main")
-            {
                 Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Menu").gameObject;
-            }
+            if (Login.Instance.IsPermission(storeName))
+                if (it.name == "Panel_Img")
+                    it.transform.Find("Btn_Upload").gameObject.SetActive(true);
         }
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
@@ -41,7 +42,7 @@ public class StoreSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene"))
         {
             if (Stack.Instance.Count() > 0)
             {
@@ -60,8 +61,9 @@ public class StoreSceneManager : MonoBehaviour
 	System.Diagnostics.Process.GetCurrentProcess().Kill();
 #endif
                 }
-                Toast.Instance.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
+                Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
             }
+
         }
     }
 
