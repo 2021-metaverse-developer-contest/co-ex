@@ -1544,7 +1544,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2065054820}
         m_TargetAssemblyTypeName: MenuBtnClick, Assembly-CSharp
-        m_MethodName: BtnCloseOnClick
+        m_MethodName: CloseBtnOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
