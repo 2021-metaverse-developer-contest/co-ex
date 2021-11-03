@@ -5,25 +5,14 @@ using UnityEngine;
 
 //https://pluu.github.io/blog/android/2015/09/07/android-metadata/
 //https://blueasa.tistory.com/2383
-public class GetManifest : MonoBehaviour
+public class Manifest : MonoBehaviour
 {
-    private static GetManifest _getManifest = null;
-
-    public static GetManifest Instance
-    {
-        get
-        {
-            if (_getManifest == null)
-                _getManifest = new GetManifest();
-            return _getManifest;
-        }
-    }
     /// <summary>
     /// Get Meta-data in AndroidManifest.xml
     /// </summary>
     /// <param name="name">android:name</param>
     /// <returns>android:value</returns>
-    public string GetManifestData(string name)
+    public static string GetManifestData(string name)
     {
         string ret = "";
 

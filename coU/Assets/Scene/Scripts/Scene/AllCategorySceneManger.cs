@@ -23,7 +23,7 @@ public class AllCategorySceneManger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
             BackBtnClick();
     }
 
