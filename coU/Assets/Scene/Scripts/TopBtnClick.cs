@@ -62,4 +62,9 @@ public class TopBtnClick : MonoBehaviour
         Stack.Instance.Clear();
         SceneManager.LoadScene("MaxstScene");
     }
+
+    public void MenuBtnOnclick()
+    {
+        SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+    }
 }

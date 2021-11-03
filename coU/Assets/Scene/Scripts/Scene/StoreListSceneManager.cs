@@ -54,6 +54,7 @@ public class StoreListSceneManager : MonoBehaviour
                 StoreListClick.clickFloor = "B2";
             else
                 StoreListClick.clickFloor = "B1";
+
         }
         else
         {
@@ -67,7 +68,7 @@ public class StoreListSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
             BackBtnOnClick();
     }
 
