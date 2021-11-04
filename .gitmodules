@@ -1,0 +1,4 @@
+[submodule "coU_crawling"]
+	path = coU_crawling
+	url = git@github.com:2021-metaverse-developer-contest/coU_crawling.git
+	branch = main
