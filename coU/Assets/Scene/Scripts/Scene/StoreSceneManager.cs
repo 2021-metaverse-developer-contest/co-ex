@@ -30,7 +30,7 @@ public class StoreSceneManager : MonoBehaviour
         {
             print(it.name);
             if (it.name == "Canvas_Main")
-                Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Menu").gameObject;
+                Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_MenuParent/Panel_Menu").gameObject;
             if (Login.Instance.IsPermission(storeName))
                 if (it.name == "Panel_Img")
                     it.transform.Find("Btn_Upload").gameObject.SetActive(true);
