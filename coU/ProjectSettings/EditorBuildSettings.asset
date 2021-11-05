@@ -18,8 +18,11 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/StoreListScene.unity
     guid: a3dc70b94338b480b9992f8b6136a25c
   - enabled: 1
-    path: Assets/Scene/Scenes/StoreScene.unity
-    guid: fd85733b8b4164d95bae7611fca89285
+    path: Assets/Scene/Scenes/StoreScene1.unity
+    guid: a30e1836c1bf34b22a8779be7872cc8b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scene/Scenes/SearchScene.unity
     guid: e765f7750cd0b43aaa1b5a1777883c5b
@@ -33,6 +36,9 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/StoreListScene 1.unity
     guid: d704577fbc9bd44bbbae898e5840bbec
   - enabled: 1
-    path: Assets/Scene/Scenes/UploadScene.unity
+    path: Assets/Scene/Scenes/UploadScene1.unity
     guid: 9231461baae3b4fb89b885f6d18a2c9a
+  - enabled: 1
+    path: Assets/Scene/Scenes/StoreScene.unity
+    guid: 0049ded2bb8eb4373bdc5355dc77f786
   m_configObjects: {}
