@@ -5,7 +5,7 @@ using UnityEngine;
 
 //https://pluu.github.io/blog/android/2015/09/07/android-metadata/
 //https://blueasa.tistory.com/2383
-public class Manifest : MonoBehaviour
+public class Manifest
 {
     /// <summary>
     /// Get Meta-data in AndroidManifest.xml

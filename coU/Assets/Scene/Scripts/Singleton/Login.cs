@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Login : MonoBehaviour
+public class Login
 {
     private static Login _login = null;
     private bool isLogin = false;

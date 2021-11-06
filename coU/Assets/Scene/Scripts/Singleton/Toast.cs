@@ -1,7 +1,7 @@
 using System.Threading;
 using UnityEngine;
 
-public class Toast : MonoBehaviour
+public class Toast
 {
     /// <summary>
     /// Show toast Message
