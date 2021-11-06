@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stack : MonoBehaviour
+public class Stack
 {
     private static Stack _stack = null;
     private static Stack<SceneInfo> stack = new Stack<SceneInfo>();
 
-    private Stack() { }
+    private Stack() {}
 
     public static Stack Instance {
         get {
