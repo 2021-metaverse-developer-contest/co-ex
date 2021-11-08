@@ -18,6 +18,12 @@ public class LoginSceneManager : MonoBehaviour
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance; //객체 초기화
     }
 
+	private void Start()
+	{
+        Screen.orientation = ScreenOrientation.Portrait;
+
+    }
+
     public void login()
     {
         Debug.Log("Is in login?");
