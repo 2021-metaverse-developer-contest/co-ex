@@ -9,7 +9,7 @@ public class UploadSceneManager : MonoBehaviour
 {
     private void Start()
     {
-        
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     private void Update()

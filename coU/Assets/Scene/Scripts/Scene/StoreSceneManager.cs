@@ -42,7 +42,8 @@ public class StoreSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene"))
+        if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 1
+            || (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene")))
         {
             if (Stack.Instance.Count() > 0)
             {
