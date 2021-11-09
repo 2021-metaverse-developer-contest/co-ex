@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/Scenes/UploadScene.unity
-    guid: d0916fa176690465a8a4e30101de5459
-  - enabled: 1
     path: Assets/Scene/Scenes/FirstScene.unity
     guid: f3e9b53197ed84522a01e5764abb3a81
   - enabled: 1
@@ -21,27 +18,27 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/StoreListScene.unity
     guid: a3dc70b94338b480b9992f8b6136a25c
   - enabled: 1
-    path: Assets/Scene/Scenes/StoreScene1.unity
-    guid: a30e1836c1bf34b22a8779be7872cc8b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+    path: Assets/Scene/Scenes/StoreScene.unity
+    guid: 0049ded2bb8eb4373bdc5355dc77f786
   - enabled: 1
     path: Assets/Scene/Scenes/SearchScene.unity
     guid: e765f7750cd0b43aaa1b5a1777883c5b
   - enabled: 1
-    path: Assets/Scene/Scenes/LoginScene.unity
-    guid: 0af51ab9f5b8247b49f0d1214808f82a
-  - enabled: 1
     path: Assets/Scene/Scenes/MenuScene.unity
     guid: fa20c20d1161149b0ae059dcdd8fcbb6
   - enabled: 1
-    path: Assets/Scene/Scenes/StoreListScene 1.unity
-    guid: d704577fbc9bd44bbbae898e5840bbec
+    path: Assets/Scene/Scenes/LoginScene.unity
+    guid: 0af51ab9f5b8247b49f0d1214808f82a
   - enabled: 1
-    path: Assets/Scene/Scenes/UploadScene1.unity
-    guid: 9231461baae3b4fb89b885f6d18a2c9a
+    path: Assets/Scene/Scenes/UploadScene.unity
+    guid: d0916fa176690465a8a4e30101de5459
   - enabled: 1
-    path: Assets/Scene/Scenes/StoreScene.unity
-    guid: 0049ded2bb8eb4373bdc5355dc77f786
+    path: Assets/Scene/Scenes/RegisterScene.unity
+    guid: 63396155da53c4cd4bf017ac41146b16
+  - enabled: 1
+    path: Assets/Scene/Scenes/SelectStoreScene.unity
+    guid: 7336332e2058544aaa9cfe34ee1c447a
+  - enabled: 1
+    path: Assets/Scene/Scenes/LoadingScene.unity
+    guid: e8d01a124c27842968103aba3b5f768e
   m_configObjects: {}
