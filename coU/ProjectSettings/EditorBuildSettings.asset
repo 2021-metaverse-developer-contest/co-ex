@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/SearchScene.unity
     guid: e765f7750cd0b43aaa1b5a1777883c5b
   - enabled: 1
-    path: Assets/Scene/Scenes/MenuScene.unity
+    path: Assets/Scene/Scenes/MenuScene1.unity
     guid: fa20c20d1161149b0ae059dcdd8fcbb6
   - enabled: 1
     path: Assets/Scene/Scenes/LoginScene.unity
