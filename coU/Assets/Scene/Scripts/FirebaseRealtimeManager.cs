@@ -47,6 +47,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
+                WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -57,7 +58,7 @@ public class FirebaseRealtimeManager
                     T data = JsonUtility.FromJson<T>(snapshot.GetRawJsonValue());
                     Debug.Log(data);
                 }
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -71,6 +72,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
+                WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -81,7 +83,7 @@ public class FirebaseRealtimeManager
                 // 값을 찾지 못해도 null 값이 들어감!
                 _realtimeDB.user = data as User;
                 _realtimeDB.storeImg = data as StoreImg;
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -95,6 +97,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
+				WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -104,7 +107,7 @@ public class FirebaseRealtimeManager
                 {
                     snap.Reference.RemoveValueAsync();
                 }
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -118,12 +121,13 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
+				WaitServer.Instance.isDone = true;
             }
             else
             {
                 DataSnapshot snapshot = task.Result;
                 snapshot.Reference.RemoveValueAsync();
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -137,10 +141,11 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
+				WaitServer.Instance.isDone = true;
             }
             else
             {
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }

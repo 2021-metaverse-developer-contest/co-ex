@@ -33,18 +33,6 @@ public class UploadManager : MonoBehaviour
         this.sortOrder = 0;
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
     }
-
-    IEnumerator transactionDelay()
-    {
-        SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
-        while (LoginSceneManager.isDone == false)
-        {
-            yield return null;
-        }
-        LoginSceneManager.isDone = false;
-        SceneManager.UnloadSceneAsync("LoadingScene");
-    }
-
     public void getDataCorutine()
     {
         StartCoroutine(getData());
@@ -72,27 +60,27 @@ public class UploadManager : MonoBehaviour
     {
         StoreImg data = new StoreImg(storeName, extension, sortOrder);
         FirebaseStorageManager.Instance.uploadFile(data, srcFullPath);
-        yield return transactionDelay();
+		yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator Delete()
     {
         StoreImg data = new StoreImg(storeName, extension, sortOrder);
         FirebaseStorageManager.Instance.deleteFile(data);
-        yield return transactionDelay();
+        yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator Download()
     {
         StoreImg data = new StoreImg(storeName, extension, sortOrder);
         FirebaseStorageManager.Instance.downloadFile(data, destFullPath);
-        yield return transactionDelay();
+        yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator getData()
     {
         FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
-        yield return transactionDelay();
+        yield return WaitServer.Instance.waitServer();
     }
 
 }
