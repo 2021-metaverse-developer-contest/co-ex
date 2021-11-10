@@ -8,9 +8,38 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:703673689078:android:aefbd5931d081c8f335dd7",
+        "mobilesdk_app_id": "1:703673689078:android:014ac09e2bd06834335dd7",
         "android_client_info": {
           "package_name": "com.DefaultCompany.firebase_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703673689078-5o4p4gthpmio2j4ae7j7a6omjqioj5s5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx7dBVDKgSMsY4tusGZrOvBV7audCdeZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703673689078-5o4p4gthpmio2j4ae7j7a6omjqioj5s5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703673689078:android:c42dbb8bf9fbf8f6335dd7",
+        "android_client_info": {
+          "package_name": "com.Maxst.VPSSDK"
         }
       },
       "oauth_client": [
