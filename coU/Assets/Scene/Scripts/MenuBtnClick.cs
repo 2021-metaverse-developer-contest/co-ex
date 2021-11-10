@@ -40,8 +40,12 @@ public class MenuBtnClick : MonoBehaviour
 
     public void LoginBtnOnClick()
     {
-        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
+        //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
+        //SceneManager.LoadSceneAsync("LoginScene");
 
+        // 2021.11.10
+        // 로그인 씬으로 이동 시 메뉴 씬은 언로드하고 로그인 씬을 Additive모드로 로드하고자함.
         SceneManager.LoadSceneAsync("LoginScene");
+        SceneManager.UnloadSceneAsync("MenuScene");
     }
 }
