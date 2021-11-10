@@ -47,7 +47,7 @@ public class RegisterBtnClick : MonoBehaviour
 		// 회원가입을 취소했다 == 로그인도 하지 못한다.
 		// => 회원가입 씬과 로그인 씬 모두 Unload한다
 		SceneManager.UnloadSceneAsync("RegisterScene");
-		SceneManager.UnloadSceneAsync("LoginScene");
+		//SceneManager.UnloadSceneAsync("LoginScene");
 	}
 
 	bool ChkCorrectPw()

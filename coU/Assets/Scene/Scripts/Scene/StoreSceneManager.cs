@@ -28,12 +28,13 @@ public class StoreSceneManager : MonoBehaviour
         print(gameObjects.Length);
         foreach (GameObject it in gameObjects)
         {
-            print(it.name);
+            print("This is GameObject" + it.name);
             if (it.name == "Canvas_Main")
+            {
                 Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_MenuParent/Panel_Menu").gameObject;
-            if (Login.Instance.IsPermission(storeName))
-                if (it.name == "Panel_Img")
-                    it.transform.Find("Btn_Upload").gameObject.SetActive(true);
+                if (LoginSceneManager.IsPermission(storeName))
+                    it.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Info/Panel_Name/Btn_Upload").gameObject.SetActive(true);
+            }
         }
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
         Debug.Log("StoreSceneManager start: categorySub " + categorySub);
