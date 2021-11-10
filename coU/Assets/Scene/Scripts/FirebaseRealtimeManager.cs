@@ -97,7 +97,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-				WaitServer.Instance.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -121,7 +121,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-				WaitServer.Instance.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -141,7 +141,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-				WaitServer.Instance.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
             else
             {
