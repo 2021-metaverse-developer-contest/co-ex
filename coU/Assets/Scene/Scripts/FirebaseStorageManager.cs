@@ -39,6 +39,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
+				WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -46,7 +47,7 @@ public class FirebaseStorageManager
                 Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 Debug.Log(metadata.SizeBytes.ToString());
-                LoginSceneManager.isDone = true;
+                WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -59,6 +60,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
+				WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -66,7 +68,7 @@ public class FirebaseStorageManager
                 //Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 //Debug.Log(metadata.SizeBytes.ToString());
-                LoginSceneManager.isDone = true;
+				WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -79,6 +81,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
+				WaitServer.Instance.isDone = true;
             }
             else
             {
@@ -86,7 +89,7 @@ public class FirebaseStorageManager
                 //Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 //Debug.Log(metadata.SizeBytes.ToString());
-                LoginSceneManager.isDone = true;
+				WaitServer.Instance.isDone = true;
             }
         });
     }
