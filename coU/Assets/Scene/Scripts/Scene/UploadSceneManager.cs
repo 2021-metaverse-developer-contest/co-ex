@@ -37,17 +37,6 @@ public class UploadSceneManager : MonoBehaviour
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
     }
 
-    IEnumerator transactionDelay()
-    {
-        SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
-        while (WaitServer.Instance.isDone == false)
-        {
-            yield return null;
-        }
-        WaitServer.Instance.isDone = false;
-        SceneManager.UnloadSceneAsync("LoadingScene");
-    }
-
     public void getDataCorutine()
     {
         StartCoroutine(getData());
