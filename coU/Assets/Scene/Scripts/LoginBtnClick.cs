@@ -34,7 +34,11 @@ public class LoginBtnClick : MonoBehaviour
 				Debug.Log($"{loginUser.id}님 안녕하세요."); // 여기서 출력된다.
 				LoginSceneManager.user = loginUser;
 				LoginSceneManager.isLogin = true;
+#if UNITY_EDITOR
+				Debug.Log(loginUser.id.Split('@')[0] + "으로 로그인했습니다.");
+#elif UNITY_ANDROID
 				Toast.ShowToastMessage(loginUser.id.Split('@')[0] + "으로 로그인했습니다.", 3000);
+#endif
 			}
 			else
 			{

@@ -22,9 +22,9 @@ public class SelectStoreSceneManager : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.Portrait;
 
-        inputObject = GameObject.Find("InputTMP_Search").gameObject;
+        inputObject = GameObject.Find("InputTMP_SearchSelect").gameObject;
         inputOuter = inputObject.GetComponent<TMP_InputField>();
-        btnSearch = GameObject.Find("Btn_Search").GetComponent<Button>();
+        btnSearch = GameObject.Find("Btn_SearchSelect").GetComponent<Button>();
 
         inputOuter.onSubmit.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
         inputOuter.onValueChanged.AddListener(delegate { ShowList(inputOuter.text); });
@@ -53,7 +53,7 @@ public class SelectStoreSceneManager : MonoBehaviour
         print("items number = " + items.Length);
         for (int i = 0; i < items.Length; i++)
         {
-            items[i] = Instantiate(itemList, GameObject.Find("Content_List").transform);
+            items[i] = Instantiate(itemList, GameObject.Find("Content_ListSelect").transform);
             items[i].GetComponentInChildren<TextMeshProUGUI>().text = stores[i].name;
         }
     }
@@ -69,7 +69,7 @@ public class SelectStoreSceneManager : MonoBehaviour
         results = new GameObject[stores.ToArray().Length];
         for (int i = 0; i < results.Length; i++)
         {
-            results[i] = Instantiate(itemResult,GameObject.Find("Content_Result").transform);
+            results[i] = Instantiate(itemResult,GameObject.Find("Content_ResultSelect").transform);
             results[i].transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text = stores[i].name;
             results[i].transform.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = stores[i].floor;
 
@@ -91,15 +91,15 @@ public class SelectStoreSceneManager : MonoBehaviour
         Debug.Log("Focus is changed");
         inputOuter.ActivateInputField();
         inputOuter.Select();
-        GameObject.Find("Panel_List").transform.Find("ScrollView_List").gameObject.SetActive(true);
-        GameObject.Find("Panel_List").transform.Find("ScrollView_Result").gameObject.SetActive(false);
+        GameObject.Find("Panel_ListSelect").transform.Find("ScrollView_ListSelect").gameObject.SetActive(true);
+        GameObject.Find("Panel_ListSelect").transform.Find("ScrollView_ResultSelect").gameObject.SetActive(false);
         ShowList(inputOuter.text);
     }
 
     public void SearchBtnOnClick(string inputText)
     {
-        GameObject.Find("Panel_List").transform.Find("ScrollView_List").gameObject.SetActive(false);
-        GameObject.Find("Panel_List").transform.Find("ScrollView_Result").gameObject.SetActive(true);
+        GameObject.Find("Panel_ListSelect").transform.Find("ScrollView_ListSelect").gameObject.SetActive(false);
+        GameObject.Find("Panel_ListSelect").transform.Find("ScrollView_ResultSelect").gameObject.SetActive(true);
         ShowResult(inputText);
     }
 }

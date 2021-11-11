@@ -768,7 +768,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1782760219}
+        m_TargetAssemblyTypeName: RegisterBtnClick, Assembly-CSharp
+        m_MethodName: InputIDOnValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2831,7 +2843,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 580758483}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1782760219}
+        m_TargetAssemblyTypeName: RegisterBtnClick, Assembly-CSharp
+        m_MethodName: ChkDupBtnOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &580758483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3122,7 +3146,7 @@ GameObject:
   - component: {fileID: 670160450}
   - component: {fileID: 670160449}
   m_Layer: 5
-  m_Name: Panel_PopClose
+  m_Name: Panel_PopCloseRegister
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4066,7 +4090,7 @@ GameObject:
   - component: {fileID: 867449826}
   - component: {fileID: 867449825}
   m_Layer: 5
-  m_Name: ScrollView_List
+  m_Name: ScrollView_ListSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4328,7 +4352,7 @@ GameObject:
   - component: {fileID: 913556685}
   - component: {fileID: 913556684}
   m_Layer: 5
-  m_Name: Panel_List
+  m_Name: Panel_ListSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4405,7 +4429,7 @@ GameObject:
   - component: {fileID: 920751346}
   - component: {fileID: 920751345}
   m_Layer: 5
-  m_Name: Content_List
+  m_Name: Content_ListSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4482,7 +4506,7 @@ GameObject:
   - component: {fileID: 961915768}
   - component: {fileID: 961915767}
   m_Layer: 5
-  m_Name: TMP_Close
+  m_Name: TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5504,7 +5528,7 @@ GameObject:
   - component: {fileID: 1178217084}
   - component: {fileID: 1178217083}
   m_Layer: 5
-  m_Name: Panel_Search
+  m_Name: Panel_SearchReg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6290,7 +6314,7 @@ GameObject:
   - component: {fileID: 1401985426}
   - component: {fileID: 1401985425}
   m_Layer: 5
-  m_Name: Panel_Pop
+  m_Name: Panel_PopErrorReg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6369,7 +6393,7 @@ GameObject:
   - component: {fileID: 1443379232}
   - component: {fileID: 1443379231}
   m_Layer: 5
-  m_Name: Btn_OK
+  m_Name: Btn_OKErrReg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6439,7 +6463,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1443379232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1782760219}
+        m_TargetAssemblyTypeName: RegisterBtnClick, Assembly-CSharp
+        m_MethodName: PopErrOKBtnOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1443379232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6491,7 +6527,7 @@ GameObject:
   - component: {fileID: 1491648606}
   - component: {fileID: 1491648605}
   m_Layer: 5
-  m_Name: ScrollView_Result
+  m_Name: ScrollView_ResultSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6733,7 +6769,7 @@ GameObject:
   - component: {fileID: 1529012403}
   - component: {fileID: 1529012402}
   m_Layer: 5
-  m_Name: TMP_Msg
+  m_Name: TMP_ErrMsg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7076,7 +7112,7 @@ GameObject:
   - component: {fileID: 1547465145}
   - component: {fileID: 1547465144}
   m_Layer: 5
-  m_Name: Content_Result
+  m_Name: Content_ResultSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7389,7 +7425,7 @@ GameObject:
   - component: {fileID: 1577022629}
   - component: {fileID: 1577022628}
   m_Layer: 5
-  m_Name: InputTMP_Search
+  m_Name: InputTMP_SearchSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7641,7 +7677,7 @@ GameObject:
   - component: {fileID: 1616822669}
   - component: {fileID: 1616822671}
   m_Layer: 5
-  m_Name: Panel_Whole
+  m_Name: Panel_Register
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8087,7 +8123,7 @@ GameObject:
   - component: {fileID: 1671593118}
   - component: {fileID: 1671593117}
   m_Layer: 5
-  m_Name: Panel_Pop
+  m_Name: Panel_PopCloseReg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8678,7 +8714,7 @@ GameObject:
   - component: {fileID: 1727224695}
   - component: {fileID: 1727224694}
   m_Layer: 5
-  m_Name: Panel_PopError
+  m_Name: Panel_PopErrorRegister
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8754,6 +8790,7 @@ GameObject:
   - component: {fileID: 1782760217}
   - component: {fileID: 1782760216}
   - component: {fileID: 1782760219}
+  - component: {fileID: 1782760220}
   m_Layer: 0
   m_Name: EventSystem_Register
   m_TagString: Untagged
@@ -8821,6 +8858,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f71651cf05834cbcb7b298508777d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1782760220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782760215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f71651cf05834cbcb7b298508777d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1818691864
 GameObject:
   m_ObjectHideFlags: 0
@@ -8834,7 +8883,7 @@ GameObject:
   - component: {fileID: 1818691866}
   - component: {fileID: 1818691865}
   m_Layer: 5
-  m_Name: Canvas_Pop
+  m_Name: Canvas_PopRegister
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9110,7 +9159,7 @@ GameObject:
   - component: {fileID: 1871662006}
   - component: {fileID: 1871662005}
   m_Layer: 5
-  m_Name: Btn_Close
+  m_Name: Btn_SelectClose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9240,6 +9289,7 @@ GameObject:
   - component: {fileID: 1879844251}
   - component: {fileID: 1879844253}
   - component: {fileID: 1879844252}
+  - component: {fileID: 1879844254}
   m_Layer: 5
   m_Name: Btn_Register
   m_TagString: Untagged
@@ -9305,6 +9355,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879844250}
   m_CullTransparentMesh: 1
+--- !u!114 &1879844254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879844250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1879844252}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1782760219}
+        m_TargetAssemblyTypeName: RegisterBtnClick, Assembly-CSharp
+        m_MethodName: RegisterBtnOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1888856686
 GameObject:
   m_ObjectHideFlags: 0
@@ -9393,7 +9499,7 @@ GameObject:
   - component: {fileID: 1893715747}
   - component: {fileID: 1893715746}
   m_Layer: 5
-  m_Name: Panel_OKParent
+  m_Name: Panel_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9723,7 +9829,7 @@ GameObject:
   - component: {fileID: 1959425447}
   - component: {fileID: 1959425446}
   m_Layer: 5
-  m_Name: Btn_Search
+  m_Name: Btn_SearchSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
