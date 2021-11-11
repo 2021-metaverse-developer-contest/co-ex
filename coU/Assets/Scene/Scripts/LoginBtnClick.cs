@@ -7,10 +7,73 @@ using UnityEngine.SceneManagement;
 
 public class LoginBtnClick : MonoBehaviour
 {
+	public void LoginCoroutine(string loginId, string loginPw)
+	{
+		StartCoroutine(Login(loginId, loginPw));
+	}
+
+	public IEnumerator Login(string loginId, string loginPw)
+	{
+		GameObject panelPop = GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject;
+		TextMeshProUGUI tmpMsg = panelPop.transform.Find("Panel_Pop/TMP_Msg").GetComponent<TextMeshProUGUI>();
+		string[] id = loginId.Split('@');
+		FirebaseRealtimeManager.Instance.readValue<User>((id[0] + "_" + id[1].Split('.')[0]).Replace('.', '_'));
+		yield return WaitServer.Instance.waitServer();
+		User loginUser = FirebaseRealtimeManager.Instance.user;
+		if (loginUser == null)
+		{
+			Debug.Log("아이디를 확인해주세요.");
+			panelPop.SetActive(true);
+			tmpMsg.text = "아이디를 확인해주세요.";
+		}
+		else
+		{
+			Debug.Log("loginID: " + loginUser?.id);
+			if (loginUser.id == loginId && loginUser.pw == loginPw)
+			{
+				Debug.Log($"{loginUser.id}님 안녕하세요."); // 여기서 출력된다.
+				LoginSceneManager.user = loginUser;
+				LoginSceneManager.isLogin = true;
+				Toast.ShowToastMessage(loginUser.id.Split('@')[0] + "으로 로그인했습니다.", 3000);
+			}
+			else
+			{
+				if (loginUser.id != loginId)
+				{
+					Debug.Log("아이디를 확인해주세요.");
+					panelPop.SetActive(true);
+					tmpMsg.text = "아이디를 확인해주세요.";
+				}
+				else
+				{
+					Debug.Log("비밀번호를 확인해주세요.");
+					panelPop.SetActive(true);
+					tmpMsg.text = "비밀번호가 일치하지않습니다.";
+				}
+			}
+		}
+
+		//
+		if (LoginSceneManager.isLogin == true)
+		{
+			// 로그인 버튼을 눌렀든, 우리매장 홍보하기를 눌렀든 일단 LoginScene은 
+			SceneManager.UnloadSceneAsync("LoginScene");
+			// 로그인이 된 다음에 씬전환
+			if (LoginSceneManager.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
+				SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+			else // 2. 로그인 버튼을 통해 들어온건가?
+				SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+		}
+		else
+		{
+			// 로그인이 되지 않았으니 아무런 동작도 하지 않음
+		}
+	}
+
 	public void LoginBtnOnClick()
 	{
 		GameObject panelPop = GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject;
-		TextMeshProUGUI tmpMsg = GameObject.Find("TMP_Msg").GetComponent<TextMeshProUGUI>();
+		TextMeshProUGUI tmpMsg = panelPop.transform.Find("Panel_Pop/TMP_Msg").GetComponent<TextMeshProUGUI>();
 		TMP_InputField fieldID = GameObject.Find("Input_ID").GetComponent<TMP_InputField>();
 		TMP_InputField fieldPW = GameObject.Find("Input_PW").GetComponent<TMP_InputField>();
 
@@ -29,12 +92,9 @@ public class LoginBtnClick : MonoBehaviour
 			panelPop.SetActive(true);
 			tmpMsg.text = "올바른 이메일 형식이 아닙니다.\n다시 입력해주세요.";
 		}
-		else if (true) // 4. 가입이 되어있지 않다.
+		else
 		{
-
-		}
-		else // => 로그인 성공!
-		{
+			LoginCoroutine(fieldID.text, fieldPW.text);
 		}
 	}
 
@@ -60,6 +120,7 @@ public class LoginBtnClick : MonoBehaviour
 	public void RegisterBtnOnClick()
 	{
 		SceneManager.LoadSceneAsync("RegisterScene", LoadSceneMode.Additive);
+		SceneManager.UnloadSceneAsync("LoginScene");
 	}
 
 	public void CloseBtnOnClick()

@@ -1845,7 +1845,6 @@ GameObject:
   m_Component:
   - component: {fileID: 742278025}
   - component: {fileID: 742278024}
-  - component: {fileID: 742278023}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1853,14 +1852,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &742278023
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742278022}
-  m_Enabled: 1
 --- !u!20 &742278024
 Camera:
   m_ObjectHideFlags: 0
@@ -2315,6 +2306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 991831924}
   - component: {fileID: 991831923}
+  - component: {fileID: 991831925}
   m_Layer: 0
   m_Name: LoginSceneManager
   m_TagString: Untagged
@@ -2350,6 +2342,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991831925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991831922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d669503c6ea4679b599c47139f4bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loginId: 
+  loginPw: 
+  storeName: 
 --- !u!1 &1018036614
 GameObject:
   m_ObjectHideFlags: 0
