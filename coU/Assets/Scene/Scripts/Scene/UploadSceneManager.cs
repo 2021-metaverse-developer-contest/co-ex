@@ -22,11 +22,12 @@ public class UploadSceneManager : MonoBehaviour
         this.storeName = LoginSceneManager.user?.storeName;
         this.sortOrder = 0;
     }
-
+    
 	private void Start()
 	{
         Screen.orientation = ScreenOrientation.Portrait;
         GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
+        LoadCoroutine();
     }
 
 	private void Update()
@@ -65,6 +66,11 @@ public class UploadSceneManager : MonoBehaviour
         StartCoroutine(Download());
     }
 
+    public void LoadCoroutine()
+    {
+        StartCoroutine(Load());
+    }
+
     public void deleteCorutine()
     {
         StartCoroutine(Delete());
@@ -91,10 +97,29 @@ public class UploadSceneManager : MonoBehaviour
         yield return WaitServer.Instance.waitServer();
     }
 
+    public IEnumerator Load()
+    {
+        //StoreImg data = new StoreImg(storeName, extension, sortOrder);
+        FirebaseStorageManager.Instance.LoadFile(null);
+        yield return WaitServer.Instance.waitServer();
+        UpdateTexture(FirebaseStorageManager.fileContent);
+    }
+
     public IEnumerator getData()
     {
         FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
         yield return WaitServer.Instance.waitServer();
+    }
+
+    void UpdateTexture(byte[] fileContents)
+    {
+        Debug.Log("This is Upload Image");
+        Texture2D newPhoto = new Texture2D(1, 1);
+        newPhoto.LoadImage(fileContents);
+        newPhoto.Apply();
+        Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
+        Image img = GameObject.Find("Img_UploadLogo").GetComponent<Image>();
+        img.sprite = sprite;
     }
 
 }

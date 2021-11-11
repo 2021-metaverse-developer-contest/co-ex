@@ -93,4 +93,26 @@ public class FirebaseStorageManager
             }
         });
     }
+
+    public static byte[] fileContent = null;
+
+    public void LoadFile(StoreImg storageData)
+    {
+        StorageReference loadPath = firebaseStorage.GetReferenceFromUrl("gs://co-ex1.appspot.com/계절밥상/2.png");
+        const long maxAllowedSize = 1 * 1000 * 500;
+        loadPath.GetBytesAsync(maxAllowedSize).ContinueWith(task =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                Debug.Log("Error " + task.Exception.ToString());
+                WaitServer.Instance.isDone = true;
+            }
+            else
+            {
+                fileContent = task.Result;
+                Debug.Log("Finished downloading");
+                WaitServer.Instance.isDone = true;
+            }
+        });
+    }
 }
