@@ -9,7 +9,7 @@ using TMPro;
 
 public class UploadSceneManager : MonoBehaviour
 {
-    public List<StoreImg> storeImgList;
+    public List<StoreImg> ListStoreImgs;
     public string srcFullPath;
     public string destFullPath;
     public string storeName;
@@ -18,7 +18,7 @@ public class UploadSceneManager : MonoBehaviour
 
     private void Awake()
     {
-        storeImgList = new List<StoreImg>();
+        ListStoreImgs = new List<StoreImg>();
         this.storeName = LoginSceneManager.user?.storeName;
         this.sortOrder = 0;
     }
@@ -28,12 +28,13 @@ public class UploadSceneManager : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
         GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
         //LoadCoroutine();
+        readStoreImgsCorutine();
     }
 
 	private void Update()
     {
-        this.storeName = LoginSceneManager.user?.storeName;
-        this.sortOrder = 0;
+        //this.storeName = LoginSceneManager.user?.storeName;
+        //this.sortOrder = 0;
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
     }
 
@@ -109,6 +110,24 @@ public class UploadSceneManager : MonoBehaviour
         Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
         Image img = GameObject.Find("Img_UploadLogo").GetComponent<Image>();
         img.sprite = sprite;
+    }
+
+    public void readStoreImgsCorutine()
+    {
+        StartCoroutine(readStoreImgs());
+    }
+    IEnumerator readStoreImgs()
+    {
+        storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
+        FirebaseRealtimeManager.Instance.readStoreImgs(storeName);
+        yield return WaitServer.Instance.waitServer();
+        ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
+        print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
+        foreach (var i in ListStoreImgs)
+        {
+            i.printAllValues();
+            Debug.Log("--------------------");
+        }
     }
 
 }

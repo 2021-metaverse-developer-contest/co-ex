@@ -18,7 +18,7 @@ public class StoreImg
     }
 
     // 막아 놓음
-    //public StoreImg(string storeName, string imgPath, string imgType, long sortOrder, string dateTime, string imgName)
+    //public StoreImg(string storeName, string imgType, long sortOrder, string imgPath, string dateTime, string imgName)
     //{
     //    this.storeName = storeName;       계절밥상
     //    this.imgType = imgType;           jpg
@@ -40,6 +40,26 @@ public class StoreImg
         this.imgName = string.Format("{0}_{1}.{2}", this.dateTime, storeName, imgType);
         //
         this.imgPath = Path.Combine(storeName, this.imgName);
+    }
+
+    public void printAllValues()
+	{
+        Debug.Log($"storeName: {storeName}");
+        Debug.Log($"imgType: {imgType}");
+        Debug.Log($"sortOrder: {sortOrder}");
+        Debug.Log($"imgPath: {imgPath}");
+        Debug.Log($"dateTime: {dateTime}");
+        Debug.Log($"imgName: {imgName}");
+    }
+
+    public static void printAllValues(string storeName, string imgType, long sortOrder, string imgPath, string dateTime, string imgName)
+    {
+        Debug.Log($"storeName: {storeName}");
+        Debug.Log($"imgType: {imgType}");
+        Debug.Log($"sortOrder: {sortOrder}");
+        Debug.Log($"imgPath: {imgPath}");
+        Debug.Log($"dateTime: {dateTime}");
+        Debug.Log($"imgName: {imgName}");
     }
 
     public string getfullPath(string firebasestorageURL)
