@@ -5,12 +5,9 @@ using TMPro;
 
 public class RegisterSceneManager : MonoBehaviour
 {
-    public static TMP_InputField storeField;
-
     // Start is called before the first frame update
     void Start()
     {
-        storeField = GameObject.Find("Input_Store").GetComponent<TMP_InputField>();
         Screen.orientation = ScreenOrientation.Portrait;
         notDuplicatedId = false;
         user = null;
@@ -82,8 +79,7 @@ public class RegisterSceneManager : MonoBehaviour
             if (GameObject.Find("Panel_SelectStore") != null)
                 GameObject.Find("Panel_SelectStore").SetActive(false);
             else
-                GameObject.Find("Canvas_Pop").transform.Find("Panel_PopClose").gameObject.SetActive(true);
-                
+                GameObject.Find("Canvas_PopRegister").transform.Find("Panel_PopCloseRegister").gameObject.SetActive(true);
 		}
     }
 }
