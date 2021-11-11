@@ -7,7 +7,7 @@ public class RegisterSceneManager : MonoBehaviour
 {
     public static TMP_InputField storeField;
 
-	   // Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         storeField = GameObject.Find("Input_Store").GetComponent<TMP_InputField>();
@@ -72,5 +72,18 @@ public class RegisterSceneManager : MonoBehaviour
             yield return WaitServer.Instance.waitServer();
             Debug.Log($"{newUser.id}가 등록되었습니다.");
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+		{
+            if (GameObject.Find("Panel_SelectStore") != null)
+                GameObject.Find("Panel_SelectStore").SetActive(false);
+            else
+                GameObject.Find("Canvas_Pop").transform.Find("Panel_PopClose").gameObject.SetActive(true);
+                
+		}
     }
 }

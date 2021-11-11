@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class UploadManager : MonoBehaviour
+public class UploadSceneManager : MonoBehaviour
 {
     public List<StoreImg> storeImgList;
     public string srcFullPath;
@@ -25,6 +26,7 @@ public class UploadManager : MonoBehaviour
 	private void Start()
 	{
         Screen.orientation = ScreenOrientation.Portrait;
+        GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
     }
 
 	private void Update()
@@ -33,6 +35,18 @@ public class UploadManager : MonoBehaviour
         this.sortOrder = 0;
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
     }
+
+    IEnumerator transactionDelay()
+    {
+        SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+        while (WaitServer.Instance.isDone == false)
+        {
+            yield return null;
+        }
+        WaitServer.Instance.isDone = false;
+        SceneManager.UnloadSceneAsync("LoadingScene");
+    }
+
     public void getDataCorutine()
     {
         StartCoroutine(getData());
@@ -60,7 +74,7 @@ public class UploadManager : MonoBehaviour
     {
         StoreImg data = new StoreImg(storeName, extension, sortOrder);
         FirebaseStorageManager.Instance.uploadFile(data, srcFullPath);
-		yield return WaitServer.Instance.waitServer();
+        yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator Delete()

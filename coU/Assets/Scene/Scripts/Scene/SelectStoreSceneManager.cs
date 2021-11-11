@@ -37,17 +37,7 @@ public class SelectStoreSceneManager : MonoBehaviour
             SearchBtnOnClick(searchStr);
             inputOuter.text = searchStr;
         }
-    }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-            BackBtnOnClick();
-    }
-
-    void BackBtnOnClick()
-    {
-        SceneManager.UnloadSceneAsync("SelectStoreScene");
     }
 
     public void ShowList(string inputText)

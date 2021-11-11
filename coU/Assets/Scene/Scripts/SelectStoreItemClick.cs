@@ -22,11 +22,13 @@ public class SelectStoreItemClick : MonoBehaviour
         GameObject cur = EventSystem.current.currentSelectedGameObject;
         RegisterSceneManager.storeField.text = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
         RegisterSceneManager.storeField.text += "(" + cur.transform.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text + ")";
-        SceneManager.UnloadSceneAsync("SelectStoreScene");
+        //SceneManager.UnloadSceneAsync("SelectStoreScene");
+        GameObject.Find("Panel_SelectStore").SetActive(false);
     }
 
-    public void CloseBtnOnClick()
+    public void CloseSelectStoreBtnOnClick()
     {
-        SceneManager.UnloadSceneAsync("SelectStoreScene");
+        GameObject.Find("Panel_SelectStore").SetActive(false);
+        //SceneManager.UnloadSceneAsync("SelectStoreScene");
     }
 }
