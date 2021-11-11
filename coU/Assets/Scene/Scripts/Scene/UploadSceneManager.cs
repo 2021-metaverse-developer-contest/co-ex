@@ -27,7 +27,7 @@ public class UploadSceneManager : MonoBehaviour
 	{
         Screen.orientation = ScreenOrientation.Portrait;
         GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
-        LoadCoroutine();
+        //LoadCoroutine();
     }
 
 	private void Update()
