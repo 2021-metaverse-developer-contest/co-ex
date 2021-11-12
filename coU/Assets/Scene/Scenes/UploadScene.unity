@@ -1459,7 +1459,7 @@ MonoBehaviour:
   srcFullPath: 
   destFullPath: 
   storeName: 
-  extension: 
+  imgType: 
   sortOrder: 0
 --- !u!4 &1439874998
 Transform:
@@ -2940,7 +2940,7 @@ GameObject:
   - component: {fileID: 2106056265}
   - component: {fileID: 2106056264}
   m_Layer: 5
-  m_Name: Content
+  m_Name: ContentUpload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
