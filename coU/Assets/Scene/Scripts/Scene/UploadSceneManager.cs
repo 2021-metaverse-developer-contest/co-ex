@@ -119,7 +119,7 @@ public class UploadSceneManager : MonoBehaviour
     IEnumerator readStoreImgs()
     {
         storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
-        FirebaseRealtimeManager.Instance.readStoreImgs(storeName);
+        FirebaseRealtimeManager.Instance.readStoreImgs(storeName); //DB에 저장된 이미지들의 정보를 가져옴
         yield return WaitServer.Instance.waitServer();
         ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
         print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
