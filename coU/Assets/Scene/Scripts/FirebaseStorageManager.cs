@@ -94,12 +94,12 @@ public class FirebaseStorageManager
         });
     }
 
-    public static byte[] fileContent = null;
+    public static byte[] fileContents = null;
 
     public void LoadFile(StoreImg storageData)
     {
-        StorageReference loadPath = firebaseStorage.GetReferenceFromUrl("gs://co-ex1.appspot.com/계절밥상/2.png");
-        const long maxAllowedSize = 1 * 1000 * 500;
+        StorageReference loadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
+        const long maxAllowedSize = 1 * 800 * 500;
         loadPath.GetBytesAsync(maxAllowedSize).ContinueWith(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
@@ -109,7 +109,7 @@ public class FirebaseStorageManager
             }
             else
             {
-                fileContent = task.Result;
+                fileContents = task.Result;
                 Debug.Log("Finished downloading");
                 WaitServer.Instance.isDone = true;
             }

@@ -13,7 +13,7 @@ public class UploadSceneManager : MonoBehaviour
     public string srcFullPath;
     public string destFullPath;
     public string storeName;
-    public string extension;
+    public string imgType;
     public int sortOrder;
 
     private void Awake()
@@ -38,19 +38,19 @@ public class UploadSceneManager : MonoBehaviour
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
     }
 
-    public void getDataCorutine()
+    public void getDataCoroutine()
     {
         StartCoroutine(getData());
     }
 
-    public void uploadCorutine()
+    public void uploadCoroutine()
     {
         srcFullPath = "/Users/yunslee/srctest.png";
-        extension = srcFullPath.Substring(srcFullPath.LastIndexOf(".") + 1);
+        imgType = srcFullPath.Substring(srcFullPath.LastIndexOf(".") + 1);
         StartCoroutine(Upload());
     }
 
-    public void downloadCorutine()
+    public void downloadCoroutine()
     {
         destFullPath = "/Users/yunslee/desttest.png";
         StartCoroutine(Download());
@@ -61,28 +61,28 @@ public class UploadSceneManager : MonoBehaviour
         StartCoroutine(Load());
     }
 
-    public void deleteCorutine()
+    public void deleteCoroutine()
     {
         StartCoroutine(Delete());
     }
 
     public IEnumerator Upload()
     {
-        StoreImg data = new StoreImg(storeName, extension, sortOrder);
+        StoreImg data = new StoreImg(storeName, imgType, sortOrder);
         FirebaseStorageManager.Instance.uploadFile(data, srcFullPath);
         yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator Delete()
     {
-        StoreImg data = new StoreImg(storeName, extension, sortOrder);
+        StoreImg data = new StoreImg(storeName, imgType, sortOrder);
         FirebaseStorageManager.Instance.deleteFile(data);
         yield return WaitServer.Instance.waitServer();
     }
 
     public IEnumerator Download()
     {
-        StoreImg data = new StoreImg(storeName, extension, sortOrder);
+        StoreImg data = new StoreImg(storeName, imgType, sortOrder);
         FirebaseStorageManager.Instance.downloadFile(data, destFullPath);
         yield return WaitServer.Instance.waitServer();
     }
@@ -92,7 +92,7 @@ public class UploadSceneManager : MonoBehaviour
         //StoreImg data = new StoreImg(storeName, extension, sortOrder);
         FirebaseStorageManager.Instance.LoadFile(null);
         yield return WaitServer.Instance.waitServer();
-        UpdateTexture(FirebaseStorageManager.fileContent);
+        UpdateTexture(FirebaseStorageManager.fileContents);
     }
 
     public IEnumerator getData()
@@ -118,7 +118,7 @@ public class UploadSceneManager : MonoBehaviour
     }
     IEnumerator readStoreImgs()
     {
-        storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
+        //storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
         FirebaseRealtimeManager.Instance.readStoreImgs(storeName); //DB에 저장된 이미지들의 정보를 가져옴
         yield return WaitServer.Instance.waitServer();
         ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
