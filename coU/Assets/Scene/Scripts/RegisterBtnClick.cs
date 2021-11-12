@@ -18,8 +18,7 @@ public class RegisterBtnClick : MonoBehaviour
 
 	IEnumerator ChkDupEmail(string email)
 	{
-		string[] id = email.Split('@');
-		FirebaseRealtimeManager.Instance.readValue<User>((id[0] + "_" + id[1].Split('.')[0]).Replace('.', '_'));
+		FirebaseRealtimeManager.Instance.readValue<User>(LoginSceneManager.GetKeyFromEmail(email));
 		yield return WaitServer.Instance.waitServer();
 		if (FirebaseRealtimeManager.Instance.user == null)
 			isDupEmail = false;
@@ -35,8 +34,7 @@ public class RegisterBtnClick : MonoBehaviour
 	IEnumerator Register(string id, string pw, string storeName)
 	{
 		User newUser = new User(id, pw, storeName, 0);
-		string[] idList = newUser.id.Split('@');
-		FirebaseRealtimeManager.Instance.createValue<User>((idList[0] + "_" + idList[1].Split('.')[0]).Replace('.', '_'), newUser);
+		FirebaseRealtimeManager.Instance.createValue<User>(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser);
 		yield return WaitServer.Instance.waitServer();
 	}
 
