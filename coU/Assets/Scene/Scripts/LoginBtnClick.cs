@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class LoginBtnClick : MonoBehaviour
 {
-
-
 	public void LoginCoroutine(string loginId, string loginPw)
 	{
 		StartCoroutine(Login(loginId, loginPw));

@@ -94,25 +94,39 @@ public class FirebaseStorageManager
         });
     }
 
-    public static byte[] fileContents = null;
+    //public static Stream fileContents = null;
+    public static Uri uri;
 
     public void LoadFile(StoreImg storageData)
     {
         StorageReference loadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
-        const long maxAllowedSize = 1 * 800 * 500;
-        loadPath.GetBytesAsync(maxAllowedSize).ContinueWith(task =>
+        //const long maxAllowedSize = long.MaxValue;
+        //loadPath.GetStreamAsync().ContinueWith(task =>
+        //{
+        //    if (task.IsFaulted || task.IsCanceled)
+        //    {
+        //        Debug.Log("Error " + task.Exception.ToString());
+        //        WaitServer.Instance.isDone = true;
+        //    }
+        //    else
+        //    {
+        //        fileContents = task.Result;
+        //        Debug.Log("Finished downloading");
+        //        WaitServer.Instance.isDone = true;
+        //    }
+        //});
+
+        loadPath.GetDownloadUrlAsync().ContinueWith(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.Log("Error " + task.Exception.ToString());
-                WaitServer.Instance.isDone = true;
-            }
+                Debug.Log("Error" + task.Exception.ToString());
             else
             {
-                fileContents = task.Result;
+                uri = task.Result;
+                Debug.Log("uri string " + uri.OriginalString);
                 Debug.Log("Finished downloading");
-                WaitServer.Instance.isDone = true;
             }
+            WaitServer.Instance.isDone = true;
         });
     }
 }

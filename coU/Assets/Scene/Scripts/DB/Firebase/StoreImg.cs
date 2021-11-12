@@ -29,6 +29,16 @@ public class StoreImg
     //    this.imgName = imgName;           DateTime_계절밥상.jpg
     //}
 
+    public StoreImg(string imgPath)
+    {
+        this.imgPath = imgPath;
+        this.storeName = imgPath.Split('/')[0];
+        this.imgType = imgPath.Substring(imgPath.LastIndexOf('.') + 1);
+        this.sortOrder = 0;
+
+        this.dateTime = imgPath.Split('/')[1].Split('_')[0];
+        this.imgName = imgPath.Split('/')[1];
+    }
 
     public StoreImg(string storeName, string imgType, long sortOrder)
     {
