@@ -170,10 +170,12 @@ public class FirebaseRealtimeManager
                 foreach (DataSnapshot snap in snapshot.Children)
                 {
                     string imgPath;
+                    long sortOrder;
 					Debug.Log(snap.Key); // 1_계절밥상
 					IDictionary dicts = (IDictionary)snap.Value;
                     imgPath = dicts[nameof(imgPath)] as string;
-                    StoreImg temp = new StoreImg(imgPath);
+                    sortOrder = (long)dicts[nameof(sortOrder)];
+					StoreImg temp = new StoreImg(imgPath, sortOrder);
                     ListStoreImgs.Add(temp);
 
 					//string storeName;
