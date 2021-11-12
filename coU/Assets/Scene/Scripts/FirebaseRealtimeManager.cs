@@ -16,6 +16,7 @@ public class FirebaseRealtimeManager
     // Realtime DB의 값을 여기에 가져다 줌, FirebaseStorageManager에서는 void 꼴
     public User user = null;
     public StoreImg storeImg = null;
+    public List<StoreImg> ListStoreImgs = new List<StoreImg>();
 
     private FirebaseRealtimeManager()
     {
@@ -145,6 +146,40 @@ public class FirebaseRealtimeManager
             }
             else
             {
+                WaitServer.Instance.isDone = true;
+            }
+        });
+    }
+
+    public void readStoreImgs(string storeName)
+    {
+        string table = typeof(StoreImg).Name;
+        //dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
+        dbReferecne.Child(table).Child(storeName).GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                Debug.Log(task.Exception);
+                WaitServer.Instance.isDone = true;
+            }
+            else
+            {
+                DataSnapshot snapshot = task.Result;
+                Debug.Log(snapshot.Key + "의 파일 갯수:" + snapshot.ChildrenCount); // MiniStoreImgs
+                foreach (DataSnapshot snap in snapshot.Children)
+                {
+                    string storeName;
+                    string imgType;
+                    long sortOrder;
+                    Debug.Log(snap.Key); // 1_계절밥상
+                    IDictionary dicts = (IDictionary)snap.Value;
+                    // Debug.Log((string)dicts[nameof(id)] + (string)dicts[nameof(storeName)] + ((long)dicts[nameof(sortOrder)]).ToString());
+                    storeName = dicts[nameof(storeName)] as string;
+                    imgType = dicts[nameof(imgType)] as string;
+                    sortOrder = (long)dicts[nameof(sortOrder)];
+                    StoreImg temp = new StoreImg(storeName, imgType, sortOrder);
+                    ListStoreImgs.Add(temp);
+                }
                 WaitServer.Instance.isDone = true;
             }
         });
