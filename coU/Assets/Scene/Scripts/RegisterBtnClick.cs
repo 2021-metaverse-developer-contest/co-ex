@@ -112,7 +112,7 @@ public class RegisterBtnClick : MonoBehaviour
 			errMsg.text = "비밀번호가 일치하지 않습니다.";
 		else
 		{
-			RegisterCoroutine(idField.text, pwField1.text, storeField.text);
+			RegisterCoroutine(idField.text, pwField1.text, storeField.text.Substring(0, storeField.text.Length - 4));
 			errMsg.text = "가입이 완료되었습니다.";
 			isDone = true;
 		}
