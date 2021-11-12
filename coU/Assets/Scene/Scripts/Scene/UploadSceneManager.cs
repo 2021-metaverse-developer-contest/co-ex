@@ -9,7 +9,7 @@ using TMPro;
 
 public class UploadSceneManager : MonoBehaviour
 {
-    public List<StoreImg> storeImgList;
+    public List<StoreImg> ListStoreImgs;
     public string srcFullPath;
     public string destFullPath;
     public string storeName;
@@ -18,7 +18,7 @@ public class UploadSceneManager : MonoBehaviour
 
     private void Awake()
     {
-        storeImgList = new List<StoreImg>();
+        ListStoreImgs = new List<StoreImg>();
         this.storeName = LoginSceneManager.user?.storeName;
         this.sortOrder = 0;
     }
@@ -27,25 +27,15 @@ public class UploadSceneManager : MonoBehaviour
 	{
         Screen.orientation = ScreenOrientation.Portrait;
         GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
-        LoadCoroutine();
+        //LoadCoroutine();
+        init();
     }
 
 	private void Update()
     {
-        this.storeName = LoginSceneManager.user?.storeName;
-        this.sortOrder = 0;
+        //this.storeName = LoginSceneManager.user?.storeName;
+        //this.sortOrder = 0;
         //FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
-    }
-
-    IEnumerator transactionDelay()
-    {
-        SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
-        while (WaitServer.Instance.isDone == false)
-        {
-            yield return null;
-        }
-        WaitServer.Instance.isDone = false;
-        SceneManager.UnloadSceneAsync("LoadingScene");
     }
 
     public void getDataCorutine()
@@ -122,4 +112,54 @@ public class UploadSceneManager : MonoBehaviour
         img.sprite = sprite;
     }
 
+    public void readStoreImgsCorutine()
+    {
+        StartCoroutine(readStoreImgs());
+    }
+    IEnumerator readStoreImgs()
+    {
+        storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
+        FirebaseRealtimeManager.Instance.readStoreImgs(storeName);
+        yield return WaitServer.Instance.waitServer();
+        ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
+        print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
+        foreach (var i in ListStoreImgs)
+        {
+            i.printAllValues();
+            Debug.Log("--------------------");
+        }
+    }
+
+    public void init()
+    {
+        // 1. DAO 클래스에 담기 + 클래스 sortOrder 순으로 정렬
+        readStoreImgsCorutine();
+        //ListStoreImgs.Sort() => order로 정렬되도록 함수짜기!
+        // 2. 클래스의 길이가 0이 아니라면, 첫번째 sortOrder에 있는 이미지 뿌려주기 void Load()로
+    }
+    public void attachImage()
+    {
+        // 0. StoreImgs객체를 만드는게 처음 할일
+		//      StoreImgs(storeName, imgType, sortOrder)에서 imgType만 구해서 넣어준다.(storeName과 sortOrder는 이미 정해져있음)
+        // 1. image List UI 하나 맨 아래 추가
+        // 2. Realtime DB에 저장하기
+        // 3. storage에 업로드하ㄱ
+    }
+
+    public void detachImage()
+    {
+        // 1. DeleteItemBtnOnClick을 누르면, 하이어라키에서 해당 리스트가 지워진다.
+        // 2. Text에 적혀있었던 imgName과 List.Remove()를 이용하여 이미지리스트에서 해당 부분 삭제
+        // 3. DB에서 해당 부분만 삭제하기 => "1_계절밥상" Key값을 객체 변수로부터 알 수 가 없음.
+		// 따라서 현재로썬 일딴은 다 지우고, 리스트로 저장되어있는 storeImgs로 갱신하는 것으로 하기
+        // 4. storage에서도 imgPath를 이용하여 삭제
+    }
+
+    // 다른 함수와 달리 Storage를 변경하지 않아도 된다.
+    public void changeOrderImage()
+	{
+        // 1. image List를 이동시키는 것을 감지하면,
+        // 2. List의 순서를 변경하고,
+        // 3. DB에 저장시킨다.
+    }
 }
