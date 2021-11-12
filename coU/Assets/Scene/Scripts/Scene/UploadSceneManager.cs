@@ -50,9 +50,9 @@ public class UploadSceneManager : MonoBehaviour
 		StartCoroutine(Download());
 	}
 
-	public void LoadCoroutine(string imgPath, Uri uri)
+	public void LoadCoroutine(string imgPath)
 	{
-		StartCoroutine(Load(imgPath, uri));
+		StartCoroutine(Load(imgPath));
 	}
 
 	public void deleteCoroutine()
@@ -74,12 +74,22 @@ public class UploadSceneManager : MonoBehaviour
 		yield return WaitServer.Instance.waitServer();
 	}
 
-	public IEnumerator Load(string imgPath, Uri uri)
+	IEnumerator Load(string imgPath)
 	{
 		StoreImg data = new StoreImg(imgPath);
 		FirebaseStorageManager.Instance.LoadFile(data);
 		yield return WaitServer.Instance.waitServer();
-		UpdateTexture(uri);
+		Uri uri = FirebaseStorageManager.uri;
+		Image img = GetUIImage();
+		UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
+		yield return www.SendWebRequest();
+		if (www.isNetworkError || www.isHttpError)
+			Debug.Log(www.error);
+		else
+		{
+			Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+			img.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(.5f, .5f));
+		}
 	}
 
 	public IEnumerator getData()
@@ -88,17 +98,19 @@ public class UploadSceneManager : MonoBehaviour
 		yield return WaitServer.Instance.waitServer();
 	}
 
-	void UpdateTexture(Uri uri)
+	public static Image GetUIImage()
 	{
 		Debug.Log("This is Upload Image");
+		return GameObject.Find("Img_UploadImg").GetComponent<Image>();
+
 		//Texture2D newPhoto = new Texture2D(1, 1);
 		//byte[] imgData = new byte[fileContents.Length];
 		//newPhoto.LoadImage(imgData);
 		//newPhoto.Apply();
 		//Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
-		Image img = GameObject.Find("Img_UploadImg").GetComponent<Image>();
-		StartCoroutine(GetTexture(img, uri));
 		//img.sprite = sprite;,
+
+		//StartCoroutine(GetTexture(img, uri));
 	}
 
 	IEnumerator GetTexture(Image img, Uri uri)
