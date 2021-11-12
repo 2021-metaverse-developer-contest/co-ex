@@ -1605,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75abc37e2d7d449168913c3da64df4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 6530511762043082070, guid: a8c7fbcca7d5d4dc8a11f1bc35833873, type: 3}
   destFullPath: 
   storeName: 
   imgType: 

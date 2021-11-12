@@ -76,4 +76,21 @@ public class StoreImg
     {
         return Path.Combine(firebasestorageURL, imgPath);
     }
+
+    public static void swapSortOrder(StoreImg a, StoreImg b) // 둘 사이 sortOrder 교환
+    {
+        long temp = a.sortOrder;
+        a.sortOrder = b.sortOrder;
+        b.sortOrder = temp;
+    }
+
+    public static int sortOrdercmp(StoreImg a, StoreImg b) // sortOrder에 따라 오름차순 정렬
+    {
+        if (a.sortOrder < b.sortOrder)
+            return (-1);
+        else if (a.sortOrder == b.sortOrder)
+            return (0);
+        else
+            return (1);
+    }
 }

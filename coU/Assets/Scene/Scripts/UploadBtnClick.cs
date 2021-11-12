@@ -75,14 +75,14 @@ public class UploadBtnClick : MonoBehaviour
     Image UpdateTexture(Uri uri)
     {
         Debug.Log("This is Upload Image");
+        return GameObject.Find("Img_UploadImg").GetComponent<Image>();
         //Texture2D newPhoto = new Texture2D(1, 1);
         //byte[] imgData = new byte[fileContents.Length];
         //newPhoto.LoadImage(imgData);
         //newPhoto.Apply();
         //Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
-        return GameObject.Find("Img_UploadImg").GetComponent<Image>();
-        //StartCoroutine(GetTexture(img, uri));
         //img.sprite = sprite;,
+        //StartCoroutine(GetTexture(img, uri));
     }
 
     //IEnumerator GetTexture(Image img, Uri uri)

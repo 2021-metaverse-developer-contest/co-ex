@@ -11,6 +11,10 @@ using UnityEngine.Networking;
 
 public class UploadSceneManager : MonoBehaviour
 {
+	[SerializeField]
+	private GameObject item;
+	Transform itemParent;
+
 	public List<StoreImg> ListStoreImgs;
 	public string destFullPath;
 	public string storeName;
@@ -30,6 +34,7 @@ public class UploadSceneManager : MonoBehaviour
 		GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
 		//LoadCoroutine();
 		init();
+		itemParent = GameObject.Find("ContentUpload").transform;
 	}
 
 	private void Update()
@@ -98,6 +103,10 @@ public class UploadSceneManager : MonoBehaviour
 		yield return WaitServer.Instance.waitServer();
 	}
 
+	/// <summary>
+	/// Returns Image Component.
+	/// </summary>
+	/// <returns></returns>
 	public static Image GetUIImage()
 	{
 		Debug.Log("This is Upload Image");
@@ -113,19 +122,18 @@ public class UploadSceneManager : MonoBehaviour
 		//StartCoroutine(GetTexture(img, uri));
 	}
 
-	IEnumerator GetTexture(Image img, Uri uri)
-	{
-		UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-			Debug.Log(www.error);
-		else
-		{
-			Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-			Sprite sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), new Vector2(.5f, .5f));
-			img.sprite = sprite;
-		}
-	}
+	//IEnumerator GetTexture(Image img, Uri uri)
+	//{
+	//	UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
+	//	yield return www.SendWebRequest();
+	//	if (www.isNetworkError || www.isHttpError)
+	//		Debug.Log(www.error);
+	//	else
+	//	{
+	//		Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+	//		img.sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), new Vector2(.5f, .5f));
+	//	}
+	//}
 
 	public void readStoreImgsCorutine()
 	{
@@ -138,9 +146,12 @@ public class UploadSceneManager : MonoBehaviour
 		yield return WaitServer.Instance.waitServer();
 		ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
 		print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
+		ListStoreImgs.Sort(StoreImg.sortOrdercmp);
 		foreach (var i in ListStoreImgs)
 		{
 			i.printAllValues();
+			GameObject newItem = Instantiate(item, itemParent);
+			newItem.GetComponentInChildren<TextMeshProUGUI>().text = i.imgPath;
 			Debug.Log("--------------------");
 		}
 	}
