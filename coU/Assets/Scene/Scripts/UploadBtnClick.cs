@@ -26,7 +26,7 @@ public class UploadBtnClick : MonoBehaviour
         yield return WaitServer.Instance.waitServer();
         GameObject newItem = Instantiate(item, GameObject.Find("ContentUpload").transform);
         newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.imgPath;
-        //newItem.transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
+		newItem.transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
     }
 
     public void GalleryBtnOnClick()
@@ -67,9 +67,9 @@ public class UploadBtnClick : MonoBehaviour
         Destroy(deleteObj);
     }
 
-    void LoadCoroutine(string imgPath, Uri uri)
+    void LoadCoroutine(string imgPath)
     {
-        StartCoroutine(Load(imgPath, uri));
+        StartCoroutine(Load(imgPath));
     }
 
     Image UpdateTexture(Uri uri)
@@ -101,15 +101,16 @@ public class UploadBtnClick : MonoBehaviour
     //    }
     //}
 
-    IEnumerator Load(string imgPath, Uri uri)
+    IEnumerator Load(string imgPath)
 	{
         StoreImg data = new StoreImg(imgPath);
         FirebaseStorageManager.Instance.LoadFile(data);
         yield return WaitServer.Instance.waitServer();
-        Image img = UpdateTexture(uri);
+
+        Uri uri = FirebaseStorageManager.uri;
+        Image img = UploadSceneManager.GetUIImage();
         Debug.Log("In coroutine " + uri.OriginalString);
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
             Debug.Log(www.error);
@@ -131,6 +132,6 @@ public class UploadBtnClick : MonoBehaviour
 
         string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ?  recentItem.GetComponent<TextMeshProUGUI>().text: clickObj.GetComponent<TextMeshProUGUI>().text;
         Debug.Log("Click ImagePath " + imgPath);
-        LoadCoroutine(imgPath, FirebaseStorageManager.uri);
+        LoadCoroutine(imgPath);
 	}
 }

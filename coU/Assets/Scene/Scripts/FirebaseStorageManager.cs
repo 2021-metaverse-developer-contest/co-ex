@@ -123,7 +123,7 @@ public class FirebaseStorageManager
             else
             {
                 uri = task.Result;
-                Debug.Log("uri string " + uri.OriginalString);
+                Debug.Log("In StorageManager uri string " + uri.OriginalString);
                 Debug.Log("Finished downloading");
             }
             WaitServer.Instance.isDone = true;
