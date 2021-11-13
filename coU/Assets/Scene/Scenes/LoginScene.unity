@@ -2354,9 +2354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d669503c6ea4679b599c47139f4bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginId: 
-  loginPw: 
-  storeName: 
+  idField: {fileID: 84807388}
+  pwField: {fileID: 2103859879}
 --- !u!1 &1018036614
 GameObject:
   m_ObjectHideFlags: 0
