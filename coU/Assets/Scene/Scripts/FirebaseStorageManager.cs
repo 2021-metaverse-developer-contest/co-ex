@@ -94,25 +94,39 @@ public class FirebaseStorageManager
         });
     }
 
-    public static byte[] fileContent = null;
+    //public static Stream fileContents = null;
+    public static Uri uri;
 
     public void LoadFile(StoreImg storageData)
     {
-        StorageReference loadPath = firebaseStorage.GetReferenceFromUrl("gs://co-ex1.appspot.com/계절밥상/2.png");
-        const long maxAllowedSize = 1 * 1000 * 500;
-        loadPath.GetBytesAsync(maxAllowedSize).ContinueWith(task =>
+        StorageReference loadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
+        //const long maxAllowedSize = long.MaxValue;
+        //loadPath.GetStreamAsync().ContinueWith(task =>
+        //{
+        //    if (task.IsFaulted || task.IsCanceled)
+        //    {
+        //        Debug.Log("Error " + task.Exception.ToString());
+        //        WaitServer.Instance.isDone = true;
+        //    }
+        //    else
+        //    {
+        //        fileContents = task.Result;
+        //        Debug.Log("Finished downloading");
+        //        WaitServer.Instance.isDone = true;
+        //    }
+        //});
+
+        loadPath.GetDownloadUrlAsync().ContinueWith(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
-            {
-                Debug.Log("Error " + task.Exception.ToString());
-                WaitServer.Instance.isDone = true;
-            }
+                Debug.Log("Error" + task.Exception.ToString());
             else
             {
-                fileContent = task.Result;
+                uri = task.Result;
+                Debug.Log("In StorageManager uri string " + uri.OriginalString);
                 Debug.Log("Finished downloading");
-                WaitServer.Instance.isDone = true;
             }
+            WaitServer.Instance.isDone = true;
         });
     }
 }

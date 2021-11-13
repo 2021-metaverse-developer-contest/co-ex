@@ -83,6 +83,7 @@ public class FirebaseRealtimeManager
                 // "as" data의 형식이 맞지 않는다면, null 값이 들어감
                 // 값을 찾지 못해도 null 값이 들어감!
                 _realtimeDB.user = data as User;
+                Debug.Log("storeName" + _realtimeDB.user.storeName);
                 _realtimeDB.storeImg = data as StoreImg;
                 WaitServer.Instance.isDone = true;
             }
@@ -168,19 +169,28 @@ public class FirebaseRealtimeManager
                 Debug.Log(snapshot.Key + "의 파일 갯수:" + snapshot.ChildrenCount); // MiniStoreImgs
                 foreach (DataSnapshot snap in snapshot.Children)
                 {
-                    string storeName;
-                    string imgType;
+                    string imgPath;
                     long sortOrder;
-                    Debug.Log(snap.Key); // 1_계절밥상
-                    IDictionary dicts = (IDictionary)snap.Value;
-                    // Debug.Log((string)dicts[nameof(id)] + (string)dicts[nameof(storeName)] + ((long)dicts[nameof(sortOrder)]).ToString());
-                    storeName = dicts[nameof(storeName)] as string;
-                    imgType = dicts[nameof(imgType)] as string;
+					Debug.Log(snap.Key); // 1_계절밥상
+					IDictionary dicts = (IDictionary)snap.Value;
+                    imgPath = dicts[nameof(imgPath)] as string;
                     sortOrder = (long)dicts[nameof(sortOrder)];
-                    StoreImg temp = new StoreImg(storeName, imgType, sortOrder);
+					StoreImg temp = new StoreImg(imgPath, sortOrder);
                     ListStoreImgs.Add(temp);
-                }
-                WaitServer.Instance.isDone = true;
+
+					//string storeName;
+					//string imgType;
+					//long sortOrder;
+					//Debug.Log(snap.Key); // 1_계절밥상
+					//IDictionary dicts = (IDictionary)snap.Value;
+					//// Debug.Log((string)dicts[nameof(id)] + (string)dicts[nameof(storeName)] + ((long)dicts[nameof(sortOrder)]).ToString());
+					//storeName = dicts[nameof(storeName)] as string;
+					//imgType = dicts[nameof(imgType)] as string;
+					//sortOrder = (long)dicts[nameof(sortOrder)];
+					//StoreImg temp = new StoreImg(storeName, imgType, sortOrder);
+					//ListStoreImgs.Add(temp);
+				}
+				WaitServer.Instance.isDone = true;
             }
         });
     }
