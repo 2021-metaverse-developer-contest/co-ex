@@ -11,31 +11,43 @@ public class RegisterBtnClick : MonoBehaviour
 	static bool isDupEmail = false; //이미 가입된 이메일인가?
 	static bool isDone = false;
 
-	void ChkDupEmailCoroutine(string email)
+	void ChkDupEmailCoroutine(TMP_InputField idField, TextMeshProUGUI txtMsg)
 	{
-		StartCoroutine(ChkDupEmail(email));
+		StartCoroutine(ChkDupEmail(idField, txtMsg));
 	}
 
-	IEnumerator ChkDupEmail(string email)
+	IEnumerator ChkDupEmail(TMP_InputField idField, TextMeshProUGUI txtMsg)
 	{
-		FirebaseRealtimeManager.Instance.readValue<User>(LoginSceneManager.GetKeyFromEmail(email));
+		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(idField.text));
 		yield return WaitServer.Instance.waitServer();
 		if (FirebaseRealtimeManager.Instance.user == null)
+		{
+			Debug.Log("No Duplication");
+			txtMsg.text = "사용 가능한 이메일입니다.";
 			isDupEmail = false;
+			isDupChk = true;
+		}
 		else
+		{
+			Debug.Log("Duplication");
+			txtMsg.text = "이미 가입된 이메일입니다.";
 			isDupEmail = true;
+			isDupChk = false;
+		}
 	}
 
-	void RegisterCoroutine(string id, string pw, string storeName)
+	void RegisterCoroutine(string id, string pw, string storeName, TextMeshProUGUI errMsg)
 	{
-		StartCoroutine(Register(id, pw, storeName));
+		StartCoroutine(Register(id, pw, storeName, errMsg));
 	}
 
-	IEnumerator Register(string id, string pw, string storeName)
+	IEnumerator Register(string id, string pw, string storeName, TextMeshProUGUI errMsg)
 	{
 		User newUser = new User(id, pw, storeName, 0);
-		FirebaseRealtimeManager.Instance.createValue<User>(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser);
+		FirebaseRealtimeManager.Instance.createUser(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser);
 		yield return WaitServer.Instance.waitServer();
+		errMsg.text = "가입이 완료되었습니다.";
+		isDone = true;
 	}
 
 	bool ChkCorrectPw()
@@ -64,18 +76,7 @@ public class RegisterBtnClick : MonoBehaviour
 		}
 		popCanvas.Find("Panel_PopErrorRegister").gameObject.SetActive(true);
 
-		ChkDupEmailCoroutine(fieldID.text);
-		if (isDupEmail)
-		{
-			errMsg.text = "이미 가입된 이메일입니다.";
-			fieldID.text = "";
-			isDupChk = false;
-		}
-		else
-		{
-			errMsg.text = "사용 가능한 이메일입니다.";
-			isDupChk = true;
-		}
+		ChkDupEmailCoroutine(fieldID, errMsg);
 	}
 
 	public void RegisterBtnOnClick()
@@ -110,9 +111,8 @@ public class RegisterBtnClick : MonoBehaviour
 			errMsg.text = "비밀번호가 일치하지 않습니다.";
 		else
 		{
-			RegisterCoroutine(idField.text, pwField1.text, storeField.text.Substring(0, storeField.text.LastIndexOf("(")));
-			errMsg.text = "가입이 완료되었습니다.";
-			isDone = true;
+			RegisterCoroutine(idField.text, pwField1.text
+				, storeField.text.Substring(0, storeField.text.LastIndexOf("(")), errMsg);
 		}
 	}
 
