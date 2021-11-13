@@ -105,7 +105,12 @@ public class UploadBtnClick : MonoBehaviour
         GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
-        string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
+        string imgPath;
+        if (clickObj == null)
+            imgPath = recentItem.GetComponent<TextMeshProUGUI>().text;
+        else
+            imgPath = clickObj.GetComponent<TextMeshProUGUI>().text;
+        //string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
         Debug.Log("Click ImagePath " + imgPath);
         LoadCoroutine(imgPath);
     }

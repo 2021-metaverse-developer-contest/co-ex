@@ -157,6 +157,7 @@ public class UploadSceneManager : MonoBehaviour
 			i.printAllValues();
 			GameObject newItem = Instantiate(item, itemParent);
 			newItem.GetComponentInChildren<TextMeshProUGUI>().text = i.imgPath;
+			Debug.Log($"newItem {newItem.GetComponentInChildren<TextMeshProUGUI>().text}");
 			Debug.Log("--------------------");
 		}
 		BtnInvoke();
@@ -165,7 +166,10 @@ public class UploadSceneManager : MonoBehaviour
 	void BtnInvoke()
 	{
 		if (itemParent.childCount > 0)
+		{
+			Debug.Log($"itemInvoke {itemParent.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text}");
 			itemParent.GetChild(0).transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
+		}
 	}
 
 	public void init()

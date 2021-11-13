@@ -99,6 +99,7 @@ public class FirebaseStorageManager
 
     public void LoadFile(StoreImg storageData)
     {
+        Debug.Log("LoadFile 102 " + storageData.getfullPath(firebasestorageURL));
         StorageReference loadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
         //const long maxAllowedSize = long.MaxValue;
         //loadPath.GetStreamAsync().ContinueWith(task =>
