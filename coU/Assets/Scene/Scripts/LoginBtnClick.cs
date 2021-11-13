@@ -59,13 +59,12 @@ public class LoginBtnClick : MonoBehaviour
 		//
 		if (LoginSceneManager.isLogin == true)
 		{
-			// 로그인 버튼을 눌렀든, 우리매장 홍보하기를 눌렀든 일단 LoginScene은 
-			SceneManager.UnloadSceneAsync("LoginScene");
 			// 로그인이 된 다음에 씬전환
 			if (LoginSceneManager.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
 				SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
 			else // 2. 로그인 버튼을 통해 들어온건가?
 				SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+			SceneManager.UnloadSceneAsync("LoginScene");
 		}
 		else
 		{
