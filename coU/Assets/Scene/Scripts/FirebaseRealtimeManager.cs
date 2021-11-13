@@ -161,6 +161,8 @@ public class FirebaseRealtimeManager
         string json = JsonUtility.ToJson(newImg);
         string key = newImg.storeName;
         long idx = newImg.sortOrder;
+        Debug.Log($"In CreateStoreImg key:{key}, idx:{idx}");
+        Debug.Log($"Json {json}");
         dbReferecne.Child("StoreImg").Child(key).Child($"{idx}_{key}").SetRawJsonValueAsync(json).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
@@ -170,6 +172,7 @@ public class FirebaseRealtimeManager
             }
             else
             {
+                Debug.Log("success");
                 WaitServer.Instance.isDone = true;
             }
             Debug.Log("In CreateSotreImg is done");

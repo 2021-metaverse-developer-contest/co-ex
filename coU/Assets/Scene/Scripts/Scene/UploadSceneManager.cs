@@ -14,8 +14,9 @@ public class UploadSceneManager : MonoBehaviour
 	[SerializeField]
 	private GameObject item;
 	Transform itemParent;
+	public static bool isBeforeMenu = false;
 
-	public List<StoreImg> ListStoreImgs;
+	public static List<StoreImg> ListStoreImgs;
 	public string destFullPath;
 	public string storeName;
 	public string imgType;
@@ -99,7 +100,7 @@ public class UploadSceneManager : MonoBehaviour
 
 	public IEnumerator getData()
 	{
-		FirebaseRealtimeManager.Instance.readValue<StoreImg>(LoginSceneManager.user.id);
+		FirebaseRealtimeManager.Instance.readStoreImgs(LoginSceneManager.user.storeName);
 		yield return WaitServer.Instance.waitServer();
 	}
 
