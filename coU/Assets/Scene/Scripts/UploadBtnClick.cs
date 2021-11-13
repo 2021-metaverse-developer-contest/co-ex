@@ -133,6 +133,10 @@ public class UploadBtnClick : MonoBehaviour
 
         Debug.Log($"childCount {itemsParent.childCount}");
         Debug.Log($"ListCount {UploadSceneManager.ListStoreImgs.ToArray().Length}");
+
+        FirebaseRealtimeManager.Instance.deleteStoreImgs(LoginSceneManager.user.storeName);
+        yield return WaitServer.Instance.waitServer();
+
         for (int i = 0; i < itemsParent.childCount; i++)
         {
             imgPath = itemsParent.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text;
@@ -168,7 +172,7 @@ public class UploadBtnClick : MonoBehaviour
             Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene").buildIndex));
         }
         SceneManager.LoadSceneAsync("StoreScene");
-        StoreSceneManager.storeName = imgPath.Split('/')[0];
+        StoreSceneManager.storeName = LoginSceneManager.user.storeName;
     }
 
     public void CloseUploadBtnOnClick()
