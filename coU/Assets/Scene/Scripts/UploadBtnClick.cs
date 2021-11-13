@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UploadBtnClick : MonoBehaviour
@@ -26,7 +27,8 @@ public class UploadBtnClick : MonoBehaviour
         yield return WaitServer.Instance.waitServer();
         GameObject newItem = Instantiate(item, GameObject.Find("ContentUpload").transform);
         newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.imgPath;
-		newItem.transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
+        UploadSceneManager.ListStoreImgs.Add(data);
+        newItem.transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
     }
 
     public void GalleryBtnOnClick()
@@ -34,14 +36,14 @@ public class UploadBtnClick : MonoBehaviour
         GameObject contentList = GameObject.Find("ContentUpload");
 
         if (contentList.transform.childCount > 4)
-		{
+        {
 #if UNITY_EDITOR
             Debug.Log("올릴 수 있는 콘텐츠의 개수는 최대 5개입니다.");
 #elif UNITY_ANDROID
             Toast.ShowToastMessage("올릴 수 있는 콘텐츠의 개수는 최대 5개입니다.", 3000);
 #endif
             return;
-		}
+        }
         string newPath = "";
         Debug.Log("Gallery Btn on click");
         NativeGallery.Permission permission = NativeGallery.GetMixedMediaFromGallery((path) =>
@@ -72,37 +74,8 @@ public class UploadBtnClick : MonoBehaviour
         StartCoroutine(Load(imgPath));
     }
 
-    Image UpdateTexture(Uri uri)
-    {
-        Debug.Log("This is Upload Image");
-        return GameObject.Find("Img_UploadImg").GetComponent<Image>();
-        //Texture2D newPhoto = new Texture2D(1, 1);
-        //byte[] imgData = new byte[fileContents.Length];
-        //newPhoto.LoadImage(imgData);
-        //newPhoto.Apply();
-        //Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
-        //img.sprite = sprite;,
-        //StartCoroutine(GetTexture(img, uri));
-    }
-
-    //IEnumerator GetTexture(Image img, Uri uri)
-    //{
-    //    Debug.Log("In coroutine " + uri.OriginalString);
-    //    UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-        
-    //    yield return www.SendWebRequest();
-    //    if (www.isNetworkError || www.isHttpError)
-    //        Debug.Log(www.error);
-    //    else
-    //    {
-    //        Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-    //        Sprite sprite = Sprite.Create(myTexture, new Rect(0f, 0f, myTexture.width, myTexture.height), new Vector2(.5f, .5f));
-    //        img.sprite = sprite;
-    //    }
-    //}
-
     IEnumerator Load(string imgPath)
-	{
+    {
         StoreImg data = new StoreImg(imgPath);
         FirebaseStorageManager.Instance.LoadFile(data);
         yield return WaitServer.Instance.waitServer();
@@ -111,7 +84,9 @@ public class UploadBtnClick : MonoBehaviour
         Image img = UploadSceneManager.GetUIImage();
         Debug.Log("In coroutine " + uri.OriginalString);
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
+        StartCoroutine(WaitServer.Instance.waitServer());
         yield return www.SendWebRequest();
+        WaitServer.Instance.isDone = true;
         if (www.isNetworkError || www.isHttpError)
             Debug.Log(www.error);
         else
@@ -125,13 +100,89 @@ public class UploadBtnClick : MonoBehaviour
     }
 
     public void UploadItemOnClick()
-	{
+    {
         Transform contentList = GameObject.Find("ContentUpload").transform;
         GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
-        string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ?  recentItem.GetComponent<TextMeshProUGUI>().text: clickObj.GetComponent<TextMeshProUGUI>().text;
+        string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
         Debug.Log("Click ImagePath " + imgPath);
         LoadCoroutine(imgPath);
-	}
+    }
+
+    public void SaveBtnOnClick()
+    {
+        CreateStoreImgCoroutine();
+    }
+
+    Transform GetItemsParent()
+    {
+        return GameObject.Find("ContentUpload").transform;
+    }
+
+    void CreateStoreImgCoroutine()
+    {
+        StartCoroutine(CreateStoreImg());
+    }
+
+    IEnumerator CreateStoreImg()
+    {
+        List<string> imgPathList = new List<string>();
+        Transform itemsParent = GetItemsParent();
+        string imgPath = "";
+
+        Debug.Log($"childCount {itemsParent.childCount}");
+        Debug.Log($"ListCount {UploadSceneManager.ListStoreImgs.ToArray().Length}");
+        for (int i = 0; i < itemsParent.childCount; i++)
+        {
+            imgPath = itemsParent.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text;
+            imgPathList.Add(imgPath);
+            foreach (var storeImg in UploadSceneManager.ListStoreImgs)
+            {
+                if (storeImg.imgPath == imgPath)
+                {
+                    Debug.Log($"create {i}번째 아이템 {imgPath}");
+                    Debug.Log($"storeImg {storeImg.imgPath}");
+                    storeImg.sortOrder = i;
+                    FirebaseRealtimeManager.Instance.createStoreImg(storeImg);
+                    yield return WaitServer.Instance.waitServer();
+                    UploadSceneManager.ListStoreImgs.Remove(storeImg);
+                    break;
+                }
+            }
+        }
+        foreach (var storeImg in UploadSceneManager.ListStoreImgs)
+        {
+            Debug.Log("Delete Storage?");
+            FirebaseStorageManager.Instance.deleteFile(storeImg);
+            yield return WaitServer.Instance.waitServer();
+        }
+#if UNITY_EDITOR
+        Debug.Log("저장되었습니다.");
+#elif UNITY_ANDROID
+		Toast.ShowToastMessage("저장되었습니다.", 3000);
+#endif
+        if (UploadSceneManager.isBeforeMenu)
+        {
+            Stack.Instance.Clear();
+            Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene").buildIndex));
+        }
+        SceneManager.LoadSceneAsync("StoreScene");
+        StoreSceneManager.storeName = imgPath.Split('/')[0];
+    }
+
+    public void CloseUploadBtnOnClick()
+    {
+        GameObject.Find("Canvas_UploadPop").transform.Find("Panel_PopCloseUpload").gameObject.SetActive(true);
+    }
+
+    public void CancelCloseBtnOnClick()
+    {
+        GameObject.Find("Panel_PopCloseUpload").SetActive(false);
+    }
+
+    public void OKCloseBtnOnClick()
+    {
+        SceneManager.UnloadSceneAsync("UploadScene");
+    }
 }

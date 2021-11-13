@@ -17,7 +17,15 @@ public class StoreSceneManager : MonoBehaviour
     GameObject Menu;
     int backCount = 0;
 
-    void Start()
+	private void Awake()
+	{
+        List<Store> curStr = GetDBData.getStoresData($"Select * from Stores where name = '{storeName}';");
+        categoryMain = curStr[0].categoryMain;
+        categorySub = curStr[0].categorySub;
+        floor = curStr[0].floor;
+    }
+
+	void Start()
     {
         Screen.orientation = ScreenOrientation.Portrait;
 
