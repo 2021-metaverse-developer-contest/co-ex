@@ -11,6 +11,11 @@ public class LoginSceneManager : MonoBehaviour
     public static User user;
     public static bool isAdvertise = false; //우리 매장 홍보하기를 누르고 로그인을 했나?
 
+    public static string GetKeyFromEmail(string email)
+    {
+        string[] ids = email.Split('@');
+        return (ids[0] + "_" + ids[1].Split('.')[0]).Replace('.', '_');
+    }
 
     // UploadScene에 접근할 때 사용함
     public static bool IsPermission(string storeName)
