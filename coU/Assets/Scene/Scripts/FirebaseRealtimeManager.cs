@@ -64,11 +64,10 @@ public class FirebaseRealtimeManager
         });
     }
 
-    public void readValue<T>(string id)
+    public void readUser(string id)
     {
-        string table = typeof(T).Name;
         //dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
-        dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWith(task =>
+        dbReferecne.Child("User").Child(id).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -79,13 +78,19 @@ public class FirebaseRealtimeManager
             {
                 DataSnapshot snapshot = task.Result;
                 Debug.Log(snapshot.ChildrenCount);
-                T data = JsonUtility.FromJson<T>(snapshot.GetRawJsonValue());
+                User data = JsonUtility.FromJson<User>(snapshot.GetRawJsonValue());
                 // "as" data의 형식이 맞지 않는다면, null 값이 들어감
                 // 값을 찾지 못해도 null 값이 들어감!
-                _realtimeDB.user = data as User;
-                Debug.Log("storeName" + _realtimeDB.user.storeName);
-                _realtimeDB.storeImg = data as StoreImg;
-                WaitServer.Instance.isDone = true;
+                if (data == null)
+                {
+                    _realtimeDB.user = null;
+                }
+                else
+                {
+                    _realtimeDB.user = data as User;
+                    Debug.Log("storeName" + _realtimeDB.user.storeName);
+                }
+				WaitServer.Instance.isDone = true;
             }
         });
     }
@@ -134,11 +139,10 @@ public class FirebaseRealtimeManager
         });
     }
 
-    public void createValue<T>(string id, T data)
+    public void createUser(string id, User newUser)
     {
-        string table = typeof(T).Name;
-        string json = JsonUtility.ToJson(data);
-        dbReferecne.Child(table).Child(id).SetRawJsonValueAsync(json).ContinueWith(task =>
+        string json = JsonUtility.ToJson(newUser);
+        dbReferecne.Child("User").Child(id).SetRawJsonValueAsync(json).ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -149,6 +153,29 @@ public class FirebaseRealtimeManager
             {
                 WaitServer.Instance.isDone = true;
             }
+        });
+    }
+
+    public void createStoreImg(StoreImg newImg)
+    {
+        string json = JsonUtility.ToJson(newImg);
+        string key = newImg.storeName;
+        long idx = newImg.sortOrder;
+        Debug.Log($"In CreateStoreImg key:{key}, idx:{idx}");
+        Debug.Log($"Json {json}");
+        dbReferecne.Child("StoreImg").Child(key).Child($"{idx}_{key}").SetRawJsonValueAsync(json).ContinueWith(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                Debug.Log("Error in createStoreImg: " + task.Exception);
+                WaitServer.Instance.isDone = true;
+            }
+            else
+            {
+                Debug.Log("success");
+                WaitServer.Instance.isDone = true;
+            }
+            Debug.Log("In CreateSotreImg is done");
         });
     }
 

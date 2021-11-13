@@ -6,28 +6,50 @@ using UnityEngine;
 
 public class StoreImg
 {
-    public string storeName { get; set; }
-    public string imgType { get; set; }
-    public long sortOrder { get; set; }
-    public string imgPath { get; set; }
-    public string dateTime { get; set; }
-    public string imgName { get; set; }
+    public string storeName;
+    public string imgType;
+    public long sortOrder;
+    public string imgPath;
+    public string dateTime;
+    public string imgName;
 
     public StoreImg()
     {
     }
 
-    // 막아 놓음
-    //public StoreImg(string storeName, string imgType, long sortOrder, string imgPath, string dateTime, string imgName)
-    //{
-    //    this.storeName = storeName;       계절밥상
-    //    this.imgType = imgType;           jpg
-    //    this.sortOrder = sortOrder;       1
+	// 막아 놓음
+	//public StoreImg(string storeName, string imgType, long sortOrder, string imgPath, string dateTime, string imgName)
+	//{
+	//    this.storeName = storeName;       계절밥상
+	//    this.imgType = imgType;           jpg
+	//    this.sortOrder = sortOrder;       1
 
-    //    this.imgPath = imgPath;           계절밥상/DateTime_계절밥상.jpg
-    //    this.dateTime = dateTime;         Date
-    //    this.imgName = imgName;           DateTime_계절밥상.jpg
-    //}
+	//    this.imgPath = imgPath;           계절밥상/DateTime_계절밥상.jpg
+	//    this.dateTime = dateTime;         Date
+	//    this.imgName = imgName;           DateTime_계절밥상.jpg
+	//}
+
+	public StoreImg(string storeName, string imgType, long sortOrder, string imgPath, string dateTime, string imgName)
+	{
+		this.storeName = storeName;
+		this.imgType = imgType;
+		this.sortOrder = sortOrder;
+		this.imgPath = imgPath;
+		this.dateTime = dateTime;
+		this.imgName = imgName;
+
+	}
+
+	public StoreImg(ref StoreImg other)
+    {
+        this.imgPath = other.imgPath;
+        this.storeName = other.storeName;
+        this.imgType = other.imgType;
+        this.sortOrder = other.sortOrder;
+
+        this.dateTime = other.dateTime;
+        this.imgName = other.imgName;
+    }
 
     public StoreImg(string imgPath)
     {
