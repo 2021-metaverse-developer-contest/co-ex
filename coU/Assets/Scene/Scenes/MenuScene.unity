@@ -201,7 +201,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 32765
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &14643531
 RectTransform:
@@ -2005,7 +2005,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 32765
   m_TargetDisplay: 0
 --- !u!224 &738958070
 RectTransform:
@@ -5007,7 +5007,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 32766
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &1580874737
 RectTransform:

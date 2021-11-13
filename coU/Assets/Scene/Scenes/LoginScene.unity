@@ -509,7 +509,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &116066660
 RectTransform:
@@ -2354,9 +2354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d669503c6ea4679b599c47139f4bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginId: 
-  loginPw: 
-  storeName: 
+  idField: {fileID: 84807388}
+  pwField: {fileID: 2103859879}
 --- !u!1 &1018036614
 GameObject:
   m_ObjectHideFlags: 0
@@ -5069,7 +5068,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 32765
   m_TargetDisplay: 0
 --- !u!224 &1818691868
 RectTransform:

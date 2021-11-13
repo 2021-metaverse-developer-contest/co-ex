@@ -21,6 +21,7 @@ public class MenuBtnClick : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync("MenuScene");
             SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+            UploadSceneManager.isBeforeMenu = true;
             //컨텐츠 업로드 페이지로 이동
         }
     }
