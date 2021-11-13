@@ -71,7 +71,11 @@ public class StoreSceneManager : MonoBehaviour
 	System.Diagnostics.Process.GetCurrentProcess().Kill();
 #endif
                 }
-                Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 250);
+#if UNITY_EDITOR
+                Debug.Log("한 번 더 누르시면 종료됩니다.");
+#elif UNITY_ANDROID
+			    Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 300);
+#endif
             }
 
         }

@@ -24,8 +24,11 @@ public class UploadSceneManager : MonoBehaviour
 
 	private void Awake()
 	{
-		ListStoreImgs = new List<StoreImg>();
+		if (ListStoreImgs == null)
+			ListStoreImgs = new List<StoreImg>();
+		ListStoreImgs.Clear();
 		this.storeName = LoginSceneManager.user?.storeName;
+		Debug.Log("UploadScene StoreName " + storeName);
 		this.sortOrder = 0;
 	}
 
