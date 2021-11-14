@@ -154,6 +154,11 @@ public class StoreSceneManager : MonoBehaviour
 
     void BackBtnOnClick()
     {
+        if (Stack.Instance.Count() == 0)
+        {
+            SceneManager.LoadScene("AllCategoryScene");
+            return;
+        }
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
         if (beforePath.Contains("MaxstScene"))
