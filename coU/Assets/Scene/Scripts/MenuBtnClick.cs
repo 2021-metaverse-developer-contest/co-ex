@@ -59,8 +59,17 @@ public class MenuBtnClick : MonoBehaviour
         LoginSceneManager.user = null;
         LoginSceneManager.isAdvertise = false;
 
-        GameObject.Find("Panel_MenuScene").transform.Find("Panel_Login").gameObject.SetActive(true);
-        GameObject.Find("Panel_Logout").SetActive(false);
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
+        {
+            //GameObject.Find("Panel_MenuScene").transform.Find("Panel_Login").gameObject.SetActive(true);
+            //GameObject.Find("Panel_Logout").SetActive(false);
+            SceneManager.UnloadSceneAsync("MenuScene");
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+        }
 #if UNITY_EDITOR
         Debug.Log("로그아웃 되었습니다.");
 #elif UNITY_ANDROID
