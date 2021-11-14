@@ -7,6 +7,8 @@ TagManager:
   - Building
   - FadeObj
   - FadeInput
+  - minicanvas
+  - naviTrack
   layers:
   - Default
   - TransparentFX
