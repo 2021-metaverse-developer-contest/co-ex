@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 95476112841948836}
   - component: {fileID: 114735056877410658}
   m_Layer: 0
-  m_Name: Demo White Rabbit
+  m_Name: Rabbit
   m_TagString: naviTrack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +212,7 @@ Transform:
   m_GameObject: {fileID: 1115346038830892}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4670911485221546}
   - {fileID: 4522061432797384}
