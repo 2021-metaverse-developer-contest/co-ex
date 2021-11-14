@@ -59,12 +59,15 @@ public class LoginBtnClick : MonoBehaviour
 		//
 		if (LoginSceneManager.isLogin == true)
 		{
+			if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("MaxstScene"))
+				SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 			// 로그인이 된 다음에 씬전환
 			if (LoginSceneManager.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
 				SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
-			else // 2. 로그인 버튼을 통해 들어온건가?
-				SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
-			SceneManager.UnloadSceneAsync("LoginScene");
+			//else // 2. 로그인 버튼을 통해 들어온건가?
+			//	SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+			if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
+				SceneManager.UnloadSceneAsync("LoginScene");
 		}
 		else
 		{

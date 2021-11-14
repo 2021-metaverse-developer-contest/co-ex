@@ -37,8 +37,8 @@ public class UploadSceneManager : MonoBehaviour
 		Screen.orientation = ScreenOrientation.Portrait;
 		GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
 		//LoadCoroutine();
-		init();
 		itemParent = GameObject.Find("ContentUpload").transform;
+		init();
 	}
 
 	private void Update()
@@ -143,6 +143,7 @@ public class UploadSceneManager : MonoBehaviour
 	{
 		StartCoroutine(readStoreImgs());
 	}
+
 	IEnumerator readStoreImgs()
 	{
 		//storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
@@ -156,7 +157,18 @@ public class UploadSceneManager : MonoBehaviour
 			i.printAllValues();
 			GameObject newItem = Instantiate(item, itemParent);
 			newItem.GetComponentInChildren<TextMeshProUGUI>().text = i.imgPath;
+			Debug.Log($"newItem {newItem.GetComponentInChildren<TextMeshProUGUI>().text}");
 			Debug.Log("--------------------");
+		}
+		BtnInvoke();
+	}
+
+	void BtnInvoke()
+	{
+		if (itemParent.childCount > 0)
+		{
+			Debug.Log($"itemInvoke {itemParent.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text}");
+			itemParent.GetChild(0).transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
 		}
 	}
 
