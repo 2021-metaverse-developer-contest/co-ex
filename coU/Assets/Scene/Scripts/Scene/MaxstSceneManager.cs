@@ -16,7 +16,7 @@ public class MaxstSceneManager : MonoBehaviour
 	public static string naviStoreName = "";
 	public static string naviStoreCategorySub = "";
 	public static string naviStoreFloor = "";
-	public static bool naviStart = false;
+	public static bool chkNaviBtnClick = false;
 
 	public TextMeshProUGUI storeNameTextBox;
 	public TextMeshProUGUI storeFloorTextBox;
@@ -279,9 +279,9 @@ public class MaxstSceneManager : MonoBehaviour
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				if (prefabRendering == false)
 					disableRenderer(currentLocalizerLocation);
-				if (naviStart == true)
+				if (chkNaviBtnClick == true)
 				{
-					naviStart = false;
+					chkNaviBtnClick = false;
 					StartNavigation(resetNaviValue); // 스토어씬에서 호출된 네비게이션
 				}
 			}
