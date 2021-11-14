@@ -105,7 +105,18 @@ public class UploadBtnClick : MonoBehaviour
         GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
-        string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
+        string imgPath = "";
+        if (clickObj == null || clickObj.name != "TMP_Item")
+        {
+            Debug.Log("Click Object is null");
+            imgPath = recentItem.GetComponent<TextMeshProUGUI>().text;
+        }
+        else
+        {
+            Debug.Log($"Click Object is not null {clickObj.name}");
+            imgPath = clickObj.GetComponent<TextMeshProUGUI>().text;
+        }
+        //string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
         Debug.Log("Click ImagePath " + imgPath);
         LoadCoroutine(imgPath);
     }
@@ -133,6 +144,10 @@ public class UploadBtnClick : MonoBehaviour
 
         Debug.Log($"childCount {itemsParent.childCount}");
         Debug.Log($"ListCount {UploadSceneManager.ListStoreImgs.ToArray().Length}");
+
+        FirebaseRealtimeManager.Instance.deleteStoreImgs(LoginSceneManager.user.storeName);
+        yield return WaitServer.Instance.waitServer();
+
         for (int i = 0; i < itemsParent.childCount; i++)
         {
             imgPath = itemsParent.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text;
@@ -165,10 +180,10 @@ public class UploadBtnClick : MonoBehaviour
         if (UploadSceneManager.isBeforeMenu)
         {
             Stack.Instance.Clear();
-            Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene").buildIndex));
+            //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));
         }
         SceneManager.LoadSceneAsync("StoreScene");
-        StoreSceneManager.storeName = imgPath.Split('/')[0];
+        StoreSceneManager.storeName = LoginSceneManager.user.storeName;
     }
 
     public void CloseUploadBtnOnClick()

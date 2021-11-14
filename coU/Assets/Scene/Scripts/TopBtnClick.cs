@@ -31,6 +31,11 @@ public class TopBtnClick : MonoBehaviour
     public void BackBtnOnClick()
     {
         string curScene = SceneManager.GetActiveScene().name;
+        if (Stack.Instance.Count() == 0)
+        {
+            SceneManager.LoadSceneAsync("AllCategoryScene");
+            return;
+        }
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
 

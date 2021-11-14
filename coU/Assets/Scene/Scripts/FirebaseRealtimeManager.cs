@@ -139,6 +139,21 @@ public class FirebaseRealtimeManager
         });
     }
 
+    public void deleteStoreImgs(string storeName)
+    {
+        dbReferecne.Child("StoreImg").Child(storeName).GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+                Debug.Log("Error Delete StoreImgs: " + task.Exception);
+            else
+			{
+                DataSnapshot snapshot = task.Result;
+                snapshot.Reference.RemoveValueAsync();
+			}
+            WaitServer.Instance.isDone = true;
+        });
+    }
+
     public void createUser(string id, User newUser)
     {
         string json = JsonUtility.ToJson(newUser);
