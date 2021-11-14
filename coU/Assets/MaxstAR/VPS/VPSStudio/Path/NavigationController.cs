@@ -23,6 +23,10 @@ public class NavigationController : MonoBehaviour
 
     //hyojlee 2021.10.23
     public GameObject arrival;
+    // yunslee 2021.11.14
+    public GameObject characterPrefab;
+    public float characterMoveSpeed = 1f;
+    public float characterScale = 1f;
 
     private List<GameObject> pathObjects = new List<GameObject>();
     private List<GameObject> arrowItems = new List<GameObject>();
@@ -237,10 +241,76 @@ public class NavigationController : MonoBehaviour
         destination.name = "destination";
         MaxstSceneManager.chkNavi = true;
         MaxstSceneManager.DestroyFakeDestination();
-        //
+		//
+		// yunslee 2021.11.14 animation 적용
+		if (characterPrefab != null)
+		{
+			print("(characterPrefab != null)");
+			List<GameObject> naviTracks = new List<GameObject>();
+			naviTracks.AddRange(GameObject.FindGameObjectsWithTag("naviTrack"));
+			StartCoroutine(followTrack(naviTracks));
+			// 애니메이션 객체 생성 및 startcoroutine 돌리기
+		}
 
-        return naviGameObject;
+
+		return naviGameObject;
     }
+
+    IEnumerator followTrack(List<GameObject> naviTracks)
+	{
+        GameObject character = Instantiate(characterPrefab);
+        character.transform.localPosition = naviTracks[0].transform.localPosition;
+        character.transform.localScale = character.transform.localScale * characterScale;
+        string animType = characterPrefab.name;
+
+        int i = 0;
+        int count = naviTracks.Count;
+        Animator animator = character.GetComponent<Animator>();
+        Vector3 dir = new Vector3();
+
+        if (animType == "Rabbit")
+        {
+            animator.SetInteger("AnimIndex", 1);
+            animator.SetTrigger("Next");
+        }
+        while (true)
+        {
+            //print($"Distance: {Vector3.Distance(arrowGroupList[i].transform.position, arrow.transform.position)}");
+            if (Vector3.Distance(naviTracks[i].transform.position, character.transform.position) <= 0.1f)
+            {
+                i++;
+                print($"{i}번째 track following");
+                if (i == count)
+                {
+                    animator.ResetTrigger("AnimIndex");
+                    yield break;
+                }
+            }
+            else
+            {
+                switch (animType)
+                {
+                    case "Rabbit":
+                        break;
+                    case "Stylized Astronaut":
+                        animator.SetInteger("AnimationPar", 1);
+                        break;
+                    case "Chicken":
+                        animator.SetInteger("Walk", 1);
+                        break;
+                }
+
+                dir = naviTracks[i].transform.position - character.transform.position;
+                character.transform.position += dir * characterMoveSpeed * Time.deltaTime;
+                dir.Normalize();
+                character.transform.forward = dir;
+                yield return null;
+            }
+        }
+        Destroy(character);
+		print("Character End");
+		yield break;
+	}
     
     private Vector3 DivideBetweenTwoPoints(in Vector3 from, in Vector3 to, double ratio)
     {
