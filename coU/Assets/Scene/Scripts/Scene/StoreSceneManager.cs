@@ -44,6 +44,7 @@ public class StoreSceneManager : MonoBehaviour
 
 	void Start()
     {
+        Debug.Log($"Current Store {storeName}");
         nextTime = Time.time + timeLeft;
 		imgWidth = imgs[0].GetComponent<RectTransform>().rect.width;
         Screen.orientation = ScreenOrientation.Portrait;

@@ -2696,10 +2696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 6530511762043082070, guid: a8c7fbcca7d5d4dc8a11f1bc35833873, type: 3}
-  destFullPath: 
   storeName: 
   imgType: 
-  sortOrder: 0
 --- !u!4 &1439874998
 Transform:
   m_ObjectHideFlags: 0
@@ -4159,7 +4157,7 @@ GameObject:
   - component: {fileID: 2079856429}
   - component: {fileID: 2079856428}
   m_Layer: 5
-  m_Name: Panel_PopCloseUpload
+  m_Name: l_PopCloseUploadloadSub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
