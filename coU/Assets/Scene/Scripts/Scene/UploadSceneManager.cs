@@ -67,14 +67,15 @@ public class UploadSceneManager : MonoBehaviour
 	//{
 	//	StoreImg data = new StoreImg(storeName, imgType, sortOrder);
 	//	FirebaseStorageManager.Instance.downloadFile(data, destFullPath);
-	//	yield return WaitServer.Instance.waitServer();
+	//	yield return wait.waitServer();
 	//}
 
 	IEnumerator Load(string imgPath)
 	{
 		StoreImg data = new StoreImg(imgPath);
-		FirebaseStorageManager.Instance.LoadFile(data);
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseStorageManager.Instance.LoadFile(data, wait);
+		yield return wait.waitServer();
 		Uri uri = FirebaseStorageManager.uri;
 		Image img = GetUIImage();
 		UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
@@ -90,8 +91,9 @@ public class UploadSceneManager : MonoBehaviour
 
 	public IEnumerator getData()
 	{
-		FirebaseRealtimeManager.Instance.readStoreImgs(LoginSceneManager.user.storeName);
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.readStoreImgs(LoginSceneManager.user.storeName, wait);
+		yield return wait.waitServer();
 	}
 
 	/// <summary>
@@ -121,8 +123,9 @@ public class UploadSceneManager : MonoBehaviour
 	IEnumerator readStoreImgs()
 	{
 		//storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
-		FirebaseRealtimeManager.Instance.readStoreImgs(storeName); //DB에 저장된 이미지들의 정보를 가져옴
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.readStoreImgs(storeName, wait); //DB에 저장된 이미지들의 정보를 가져옴
+		yield return wait.waitServer();
 		ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
 		print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
 		ListStoreImgs.Sort(StoreImg.sortOrdercmp);

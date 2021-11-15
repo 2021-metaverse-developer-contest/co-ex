@@ -31,7 +31,7 @@ public class FirebaseStorageManager
         firebasestorageURL = "gs://co-ex1.appspot.com";
     }
 
-    public void uploadFile(StoreImg storageData, string srcFullPath)
+    public void uploadFile(StoreImg storageData, string srcFullPath, WaitServer wait)
     {
         StorageReference uploadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
         uploadPath.PutFileAsync(srcFullPath).ContinueWith((task) =>
@@ -39,7 +39,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -47,12 +47,12 @@ public class FirebaseStorageManager
                 Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 Debug.Log(metadata.SizeBytes.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
-    public void downloadFile(StoreImg storageData, string destFullPath)
+    public void downloadFile(StoreImg storageData, string destFullPath, WaitServer wait)
     {
         StorageReference uploadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
         uploadPath.GetFileAsync(destFullPath).ContinueWith(task =>
@@ -60,7 +60,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -68,12 +68,12 @@ public class FirebaseStorageManager
                 //Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 //Debug.Log(metadata.SizeBytes.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
-    public void deleteFile(StoreImg storageData)
+    public void deleteFile(StoreImg storageData, WaitServer wait)
     {
         StorageReference deletePath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
         deletePath.DeleteAsync().ContinueWith(task =>
@@ -81,7 +81,7 @@ public class FirebaseStorageManager
             if (task.IsFaulted || task.IsCanceled)
             {
                 Debug.Log(task.Exception.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -89,7 +89,7 @@ public class FirebaseStorageManager
                 //Firebase.Storage.StorageMetadata metadata = task.Result;
                 //string download_url = metadata.DownloadUrl.ToString(); Deprecated
                 //Debug.Log(metadata.SizeBytes.ToString());
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
@@ -97,7 +97,7 @@ public class FirebaseStorageManager
     //public static Stream fileContents = null;
     public static Uri uri;
 
-    public void LoadFile(StoreImg storageData)
+    public void LoadFile(StoreImg storageData, WaitServer wait)
     {
         Debug.Log("LoadFile 102 " + storageData.getfullPath(firebasestorageURL));
         StorageReference loadPath = firebaseStorage.GetReferenceFromUrl(storageData.getfullPath(firebasestorageURL));
@@ -107,13 +107,13 @@ public class FirebaseStorageManager
         //    if (task.IsFaulted || task.IsCanceled)
         //    {
         //        Debug.Log("Error " + task.Exception.ToString());
-        //        WaitServer.Instance.isDone = true;
+        //        wait.isDone = true;
         //    }
         //    else
         //    {
         //        fileContents = task.Result;
         //        Debug.Log("Finished downloading");
-        //        WaitServer.Instance.isDone = true;
+        //        wait.isDone = true;
         //    }
         //});
 
@@ -127,7 +127,7 @@ public class FirebaseStorageManager
                 Debug.Log("StorageManager uri string " + uri.OriginalString);
                 Debug.Log("Finished downloading");
             }
-            WaitServer.Instance.isDone = true;
+            wait.isDone = true;
         });
     }
 }

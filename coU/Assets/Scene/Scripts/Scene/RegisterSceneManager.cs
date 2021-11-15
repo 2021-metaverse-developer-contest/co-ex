@@ -41,8 +41,9 @@ public class RegisterSceneManager : MonoBehaviour
 
     public IEnumerator checkDuplicated()
 	{
-        FirebaseRealtimeManager.Instance.readUser(registerId);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseRealtimeManager.Instance.readUser(registerId, wait);
+        yield return wait.waitServer();
         User existUser = FirebaseRealtimeManager.Instance.user;
         if (existUser != null)
 		{
@@ -58,15 +59,17 @@ public class RegisterSceneManager : MonoBehaviour
     public IEnumerator Register()
     {
         User newUser = new User(registerId, registerPw, storeName, 0);
-        FirebaseRealtimeManager.Instance.readUser(newUser.id);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseRealtimeManager.Instance.readUser(newUser.id, wait);
+        yield return wait.waitServer();
         User existUser = FirebaseRealtimeManager.Instance.user;
         if (existUser != null)
             Debug.Log("중복된 id가 있습니다.");
         else
         {
-            FirebaseRealtimeManager.Instance.createUser(newUser.id, newUser);
-            yield return WaitServer.Instance.waitServer();
+		    WaitServer wait2 = new WaitServer();
+            FirebaseRealtimeManager.Instance.createUser(newUser.id, newUser, wait2);
+            yield return wait2.waitServer();
             Debug.Log($"{newUser.id}가 등록되었습니다.");
         }
     }
