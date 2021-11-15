@@ -16,8 +16,9 @@ public class LoginBtnClick : MonoBehaviour
 	{
 		GameObject panelPop = GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject;
 		TextMeshProUGUI tmpMsg = panelPop.transform.Find("Panel_Pop/TMP_Msg").GetComponent<TextMeshProUGUI>();
-		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(loginId));
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(loginId), wait);
+		yield return wait.waitServer();
 		User loginUser = FirebaseRealtimeManager.Instance.user;
 		if (loginUser == null)
 		{

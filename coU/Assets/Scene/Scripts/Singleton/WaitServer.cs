@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class WaitServer
 {
-    private static WaitServer _waitServer = null;
-    private WaitServer() { }
-    public static WaitServer Instance
-    {
-        get
-        {
-            if (_waitServer == null)
-                _waitServer = new WaitServer();
-            return _waitServer;
-        }
-    }
+    //private static WaitServer _waitServer = null;
+    //private WaitServer() { }
+    //public static WaitServer Instance
+    //{
+    //    get
+    //    {
+    //        if (_waitServer == null)
+    //            _waitServer = new WaitServer();
+    //        return _waitServer;
+    //    }
+    //}
     public bool isDone = false;
 
 

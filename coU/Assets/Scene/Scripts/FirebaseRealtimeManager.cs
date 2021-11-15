@@ -39,7 +39,7 @@ public class FirebaseRealtimeManager
     //{
     //};
 
-    public void printAllValue<T>()
+    public void printAllValue<T>(WaitServer wait)
     {
         string table = typeof(T).Name;
         //dbReferecne.Child(table).GetValueAsync().ContinueWithOnMainThread(task =>
@@ -48,7 +48,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -59,12 +59,12 @@ public class FirebaseRealtimeManager
                     T data = JsonUtility.FromJson<T>(snapshot.GetRawJsonValue());
                     Debug.Log(data);
                 }
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
-    public void readUser(string id)
+    public void readUser(string id, WaitServer wait)
     {
         //dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
         dbReferecne.Child("User").Child(id).GetValueAsync().ContinueWith(task =>
@@ -72,7 +72,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -90,12 +90,12 @@ public class FirebaseRealtimeManager
                     _realtimeDB.user = data as User;
                     Debug.Log("storeName" + _realtimeDB.user.storeName);
                 }
-				WaitServer.Instance.isDone = true;
+				wait.isDone = true;
             }
         });
     }
 
-    public void deleteAllValue<T>()
+    public void deleteAllValue<T>(WaitServer wait)
     {
         string table = typeof(T).Name;
         //dbReferecne.Child(table).GetValueAsync().ContinueWithOnMainThread(task =>
@@ -104,7 +104,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -114,13 +114,13 @@ public class FirebaseRealtimeManager
                 {
                     snap.Reference.RemoveValueAsync();
                 }
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
 
-    public void deleteValue<T>(string id)
+    public void deleteValue<T>(string id, WaitServer wait)
     {
         string table = typeof(T).Name;
         dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWith(task =>
@@ -128,18 +128,18 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
                 DataSnapshot snapshot = task.Result;
                 snapshot.Reference.RemoveValueAsync();
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
-    public void deleteStoreImgs(string storeName)
+    public void deleteStoreImgs(string storeName, WaitServer wait)
     {
         dbReferecne.Child("StoreImg").Child(storeName).GetValueAsync().ContinueWith(task =>
         {
@@ -150,11 +150,11 @@ public class FirebaseRealtimeManager
                 DataSnapshot snapshot = task.Result;
                 snapshot.Reference.RemoveValueAsync();
 			}
-            WaitServer.Instance.isDone = true;
+            wait.isDone = true;
         });
     }
 
-    public void createUser(string id, User newUser)
+    public void createUser(string id, User newUser, WaitServer wait)
     {
         string json = JsonUtility.ToJson(newUser);
         dbReferecne.Child("User").Child(id).SetRawJsonValueAsync(json).ContinueWith(task =>
@@ -162,16 +162,16 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
         });
     }
 
-    public void createStoreImg(StoreImg newImg)
+    public void createStoreImg(StoreImg newImg, WaitServer wait)
     {
         string json = JsonUtility.ToJson(newImg);
         string key = newImg.storeName;
@@ -183,18 +183,18 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log("Error in createStoreImg: " + task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
                 Debug.Log("success");
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             Debug.Log("In CreateSotreImg is done");
         });
     }
 
-    public void readStoreImgs(string storeName)
+    public void readStoreImgs(string storeName, WaitServer wait)
     {
         ListStoreImgs.Clear();
         string table = typeof(StoreImg).Name;
@@ -204,7 +204,7 @@ public class FirebaseRealtimeManager
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.Log(task.Exception);
-                WaitServer.Instance.isDone = true;
+                wait.isDone = true;
             }
             else
             {
@@ -233,7 +233,7 @@ public class FirebaseRealtimeManager
 					//StoreImg temp = new StoreImg(storeName, imgType, sortOrder);
 					//ListStoreImgs.Add(temp);
 				}
-				WaitServer.Instance.isDone = true;
+				wait.isDone = true;
             }
         });
     }
