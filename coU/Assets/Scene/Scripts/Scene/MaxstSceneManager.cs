@@ -441,6 +441,7 @@ public class MaxstSceneManager : MonoBehaviour
 			print(Stores.ToArray().Length);
 			destVector.x = ((float)Stores[0].modifiedX);
 			destVector.y = ((float)Stores[0].modifiedY);
+			destVector.z = (float)0;
 			print(destVector.x);
 			print(destVector.y);
 			return destVector;
