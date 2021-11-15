@@ -196,6 +196,7 @@ public class FirebaseRealtimeManager
 
     public void readStoreImgs(string storeName)
     {
+        ListStoreImgs.Clear();
         string table = typeof(StoreImg).Name;
         //dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
         dbReferecne.Child(table).Child(storeName).GetValueAsync().ContinueWith(task =>

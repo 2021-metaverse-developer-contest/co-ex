@@ -41,6 +41,10 @@ public class UploadSceneManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			GameObject.Find("Canvas_UploadPop").transform.Find("Panel_PopCloseUpload").gameObject.SetActive(true);
+		}
 	}
 
 	public void getDataCoroutine()
