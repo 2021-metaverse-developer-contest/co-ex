@@ -29,7 +29,7 @@ public class MenuBtnClick : MonoBehaviour
     // login pop up
     public void PopCloseBtnOnClick()
     {
-        GameObject.Find("Panel_Login").gameObject.SetActive(false);
+        GameObject.Find("Panel_PopWhole").gameObject.SetActive(false);
         //GameObject[] gameObjects = SceneManager.GetSceneByName("MenuScene").GetRootGameObjects();
 
         //foreach (GameObject gameObject in gameObjects)
