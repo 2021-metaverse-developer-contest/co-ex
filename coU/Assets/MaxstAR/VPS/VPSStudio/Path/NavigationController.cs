@@ -11,6 +11,15 @@ using JsonFx.Json;
 
 public class NavigationController : MonoBehaviour
 {
+    public enum e_character
+    {
+        none,
+        astronaut,
+        rabbit,
+        coco
+    };
+    public static e_character character;
+
     private static string pathURL = "http://ec2-3-34-147-254.ap-northeast-2.compute.amazonaws.com:5501";
 
     private Vector3 startPosition;

@@ -77,7 +77,11 @@ public class StoreSceneManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 1
             || (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene")))
         {
-            if (Stack.Instance.Count() > 0)
+            if (GameObject.Find("Panel_ChooseWhole") != null)
+            {
+                GameObject.Find("Panel_ChooseWhole").SetActive(false);
+            }
+            else if (Stack.Instance.Count() > 0)
             {
                 BackBtnOnClick();
             }

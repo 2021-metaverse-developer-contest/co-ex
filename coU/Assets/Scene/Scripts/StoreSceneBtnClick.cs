@@ -25,8 +25,30 @@ public class StoreSceneBtnClick : MonoBehaviour
         Application.OpenURL("tel:" + phone);
     }
 
+    public void UploadBtnOnClick()
+    {
+        SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+        UploadSceneManager.isBeforeMenu = false;
+    }
+
+    public void NaviCharacterPopUp()
+    {
+        GameObject.Find("Canvas_Choose").transform.Find("Panel_ChooseWhole").gameObject.SetActive(true);
+    }
+
     public void NaviBtnOnClick()
     {
+        string charac = GameObject.Find("TMP_Choose").GetComponent<TextMeshProUGUI>().text;
+        if (charac == "선택안함")
+            NavigationController.character = NavigationController.e_character.none;
+        else if (charac == "우주인")
+            NavigationController.character = NavigationController.e_character.astronaut;
+        else if (charac == "토끼")
+            NavigationController.character = NavigationController.e_character.rabbit;
+        else
+            NavigationController.character = NavigationController.e_character.coco;
+
+
         Debug.Log("Navigation Btn click " + StoreSceneManager.floor);
         MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
         MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
@@ -37,9 +59,8 @@ public class StoreSceneBtnClick : MonoBehaviour
         SceneManager.LoadScene("MaxstScene");
     }
 
-    public void UploadBtnOnClick()
+    public void NaviPopCloseBtnOnClick()
     {
-        SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
-        UploadSceneManager.isBeforeMenu = false;
+        GameObject.Find("Panel_ChooseWhole").SetActive(false);
     }
 }
