@@ -40,13 +40,13 @@ public class StoreSceneBtnClick : MonoBehaviour
     {
         string charac = GameObject.Find("TMP_Choose").GetComponent<TextMeshProUGUI>().text;
         if (charac == "선택안함")
-            NavigationController.character = NavigationController.e_character.none;
+            NavigationController.characterType = NavigationController.e_character.none;
         else if (charac == "우주인")
-            NavigationController.character = NavigationController.e_character.astronaut;
+            NavigationController.characterType = NavigationController.e_character.astronaut;
         else if (charac == "토끼")
-            NavigationController.character = NavigationController.e_character.rabbit;
+            NavigationController.characterType = NavigationController.e_character.rabbit;
         else
-            NavigationController.character = NavigationController.e_character.coco;
+            NavigationController.characterType = NavigationController.e_character.coco;
 
 
         Debug.Log("Navigation Btn click " + StoreSceneManager.floor);
