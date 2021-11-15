@@ -38,6 +38,7 @@ public class UploadSceneManager : MonoBehaviour
 		GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
 		//LoadCoroutine();
 		itemParent = GameObject.Find("ContentUpload").transform;
+		ListStoreImgs.Clear();
 		init();
 	}
 

@@ -8,7 +8,7 @@ public class ImgScrolling : MonoBehaviour
 {
 	public RectTransform content; //움직일 오브젝트
 	Button nextBtn;
-	private int count; //나눠야할 값
+	private int count = 0; //나눠야할 값
 	private float pos; //content의 LocalPosition
 	private float movepos; //움직일 값
 	private bool isScroll = false; //움직여야하는 지 구별
@@ -27,11 +27,12 @@ public class ImgScrolling : MonoBehaviour
 		nextTime = Time.time + timeLeft;
 		imgWidth = GameObject.Find("Img_Logo").GetComponent<RectTransform>().rect.width;
 		Debug.Log($"Start's imgWidth {imgWidth}");
-		foreach (Transform c in content.transform)
-		{
-			if (c.gameObject.activeSelf)
-				count++;
-		}
+		//foreach (Transform c in content.transform)
+		//{
+		//	if (c.gameObject.activeSelf)
+		//		count++;
+		//}
+
 		//Debug.Log($"Start's child count {count}");
 		//Debug.Log($"Start's movepos, content.rect.xMax {movepos.ToString()}, {content.rect.xMax}");
 		//Debug.Log($"Start's rect.width {content.rect.width}");
@@ -42,6 +43,20 @@ public class ImgScrolling : MonoBehaviour
 		 * content.rect.xMax = imgWidth * count / 2
 		 * => movepos = 1406 * (count - 1) / 2
 		 */
+		ReadImgDBCoroutine();
+	}
+
+	void ReadImgDBCoroutine()
+	{
+		StartCoroutine(ReadImgDB());
+	}
+
+	IEnumerator ReadImgDB()
+	{
+		FirebaseRealtimeManager.Instance.readStoreImgs(StoreSceneManager.storeName);
+		yield return WaitServer.Instance.waitServer();
+		count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
+		Debug.Log($"ImgScrolling count {count}");
 		movepos = imgWidth * (count - 1) / 2;
 		while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
 			content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
@@ -50,11 +65,11 @@ public class ImgScrolling : MonoBehaviour
 
 	public void Right()
 	{
-		Debug.Log($"Start's right   movepos			  {movepos.ToString()}");
-		Debug.Log($"Start's right   content.rect.xMax {content.rect.xMax}");
-		Debug.Log($"Start's right   content.rect.xMin {content.rect.xMin}");
-		Debug.Log($"currentLocalPosition {content.localPosition.ToString()}");
-		Debug.Log($"Start's right {content.rect.xMin + content.rect.xMax / count}");
+		//Debug.Log($"Start's right   movepos			  {movepos.ToString()}");
+		//Debug.Log($"Start's right   content.rect.xMax {content.rect.xMax}");
+		//Debug.Log($"Start's right   content.rect.xMin {content.rect.xMin}");
+		//Debug.Log($"currentLocalPosition {content.localPosition.ToString()}");
+		//Debug.Log($"Start's right {content.rect.xMin + content.rect.xMax / count}");
 		if (content.rect.xMin + content.rect.xMax / count  == Math.Round(movepos))
 		{
 			movepos = imgWidth * (count - 1) / 2;
@@ -74,11 +89,11 @@ public class ImgScrolling : MonoBehaviour
 
 	public void Left()
 	{
-		Debug.Log($"Start's left   movepos			  {Math.Round(movepos).ToString()}");
-		Debug.Log($"Start's left   content.rect.xMax {content.rect.xMax}");
-		Debug.Log($"Start's left   content.rect.xMin {content.rect.xMin}");
-		Debug.Log($"currentLocalPosition {content.localPosition.ToString()}");
-		Debug.Log($"Start's left {content.rect.xMax - content.rect.xMax / count}");
+		//Debug.Log($"Start's left   movepos			  {Math.Round(movepos).ToString()}");
+		//Debug.Log($"Start's left   content.rect.xMax {content.rect.xMax}");
+		//Debug.Log($"Start's left   content.rect.xMin {content.rect.xMin}");
+		//Debug.Log($"currentLocalPosition {content.localPosition.ToString()}");
+		//Debug.Log($"Start's left {content.rect.xMax - content.rect.xMax / count}");
 		if (content.rect.xMax - content.rect.xMax / count == Math.Round(movepos))
 		{
 			movepos = imgWidth * (count - 1) / 2 * -1;
