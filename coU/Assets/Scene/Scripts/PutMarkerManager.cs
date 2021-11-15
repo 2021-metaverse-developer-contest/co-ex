@@ -122,15 +122,12 @@ public class PutMarkerManager : MonoBehaviour
         //int modifyX = -240;
         //int modifyY = 360;
         float yValue = 0f;
-        if (floor == "B1")
-            yValue = 2.5f;
-        else if (floor == "B2")
-            yValue = -5.0f;
+        if (floor == "B2")
+            yValue = -1.0f;
         else if (floor == "1F")
-            yValue = 2.5f;
+            yValue = 7.0f;
         else
-            yValue = 2.5f;
-
+            yValue = 4.5f;
 
         foreach (var it in stores)
         {
@@ -190,7 +187,9 @@ public class PutMarkerManager : MonoBehaviour
             
             Transform arTransform = getARTransform();
             canvas.transform.localPosition = rawLocation;
-			canvas.transform.forward = arTransform.forward;
+            Vector3 temp = new Vector3(canvas.transform.position.x, yValue, canvas.transform.position.z);
+            canvas.transform.position = temp;
+            canvas.transform.forward = arTransform.forward;
             canvas.name = it.name;
             canvas.SetActive(false);
         }
