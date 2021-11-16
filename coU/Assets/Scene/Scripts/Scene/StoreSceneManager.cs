@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -123,9 +123,10 @@ public class StoreSceneManager : MonoBehaviour
     {
         string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
 		WaitServer wait = new WaitServer();
-        FirebaseRealtimeManager.Instance.readStoreImgs(storeName, wait);
+        FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+        firebaseRealtime.readStoreImgs(storeName, wait);
         yield return wait.waitServer();
-        count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
+        count = firebaseRealtime.ListStoreImgs.ToArray().Length;
         int idx = count == 0 ? 1 : count;
 
         for ( ; idx < imgs.Length; idx++)
@@ -140,16 +141,17 @@ public class StoreSceneManager : MonoBehaviour
         }
         else
 		{
-            FirebaseRealtimeManager.Instance.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
+            firebaseRealtime.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
             int i = 0;
 
-            foreach (StoreImg img in FirebaseRealtimeManager.Instance.ListStoreImgs)
+            foreach (StoreImg img in firebaseRealtime.ListStoreImgs)
             {
 		        WaitServer wait2 = new WaitServer();
-                FirebaseStorageManager.Instance.LoadFile(img, wait2);
+                FirebaseStorageManager firebaseStorage = new FirebaseStorageManager();
+                firebaseStorage.LoadFile(img, wait2);
                 yield return wait2.waitServer();
 
-                Uri uri = FirebaseStorageManager.uri;
+                Uri uri = firebaseStorage.uri;
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
                 yield return www.SendWebRequest();
                 if (www.isNetworkError || www.isHttpError)

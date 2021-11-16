@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -17,9 +17,10 @@ public class LoginBtnClick : MonoBehaviour
 		GameObject panelPop = GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject;
 		TextMeshProUGUI tmpMsg = panelPop.transform.Find("Panel_Pop/TMP_Msg").GetComponent<TextMeshProUGUI>();
 		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(loginId), wait);
+		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+		firebaseRealtime.readUser(LoginSceneManager.GetKeyFromEmail(loginId), wait);
 		yield return wait.waitServer();
-		User loginUser = FirebaseRealtimeManager.Instance.user;
+		User loginUser = firebaseRealtime.user;
 		if (loginUser == null)
 		{
 			Debug.Log("아이디를 확인해주세요.");
