@@ -306,7 +306,8 @@ public class NavigationController : MonoBehaviour
                 print($"{i}번째 track following");
                 if (i == count)
                 {
-                    animator.ResetTrigger("AnimIndex");
+                    // 목적지에 도착하면 움직임을 멈추도록 수정
+                    //animator.ResetTrigger("AnimIndex"); 이런 뉘앙스
                     break;
                 }
             }
