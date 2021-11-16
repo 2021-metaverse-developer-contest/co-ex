@@ -18,8 +18,9 @@ public class RegisterBtnClick : MonoBehaviour
 
 	IEnumerator ChkDupEmail(TMP_InputField idField, TextMeshProUGUI txtMsg)
 	{
-		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(idField.text));
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(idField.text), wait);
+		yield return wait.waitServer();
 		if (FirebaseRealtimeManager.Instance.user == null)
 		{
 			Debug.Log("No Duplication");
@@ -44,8 +45,9 @@ public class RegisterBtnClick : MonoBehaviour
 	IEnumerator Register(string id, string pw, string storeName, TextMeshProUGUI errMsg)
 	{
 		User newUser = new User(id, pw, storeName, 0);
-		FirebaseRealtimeManager.Instance.createUser(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser);
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.createUser(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser, wait);
+		yield return wait.waitServer();
 		errMsg.text = "가입이 완료되었습니다.";
 		isDone = true;
 	}

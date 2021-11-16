@@ -122,8 +122,9 @@ public class StoreSceneManager : MonoBehaviour
     IEnumerator InitialImgs(Store store)
     {
         string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
-        FirebaseRealtimeManager.Instance.readStoreImgs(storeName);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseRealtimeManager.Instance.readStoreImgs(storeName, wait);
+        yield return wait.waitServer();
         count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
         int idx = count == 0 ? 1 : count;
 
@@ -144,8 +145,9 @@ public class StoreSceneManager : MonoBehaviour
 
             foreach (StoreImg img in FirebaseRealtimeManager.Instance.ListStoreImgs)
             {
-                FirebaseStorageManager.Instance.LoadFile(img);
-                yield return WaitServer.Instance.waitServer();
+		        WaitServer wait2 = new WaitServer();
+                FirebaseStorageManager.Instance.LoadFile(img, wait2);
+                yield return wait2.waitServer();
 
                 Uri uri = FirebaseStorageManager.uri;
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
