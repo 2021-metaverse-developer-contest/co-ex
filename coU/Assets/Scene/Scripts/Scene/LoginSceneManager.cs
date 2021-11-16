@@ -27,8 +27,9 @@ public class LoginSceneManager : MonoBehaviour
 
 	public static string GetKeyFromEmail(string email)
     {
-        string[] ids = email.Split('@');
-        return (ids[0] + "_" + ids[1].Split('.')[0]).Replace('.', '_');
+        return email.Replace('.', '_').Replace('@', '_');
+        //string[] ids = email.Split('@');
+        //return (ids[0] + "_" + ids[1].Split('.')[0]).Replace('.', '_');
     }
 
     // UploadScene에 접근할 때 사용함

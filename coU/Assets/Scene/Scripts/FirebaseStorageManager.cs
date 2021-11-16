@@ -12,20 +12,10 @@ using UnityEngine;
 
 public class FirebaseStorageManager
 {
-    private static FirebaseStorageManager _firebaseStorageManager;
-    public static FirebaseStorageManager Instance
-    {
-        get
-        {
-            if (_firebaseStorageManager == null)
-                _firebaseStorageManager = new FirebaseStorageManager();
-            return _firebaseStorageManager;
-        }
-    }
-
     private Firebase.Storage.FirebaseStorage firebaseStorage;
     private string firebasestorageURL;
-    private FirebaseStorageManager()
+    public Uri uri;
+    public FirebaseStorageManager()
     {
         firebaseStorage = Firebase.Storage.FirebaseStorage.DefaultInstance;
         firebasestorageURL = "gs://co-ex1.appspot.com";
@@ -95,7 +85,6 @@ public class FirebaseStorageManager
     }
 
     //public static Stream fileContents = null;
-    public static Uri uri;
 
     public void LoadFile(StoreImg storageData, WaitServer wait)
     {

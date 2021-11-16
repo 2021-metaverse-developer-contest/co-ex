@@ -12,8 +12,9 @@ public class UploadBtnClick : MonoBehaviour
 {
     [SerializeField]
     private GameObject item; //TMP_Item UI에 컨텐츠 이름 넣긴
+    List<StoreImg> listStoreImgs = new List<StoreImg>();
 
-    void uploadCoroutine(string srcFullPath)
+    void UploadCoroutine(string srcFullPath)
     {
         //srcFullPath = "/Users/yunslee/srctest.png";
         StartCoroutine(Upload(srcFullPath));
@@ -24,7 +25,8 @@ public class UploadBtnClick : MonoBehaviour
         string imgType = srcFullPath.Substring(srcFullPath.LastIndexOf(".") + 1);
         StoreImg data = new StoreImg(LoginSceneManager.user?.storeName, imgType, 0);
 		WaitServer wait = new WaitServer();
-        FirebaseStorageManager.Instance.uploadFile(data, srcFullPath, wait);
+        FirebaseStorageManager firebaseStorage = new FirebaseStorageManager();
+        firebaseStorage.uploadFile(data, srcFullPath, wait);
         yield return wait.waitServer();
         GameObject newItem = Instantiate(item, GameObject.Find("ContentUpload").transform);
         newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.imgPath;
@@ -54,7 +56,7 @@ public class UploadBtnClick : MonoBehaviour
             Debug.Log("Image path: " + path);
             newPath = path;
 #if UNITY_EDITOR
-            uploadCoroutine(newPath);
+            UploadCoroutine(newPath);
 #elif UNITY_ANDROID
             uploadCoroutine("file://" + newPath);
 #endif
@@ -100,10 +102,11 @@ public class UploadBtnClick : MonoBehaviour
     {
         StoreImg data = new StoreImg(imgPath);
 		WaitServer wait = new WaitServer();
-        FirebaseStorageManager.Instance.LoadFile(data, wait);
+        FirebaseStorageManager firebaseStorage = new FirebaseStorageManager();
+        firebaseStorage.LoadFile(data, wait);
         yield return wait.waitServer();
 
-        Uri uri = FirebaseStorageManager.uri;
+        Uri uri = firebaseStorage.uri;
         Image img = UploadSceneManager.GetUIImage();
         Debug.Log("In coroutine " + uri.OriginalString);
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
@@ -171,7 +174,8 @@ public class UploadBtnClick : MonoBehaviour
         Debug.Log($"ListCount {UploadSceneManager.ListStoreImgs.ToArray().Length}");
 
 		WaitServer wait = new WaitServer();
-        FirebaseRealtimeManager.Instance.deleteStoreImgs(LoginSceneManager.user.storeName, wait);
+        FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+        firebaseRealtime.deleteStoreImgs(LoginSceneManager.user.storeName, wait);
         yield return wait.waitServer();
 
         for (int i = 0; i < itemsParent.childCount; i++)
@@ -186,7 +190,7 @@ public class UploadBtnClick : MonoBehaviour
                     Debug.Log($"storeImg {storeImg.imgPath}");
                     storeImg.sortOrder = i;
 		            WaitServer wait2 = new WaitServer();
-                    FirebaseRealtimeManager.Instance.createStoreImg(storeImg, wait2);
+                    firebaseRealtime.createStoreImg(storeImg, wait2);
                     yield return wait2.waitServer();
                     UploadSceneManager.ListStoreImgs.Remove(storeImg);
                     break;
@@ -197,7 +201,7 @@ public class UploadBtnClick : MonoBehaviour
         {
             Debug.Log("Delete Storage?");
 		    WaitServer wait3 = new WaitServer();
-            FirebaseStorageManager.Instance.deleteFile(storeImg, wait3);
+            new FirebaseStorageManager().deleteFile(storeImg, wait3);
             yield return wait3.waitServer();
         }
 #if UNITY_EDITOR

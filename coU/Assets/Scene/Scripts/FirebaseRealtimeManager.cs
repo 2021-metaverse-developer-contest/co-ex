@@ -10,28 +10,18 @@ using UnityEngine.SceneManagement;
 
 public class FirebaseRealtimeManager
 {
-    private static FirebaseRealtimeManager _realtimeDB = null;
-    private static DatabaseReference dbReferecne = null;
+    //private static DatabaseReference dbReferecne = null;
+    private DatabaseReference dbReferecne = null;
 
     // Realtime DB의 값을 여기에 가져다 줌, FirebaseStorageManager에서는 void 꼴
     public User user = null;
     public StoreImg storeImg = null;
     public List<StoreImg> ListStoreImgs = new List<StoreImg>();
 
-    private FirebaseRealtimeManager()
+    public FirebaseRealtimeManager()
     {
         Debug.Log("Constructor of FirebaseRealtimeManager");
         dbReferecne = FirebaseDatabase.DefaultInstance.RootReference;
-    }
-
-    public static FirebaseRealtimeManager Instance
-    {
-        get
-        {
-            if (_realtimeDB == null)
-                _realtimeDB = new FirebaseRealtimeManager();
-            return _realtimeDB;
-        }
     }
 
     // 구현 안함
@@ -83,12 +73,12 @@ public class FirebaseRealtimeManager
                 // 값을 찾지 못해도 null 값이 들어감!
                 if (data == null)
                 {
-                    _realtimeDB.user = null;
+                    this.user = null;
                 }
                 else
                 {
-                    _realtimeDB.user = data as User;
-                    Debug.Log("storeName" + _realtimeDB.user.storeName);
+                    this.user = data as User;
+                    Debug.Log("storeName" + this.user.storeName);
                 }
 				wait.isDone = true;
             }
@@ -141,7 +131,8 @@ public class FirebaseRealtimeManager
 
     public void deleteStoreImgs(string storeName, WaitServer wait)
     {
-        dbReferecne.Child("StoreImg").Child(storeName).GetValueAsync().ContinueWith(task =>
+        string storeNameKey = storeName.Replace('.', '_');
+        dbReferecne.Child("StoreImg").Child(storeNameKey).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
                 Debug.Log("Error Delete StoreImgs: " + task.Exception);
@@ -174,7 +165,7 @@ public class FirebaseRealtimeManager
     public void createStoreImg(StoreImg newImg, WaitServer wait)
     {
         string json = JsonUtility.ToJson(newImg);
-        string key = newImg.storeName;
+        string key = newImg.storeName.Replace('.', '_');
         long idx = newImg.sortOrder;
         Debug.Log($"In CreateStoreImg key:{key}, idx:{idx}");
         Debug.Log($"Json {json}");
@@ -198,8 +189,9 @@ public class FirebaseRealtimeManager
     {
         ListStoreImgs.Clear();
         string table = typeof(StoreImg).Name;
+        string storeNameKey = storeName.Replace('.', '_');
         //dbReferecne.Child(table).Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
-        dbReferecne.Child(table).Child(storeName).GetValueAsync().ContinueWith(task =>
+        dbReferecne.Child(table).Child(storeNameKey).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCanceled || task.IsFaulted)
             {

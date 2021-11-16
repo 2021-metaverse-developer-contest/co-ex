@@ -19,7 +19,6 @@ public class UploadSceneManager : MonoBehaviour
 
 	public static List<StoreImg> ListStoreImgs;
 	public string storeName;
-	public string imgType;
 
 	private void Awake()
 	{
@@ -33,8 +32,7 @@ public class UploadSceneManager : MonoBehaviour
 	private void Start()
 	{
 		Screen.orientation = ScreenOrientation.Portrait;
-		GameObject.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
-		//LoadCoroutine();
+		GameObject.Find("Panel_UploadCenter/TMP_StoreName").GetComponent<TextMeshProUGUI>().text = storeName;
 		itemParent = GameObject.Find("ContentUpload").transform;
 		ListStoreImgs.Clear();
 		init();
@@ -48,72 +46,14 @@ public class UploadSceneManager : MonoBehaviour
 		}
 	}
 
-	public void getDataCoroutine()
-	{
-		StartCoroutine(getData());
-	}
-
-	//public void downloadCoroutine()
-	//{
-	//	destFullPath = "/Users/yunslee/desttest.png";
-	//	StartCoroutine(Download());
-	//}
-
-	public void LoadCoroutine(string imgPath)
-	{
-		StartCoroutine(Load(imgPath));
-	}
-
-	//public IEnumerator Download()
-	//{
-	//	StoreImg data = new StoreImg(storeName, imgType, sortOrder);
-	//	FirebaseStorageManager.Instance.downloadFile(data, destFullPath);
-	//	yield return wait.waitServer();
-	//}
-
-	IEnumerator Load(string imgPath)
-	{
-		StoreImg data = new StoreImg(imgPath);
-		WaitServer wait = new WaitServer();
-		FirebaseStorageManager.Instance.LoadFile(data, wait);
-		yield return wait.waitServer();
-		Uri uri = FirebaseStorageManager.uri;
-		Image img = GetUIImage();
-		UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-		yield return www.SendWebRequest();
-		if (www.isNetworkError || www.isHttpError)
-			Debug.Log(www.error);
-		else
-		{
-			Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-			img.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(.5f, .5f));
-		}
-	}
-
-	public IEnumerator getData()
-	{
-		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.readStoreImgs(LoginSceneManager.user.storeName, wait);
-		yield return wait.waitServer();
-	}
-
 	/// <summary>
 	/// Returns Image Component.
-	/// </summary>
 	/// <returns>Image component</returns>
+	/// </summary>
 	public static Image GetUIImage()
 	{
 		Debug.Log("This is Upload Image");
 		return GameObject.Find("Img_UploadImg").GetComponent<Image>();
-
-		//Texture2D newPhoto = new Texture2D(1, 1);
-		//byte[] imgData = new byte[fileContents.Length];
-		//newPhoto.LoadImage(imgData);
-		//newPhoto.Apply();
-		//Sprite sprite = Sprite.Create(newPhoto, new Rect(0, 0, newPhoto.width, newPhoto.height), new Vector2(.5f, .5f));
-		//img.sprite = sprite;,
-
-		//StartCoroutine(GetTexture(img, uri));
 	}
 
 	public void readStoreImgsCorutine()
@@ -125,9 +65,10 @@ public class UploadSceneManager : MonoBehaviour
 	{
 		//storeName = "계절밥상"; // Test를 위해서 Firebase에 맞게함. 실제로는 로그인 유저에 맞는 public storeName를 사용하면 됨.
 		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.readStoreImgs(storeName, wait); //DB에 저장된 이미지들의 정보를 가져옴
+		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+		firebaseRealtime.readStoreImgs(storeName, wait); //DB에 저장된 이미지들의 정보를 가져옴
 		yield return wait.waitServer();
-		ListStoreImgs = FirebaseRealtimeManager.Instance.ListStoreImgs;
+		ListStoreImgs = firebaseRealtime.ListStoreImgs;
 		print($"데이터 가져온 갯수: {ListStoreImgs.Count}");
 		ListStoreImgs.Sort(StoreImg.sortOrdercmp);
 		foreach (var i in ListStoreImgs)
