@@ -29,6 +29,8 @@ public class UploadBtnClick : MonoBehaviour
         GameObject newItem = Instantiate(item, GameObject.Find("ContentUpload").transform);
         newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.imgPath;
         UploadSceneManager.ListStoreImgs.Add(data);
+
+        EventSystem.current.SetSelectedGameObject(newItem.transform.Find("TMP_Item").gameObject);
         newItem.transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
     }
 
