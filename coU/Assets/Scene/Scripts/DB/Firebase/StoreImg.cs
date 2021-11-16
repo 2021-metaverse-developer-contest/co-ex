@@ -82,7 +82,7 @@ public class StoreImg
         this.dateTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         this.imgName = string.Format("{0}_{1}.{2}", this.dateTime, storeName, imgType);
         //
-        this.imgPath = Path.Combine(storeName, this.imgName);
+        this.imgPath = Path.Combine(storeName.Replace('.', '_'), this.imgName);
     }
 
     public void printAllValues()
@@ -107,7 +107,9 @@ public class StoreImg
 
     public string getfullPath(string firebasestorageURL)
     {
-        return Path.Combine(firebasestorageURL, imgPath);
+        string[] imgPaths = imgPath.Split('/');
+        imgPaths[0] = imgPaths[0].Replace('.', '_');
+        return Path.Combine(firebasestorageURL, imgPaths[0], imgPaths[1]);
     }
 
     public static void swapSortOrder(StoreImg a, StoreImg b) // 둘 사이 sortOrder 교환

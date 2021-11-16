@@ -54,9 +54,10 @@ public class ImgScrolling : MonoBehaviour
 	IEnumerator ReadImgDB()
 	{
 		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.readStoreImgs(StoreSceneManager.storeName, wait);
+		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+		firebaseRealtime.readStoreImgs(StoreSceneManager.storeName, wait);
 		yield return wait.waitServer();
-		count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
+		count = firebaseRealtime.ListStoreImgs.ToArray().Length;
 		Debug.Log($"ImgScrolling count {count}");
 		movepos = imgWidth * (count - 1) / 2;
 		while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)

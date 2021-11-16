@@ -53,25 +53,27 @@ public class ImgScrollingMini : MonoBehaviour
 	{
 		Store store = GetDBData.getStoresData($"Select * from Stores where name = '{tmpStoreName.text}';")[0];
 		WaitServer wait = new WaitServer(isLoadScene: false);
-		FirebaseRealtimeManager.Instance.readStoreImgs(tmpStoreName.text, wait);
+		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+		firebaseRealtime.readStoreImgs(tmpStoreName.text, wait);
 		yield return wait.waitServer();
-		count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
+		count = firebaseRealtime.ListStoreImgs.ToArray().Length;
 		int idx = count == 0 ? 1 : count;
 
 		for (; idx < imgs.Length; idx++)
 			imgs[idx].SetActive(false);
 		if (count > 0)
 		{
-			FirebaseRealtimeManager.Instance.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
+			firebaseRealtime.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
 			int i = 0;
 
-			foreach (StoreImg img in FirebaseRealtimeManager.Instance.ListStoreImgs)
+			foreach (StoreImg img in firebaseRealtime.ListStoreImgs)
 			{
 				WaitServer wait2 = new WaitServer(isLoadScene: false);
-				FirebaseStorageManager.Instance.LoadFile(img, wait2);
+				FirebaseStorageManager firebaseStorage = new FirebaseStorageManager();
+				firebaseStorage.LoadFile(img, wait2);
 				yield return wait2.waitServer();
 
-				Uri uri = FirebaseStorageManager.uri;
+				Uri uri = firebaseStorage.uri;
 				UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
 				yield return www.SendWebRequest();
 				if (www.isNetworkError || www.isHttpError)
