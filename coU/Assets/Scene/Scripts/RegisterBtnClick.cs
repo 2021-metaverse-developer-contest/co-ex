@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -19,9 +19,10 @@ public class RegisterBtnClick : MonoBehaviour
 	IEnumerator ChkDupEmail(TMP_InputField idField, TextMeshProUGUI txtMsg)
 	{
 		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.readUser(LoginSceneManager.GetKeyFromEmail(idField.text), wait);
+		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
+		firebaseRealtime.readUser(LoginSceneManager.GetKeyFromEmail(idField.text), wait);
 		yield return wait.waitServer();
-		if (FirebaseRealtimeManager.Instance.user == null)
+		if (firebaseRealtime.user == null)
 		{
 			Debug.Log("No Duplication");
 			txtMsg.text = "사용 가능한 이메일입니다.";
@@ -46,7 +47,7 @@ public class RegisterBtnClick : MonoBehaviour
 	{
 		User newUser = new User(id, pw, storeName, 0);
 		WaitServer wait = new WaitServer();
-		FirebaseRealtimeManager.Instance.createUser(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser, wait);
+		new FirebaseRealtimeManager().createUser(LoginSceneManager.GetKeyFromEmail(newUser.id), newUser, wait);
 		yield return wait.waitServer();
 		errMsg.text = "가입이 완료되었습니다.";
 		isDone = true;

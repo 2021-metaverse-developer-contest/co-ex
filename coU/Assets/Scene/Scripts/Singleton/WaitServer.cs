@@ -35,7 +35,10 @@ public class WaitServer
     {
         if (this.isLoadScene == true)
         {
-            SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+            AsyncOperation asyncOper = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+
+            while (!asyncOper.isDone)
+                yield return null;
 
             //int index = SceneManager.sceneCount;
             //var op = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
