@@ -55,6 +55,7 @@ public class PutMarkerManager : MonoBehaviour
             if (isValidDistance(canvas.transform.position) == true)
             {
                 canvas.SetActive(true);
+                canvas.GetComponent<ImgScrollingMini>().inRadiusRange = true;
                 Transform arTransform = getARTransform();
                 canvas.transform.forward = arTransform.forward;
 
@@ -85,6 +86,8 @@ public class PutMarkerManager : MonoBehaviour
             else
             {
                 canvas.SetActive(false);
+                // canvas.GetComponent<ImgScrollingMini>().inRadiusRange = false;
+                /// 이미 true로 storeImgs가 로드 됬으면(true), 이미지가 언로드(false) 될 필요가 없어서, ImgScrollingMini에서 false 일 때를 따로 구현하지 않았음
             }
         }
     }
