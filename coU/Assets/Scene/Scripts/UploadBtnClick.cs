@@ -108,6 +108,12 @@ public class UploadBtnClick : MonoBehaviour
         GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
+        // 아이템이 클릭됐을 때 색상 변화가 있어야함.
+        // 다른 곳을 클릭하면 색상이 그대로 유지되어야하되 다른 아이템을 클릭하면 색상이 화이트로 변경되어야함.
+        // 한마디로 아이템들이 하나의 토글 그룹이라고 생각하면 됨.
+
+        clickObj.transform.parent.GetComponent<Image>().color = new Color32(198, 215, 255, 76);
+
         string imgPath = "";
         if (clickObj == null || clickObj.name != "TMP_Item")
         {
