@@ -23,8 +23,9 @@ public class UploadBtnClick : MonoBehaviour
     {
         string imgType = srcFullPath.Substring(srcFullPath.LastIndexOf(".") + 1);
         StoreImg data = new StoreImg(LoginSceneManager.user?.storeName, imgType, 0);
-        FirebaseStorageManager.Instance.uploadFile(data, srcFullPath);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseStorageManager.Instance.uploadFile(data, srcFullPath, wait);
+        yield return wait.waitServer();
         GameObject newItem = Instantiate(item, GameObject.Find("ContentUpload").transform);
         newItem.GetComponentInChildren<TextMeshProUGUI>().text = data.imgPath;
         UploadSceneManager.ListStoreImgs.Add(data);
@@ -77,16 +78,18 @@ public class UploadBtnClick : MonoBehaviour
     IEnumerator Load(string imgPath)
     {
         StoreImg data = new StoreImg(imgPath);
-        FirebaseStorageManager.Instance.LoadFile(data);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseStorageManager.Instance.LoadFile(data, wait);
+        yield return wait.waitServer();
 
         Uri uri = FirebaseStorageManager.uri;
         Image img = UploadSceneManager.GetUIImage();
         Debug.Log("In coroutine " + uri.OriginalString);
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
-        StartCoroutine(WaitServer.Instance.waitServer());
+        WaitServer wait2 = new WaitServer();
+        StartCoroutine(wait2.waitServer());
         yield return www.SendWebRequest();
-        WaitServer.Instance.isDone = true;
+        wait2.isDone = true;
         if (www.isNetworkError || www.isHttpError)
             Debug.Log(www.error);
         else
@@ -104,6 +107,12 @@ public class UploadBtnClick : MonoBehaviour
         Transform contentList = GameObject.Find("ContentUpload").transform;
         GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
+
+        // 아이템이 클릭됐을 때 색상 변화가 있어야함.
+        // 다른 곳을 클릭하면 색상이 그대로 유지되어야하되 다른 아이템을 클릭하면 색상이 화이트로 변경되어야함.
+        // 한마디로 아이템들이 하나의 토글 그룹이라고 생각하면 됨.
+
+        clickObj.transform.parent.GetComponent<Image>().color = new Color32(198, 215, 255, 76);
 
         string imgPath = "";
         if (clickObj == null || clickObj.name != "TMP_Item")
@@ -145,8 +154,9 @@ public class UploadBtnClick : MonoBehaviour
         Debug.Log($"childCount {itemsParent.childCount}");
         Debug.Log($"ListCount {UploadSceneManager.ListStoreImgs.ToArray().Length}");
 
-        FirebaseRealtimeManager.Instance.deleteStoreImgs(LoginSceneManager.user.storeName);
-        yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+        FirebaseRealtimeManager.Instance.deleteStoreImgs(LoginSceneManager.user.storeName, wait);
+        yield return wait.waitServer();
 
         for (int i = 0; i < itemsParent.childCount; i++)
         {
@@ -159,8 +169,9 @@ public class UploadBtnClick : MonoBehaviour
                     Debug.Log($"create {i}번째 아이템 {imgPath}");
                     Debug.Log($"storeImg {storeImg.imgPath}");
                     storeImg.sortOrder = i;
-                    FirebaseRealtimeManager.Instance.createStoreImg(storeImg);
-                    yield return WaitServer.Instance.waitServer();
+		            WaitServer wait2 = new WaitServer();
+                    FirebaseRealtimeManager.Instance.createStoreImg(storeImg, wait2);
+                    yield return wait2.waitServer();
                     UploadSceneManager.ListStoreImgs.Remove(storeImg);
                     break;
                 }
@@ -169,8 +180,9 @@ public class UploadBtnClick : MonoBehaviour
         foreach (var storeImg in UploadSceneManager.ListStoreImgs)
         {
             Debug.Log("Delete Storage?");
-            FirebaseStorageManager.Instance.deleteFile(storeImg);
-            yield return WaitServer.Instance.waitServer();
+		    WaitServer wait3 = new WaitServer();
+            FirebaseStorageManager.Instance.deleteFile(storeImg, wait3);
+            yield return wait3.waitServer();
         }
 #if UNITY_EDITOR
         Debug.Log("저장되었습니다.");

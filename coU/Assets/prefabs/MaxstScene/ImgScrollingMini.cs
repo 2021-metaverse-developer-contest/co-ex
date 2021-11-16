@@ -43,8 +43,9 @@ public class ImgScrollingMini : MonoBehaviour
 	IEnumerator LoadImgs()
 	{
 		Store store = GetDBData.getStoresData($"Select * from Stores where name = '{tmpStoreName.text}';")[0];
-		FirebaseRealtimeManager.Instance.readStoreImgs(tmpStoreName.text);
-		yield return WaitServer.Instance.waitServer();
+		WaitServer wait = new WaitServer();
+		FirebaseRealtimeManager.Instance.readStoreImgs(tmpStoreName.text, wait);
+		yield return wait.waitServer();
 		count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
 		int idx = count == 0 ? 1 : count;
 
@@ -57,8 +58,9 @@ public class ImgScrollingMini : MonoBehaviour
 
 			foreach (StoreImg img in FirebaseRealtimeManager.Instance.ListStoreImgs)
 			{
-				FirebaseStorageManager.Instance.LoadFile(img);
-				yield return WaitServer.Instance.waitServer();
+				WaitServer wait2 = new WaitServer();
+				FirebaseStorageManager.Instance.LoadFile(img, wait2);
+				yield return wait2.waitServer();
 
 				Uri uri = FirebaseStorageManager.uri;
 				UnityWebRequest www = UnityWebRequestTexture.GetTexture(uri);
