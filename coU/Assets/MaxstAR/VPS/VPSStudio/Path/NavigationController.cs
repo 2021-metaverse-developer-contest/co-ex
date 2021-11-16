@@ -369,15 +369,17 @@ public class NavigationController : MonoBehaviour
 			animator.SetTrigger("Next");
 		}
 
-		while (true)
+        while (true)
         {
 			if (naviTracks[i] == null)
 			{
 				showMessageWhenNaviTrackDestroy(NavigationController.characterType);
-                break;
-            }
+				stopMotion(animator, NavigationController.characterType);
+				yield break;
+			}
+
 			//print($"Distance: {Vector3.Distance(arrowGroupList[i].transform.position, arrow.transform.position)}");
-			else if (Vector3.Distance(naviTracks[i].transform.position, character.transform.position) <= 0.1f)
+			if (Vector3.Distance(naviTracks[i].transform.position, character.transform.position) <= 0.1f)
             {
                 i++;
                 print($"{i}번째 track following");
@@ -386,12 +388,16 @@ public class NavigationController : MonoBehaviour
             }
             else
             {
+                // 나와의 거리가 가까운 경우
                 runMotion(animator, NavigationController.characterType);
                 dir = naviTracks[i].transform.position - character.transform.position;
                 dir.Normalize();
                 character.transform.position += dir * characterMoveSpeed * Time.deltaTime;
                 character.transform.forward = dir;
                 yield return null;
+                // 나와의 거리가 먼 경우
+                // 멈춰서(Motion Stop) 나를 기다리도록 구현해야 함
+
             }
         }
         stopMotion(animator, NavigationController.characterType);
