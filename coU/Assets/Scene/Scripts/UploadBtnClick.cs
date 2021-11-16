@@ -66,8 +66,27 @@ public class UploadBtnClick : MonoBehaviour
     public void DeleteItemBtnOnClick()
     {
         GameObject deleteObj = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        Color deleteClr = deleteObj.GetComponent<Image>().color;
 
-        Destroy(deleteObj);
+        //Destroy(deleteObj);
+        DestroyImmediate(deleteObj);
+        Transform content = GameObject.Find("ContentUpload").transform;
+        Debug.Log($"Content child count {content.childCount}");
+        if (content.childCount > 0)
+        {
+            if (deleteClr == new Color32(198, 215, 255, 76))
+            {
+                Debug.Log("0 is not null");
+                Debug.Log($"0 is {content.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text}");
+                EventSystem.current.SetSelectedGameObject(content.GetChild(0).Find("TMP_Item").gameObject);
+                content.GetChild(0).Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
+            }
+        }
+        else
+        {
+            Image img = UploadSceneManager.GetUIImage();
+            img.sprite = null;
+        }
     }
 
     void LoadCoroutine(string imgPath)
@@ -105,29 +124,24 @@ public class UploadBtnClick : MonoBehaviour
     public void UploadItemOnClick()
     {
         Transform contentList = GameObject.Find("ContentUpload").transform;
-        GameObject recentItem = contentList.GetChild(contentList.childCount - 1).Find("TMP_Item").gameObject;
+        int childCount = contentList.childCount;
+        GameObject recentItem = contentList.GetChild(childCount - 1).Find("TMP_Item").gameObject;
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
-        // 아이템이 클릭됐을 때 색상 변화가 있어야함.
-        // 다른 곳을 클릭하면 색상이 그대로 유지되어야하되 다른 아이템을 클릭하면 색상이 화이트로 변경되어야함.
-        // 한마디로 아이템들이 하나의 토글 그룹이라고 생각하면 됨.
-
-        clickObj.transform.parent.GetComponent<Image>().color = new Color32(198, 215, 255, 76);
-
-        string imgPath = "";
         if (clickObj == null || clickObj.name != "TMP_Item")
+            clickObj = recentItem;
+
+        // 아이템이 클릭됐을 때 색상 변화가 있어야함.
+        // 다른 곳을 클릭하면 색상이 그대로 유지되어야하되 다른 아이템을s 클릭하면 색상이 화이트로 변경되어야함.
+        // 한마디로 아이템들이 하나의 토글 그룹이라고 생각하면 됨.
+        for (int i = 0; i < childCount; i++)
         {
-            Debug.Log("Click Object is null");
-            imgPath = recentItem.GetComponent<TextMeshProUGUI>().text;
+            contentList.GetChild(i).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            if (contentList.GetChild(i) == clickObj.transform.parent)
+                contentList.GetChild(i).GetComponent<Image>().color = new Color32(198, 215, 255, 76);
         }
-        else
-        {
-            Debug.Log($"Click Object is not null {clickObj.name}");
-            imgPath = clickObj.GetComponent<TextMeshProUGUI>().text;
-        }
-        //string imgPath = clickObj.GetComponent<TextMeshProUGUI>() == null ? recentItem.GetComponent<TextMeshProUGUI>().text : clickObj.GetComponent<TextMeshProUGUI>().text;
-        Debug.Log("Click ImagePath " + imgPath);
-        LoadCoroutine(imgPath);
+
+        LoadCoroutine(clickObj.GetComponent<TextMeshProUGUI>().text);
     }
 
     public void SaveBtnOnClick()
