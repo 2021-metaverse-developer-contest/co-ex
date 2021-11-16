@@ -18,7 +18,7 @@ public class NavigationController : MonoBehaviour
         rabbit,
         coco
     };
-    public static e_character character;
+    public static e_character characterType;
 
     private static string pathURL = "http://ec2-3-34-147-254.ap-northeast-2.compute.amazonaws.com:5501";
 
@@ -33,7 +33,9 @@ public class NavigationController : MonoBehaviour
     //hyojlee 2021.10.23
     public GameObject arrival;
     // yunslee 2021.11.14
-    public GameObject characterPrefab;
+    public GameObject rabbitPrefab;
+    public GameObject astronautPrefab;
+    public GameObject cocoPrefab;
     public float characterMoveSpeed = 1f;
     public float characterScale = 1f;
 
@@ -252,12 +254,24 @@ public class NavigationController : MonoBehaviour
         MaxstSceneManager.DestroyFakeDestination();
 		//
 		// yunslee 2021.11.14 animation 적용
-		if (characterPrefab != null)
+		if (NavigationController.characterType != e_character.none)
 		{
-			print("(characterPrefab != null)");
 			List<GameObject> naviTracks = new List<GameObject>();
 			naviTracks.AddRange(GameObject.FindGameObjectsWithTag("naviTrack"));
-			StartCoroutine(followTrack(naviTracks));
+            GameObject characterPrefab = null;
+            switch (NavigationController.characterType)
+			{
+                case e_character.astronaut:
+                    characterPrefab = astronautPrefab;
+                    break;
+                case e_character.coco:
+                    characterPrefab = cocoPrefab;
+                    break;
+                case e_character.rabbit:
+                    characterPrefab = rabbitPrefab;
+                    break;
+            }
+            StartCoroutine(followTrack(naviTracks, characterPrefab));
 			// 애니메이션 객체 생성 및 startcoroutine 돌리기
 		}
 
@@ -265,19 +279,20 @@ public class NavigationController : MonoBehaviour
 		return naviGameObject;
     }
 
-    IEnumerator followTrack(List<GameObject> naviTracks)
+    IEnumerator followTrack(List<GameObject> naviTracks, GameObject characterPrefab)
 	{
+        if (characterPrefab == null)
+            yield break;
         GameObject character = Instantiate(characterPrefab);
         character.transform.localPosition = naviTracks[0].transform.localPosition;
         character.transform.localScale = character.transform.localScale * characterScale;
-        string animType = characterPrefab.name;
 
         int i = 0;
         int count = naviTracks.Count;
         Animator animator = character.GetComponent<Animator>();
         Vector3 dir = new Vector3();
 
-        if (animType == "Rabbit")
+        if (NavigationController.characterType == e_character.rabbit)
         {
             animator.SetInteger("AnimIndex", 1);
             animator.SetTrigger("Next");
@@ -292,19 +307,19 @@ public class NavigationController : MonoBehaviour
                 if (i == count)
                 {
                     animator.ResetTrigger("AnimIndex");
-                    yield break;
+                    break;
                 }
             }
             else
             {
-                switch (animType)
+                switch (NavigationController.characterType)
                 {
-                    case "Rabbit":
+                    case e_character.rabbit:
                         break;
-                    case "Stylized Astronaut":
+                    case e_character.astronaut:
                         animator.SetInteger("AnimationPar", 1);
                         break;
-                    case "Chicken":
+                    case e_character.coco:
                         animator.SetInteger("Walk", 1);
                         break;
                 }

@@ -23417,8 +23417,11 @@ MonoBehaviour:
   arrowPrefab: {fileID: 8559583761412443589, guid: 412b11ec513594b188bcc20fa81a5c99,
     type: 3}
   arrival: {fileID: 3166239327641260764, guid: bf1a1b0491ae442c385231f548e09c57, type: 3}
-  characterPrefab: {fileID: 1147752367711628, guid: 2abf19653d633114faedf3b60dc6c39f,
+  rabbitPrefab: {fileID: 1588090451174212, guid: 7cc9bbd1e2d864a6c8af46c54c7df0bc,
     type: 3}
+  astronautPrefab: {fileID: 1147752367711628, guid: 109331017b199405fbe8dfd8db3ec233,
+    type: 3}
+  cocoPrefab: {fileID: 1969419073538870, guid: d7f62278d5e4b4e5c9501d98bb6d7b10, type: 3}
   characterMoveSpeed: 2.5
   characterScale: 1
 --- !u!1 &1347568646
