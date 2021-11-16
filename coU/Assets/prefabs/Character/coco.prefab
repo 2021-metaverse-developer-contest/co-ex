@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4431355569897286}
   - component: {fileID: 33341098857998220}
   - component: {fileID: 23310005319746522}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4656303906886512}
   - component: {fileID: 33910132354422980}
   - component: {fileID: 23253424598738660}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LegR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4898895339674762}
   - component: {fileID: 33393269503575124}
   - component: {fileID: 23726694822689026}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 4701122132943260}
   - component: {fileID: 33922833276370558}
   - component: {fileID: 23524579445022244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LegL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 4292928448873590}
   - component: {fileID: 95970164997226778}
   - component: {fileID: 114807186997810214}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: coco
   m_TagString: naviTrack
   m_Icon: {fileID: 0}
