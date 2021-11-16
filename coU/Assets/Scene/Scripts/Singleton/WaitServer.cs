@@ -35,25 +35,25 @@ public class WaitServer
     {
         if (this.isLoadScene == true)
         {
-            //SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
 
-            int index = SceneManager.sceneCount;
-            var op = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
-            yield return new WaitUntil(() => op.isDone);
-            Scene loadedScene = SceneManager.GetSceneAt(index);
+            //int index = SceneManager.sceneCount;
+            //var op = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+            //yield return new WaitUntil(() => op.isDone);
+            //Scene loadedScene = SceneManager.GetSceneAt(index);
 
             Debug.Log("waitServer Start");
             while (this.isDone == false)
             {
-                Debug.Log("waitServer ~ing");
+                //Debug.Log("waitServer ~ing");
                 yield return null;
             }
             this.isDone = false;
             Debug.Log("waitServer End");
 
-            SceneManager.UnloadSceneAsync(loadedScene);
+			//SceneManager.UnloadSceneAsync(loadedScene);
 
-            //SceneManager.UnloadSceneAsync("LoadingScene");
+			SceneManager.UnloadSceneAsync("LoadingScene");
         }
         else
         {
