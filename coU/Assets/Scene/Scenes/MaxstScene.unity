@@ -23417,7 +23417,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 8559583761412443589, guid: 412b11ec513594b188bcc20fa81a5c99,
     type: 3}
   arrival: {fileID: 3166239327641260764, guid: bf1a1b0491ae442c385231f548e09c57, type: 3}
-  rabbitPrefab: {fileID: 1588090451174212, guid: 7cc9bbd1e2d864a6c8af46c54c7df0bc,
+  rabbitPrefab: {fileID: 1115346038830892, guid: 59f8e9ac913c64006a42bb10b96d358a,
     type: 3}
   astronautPrefab: {fileID: 1147752367711628, guid: 109331017b199405fbe8dfd8db3ec233,
     type: 3}
