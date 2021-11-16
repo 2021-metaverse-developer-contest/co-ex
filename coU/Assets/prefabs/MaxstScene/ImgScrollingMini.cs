@@ -19,11 +19,14 @@ public class ImgScrollingMini : MonoBehaviour
 	float nextTime;
 	float timeLeft = 5.0f;
 
+	[NonSerialized]
+	public bool inRadiusRange = false;
+	private bool justOneTime = false;
+
 	private void Start()
 	{
 		nextTime = Time.time + timeLeft;
 		imgWidth = imgs[0].GetComponent<RectTransform>().rect.width;
-		LoadImgsCoroutine();
 	}
 
 	private void Update()
@@ -33,6 +36,11 @@ public class ImgScrollingMini : MonoBehaviour
 			nextTime = Time.time + timeLeft;
 			Right();
 		}
+		if (inRadiusRange == true && justOneTime == false)
+		{
+			justOneTime = true;
+			LoadImgsCoroutine();
+		}
 	}
 
 	void LoadImgsCoroutine()
@@ -40,10 +48,11 @@ public class ImgScrollingMini : MonoBehaviour
 		StartCoroutine(LoadImgs());
 	}
 
+
 	IEnumerator LoadImgs()
 	{
 		Store store = GetDBData.getStoresData($"Select * from Stores where name = '{tmpStoreName.text}';")[0];
-		WaitServer wait = new WaitServer();
+		WaitServer wait = new WaitServer(isLoadScene: false);
 		FirebaseRealtimeManager.Instance.readStoreImgs(tmpStoreName.text, wait);
 		yield return wait.waitServer();
 		count = FirebaseRealtimeManager.Instance.ListStoreImgs.ToArray().Length;
@@ -58,7 +67,7 @@ public class ImgScrollingMini : MonoBehaviour
 
 			foreach (StoreImg img in FirebaseRealtimeManager.Instance.ListStoreImgs)
 			{
-				WaitServer wait2 = new WaitServer();
+				WaitServer wait2 = new WaitServer(isLoadScene: false);
 				FirebaseStorageManager.Instance.LoadFile(img, wait2);
 				yield return wait2.waitServer();
 
