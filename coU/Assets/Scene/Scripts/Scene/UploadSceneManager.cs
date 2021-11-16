@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO;
 using UnityEngine.Networking;
+using UnityEngine.EventSystems;
 
 public class UploadSceneManager : MonoBehaviour
 {
@@ -145,6 +146,7 @@ public class UploadSceneManager : MonoBehaviour
 		if (itemParent.childCount > 0)
 		{
 			Debug.Log($"itemInvoke {itemParent.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text}");
+			EventSystem.current.SetSelectedGameObject(itemParent.GetChild(0).transform.Find("TMP_Item").gameObject);
 			itemParent.GetChild(0).transform.Find("TMP_Item").GetComponent<Button>().onClick.Invoke();
 		}
 	}
