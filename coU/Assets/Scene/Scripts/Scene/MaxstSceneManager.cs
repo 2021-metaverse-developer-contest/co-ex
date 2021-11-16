@@ -52,6 +52,7 @@ public class MaxstSceneManager : MonoBehaviour
     //뒤로가기 2번 클릭 시 종료되도록 하기 위해 키 이벤트 카운트할 변수
 	int backCount = 0;
 	GameObject panelBackground;
+	GameObject panelFloor;
 	public static bool onceDetectARLocation = false;
 
 	//hyojlee 2021.10.23
@@ -154,7 +155,8 @@ public class MaxstSceneManager : MonoBehaviour
 
 		//hyojlee 2021/10/19
 		panelBackground = GameObject.Find("Panel_Background").gameObject;
-
+		panelFloor = GameObject.Find("Panel_Floor");
+		panelFloor.SetActive(false);
 		if (isOcclusion)
 		{
 			foreach (GameObject eachGameObject in occlusionObjects)
@@ -277,6 +279,7 @@ public class MaxstSceneManager : MonoBehaviour
 					eachTrackable.gameObject.SetActive(isLocationInclude);
 				}
 				panelBackground.SetActive(false);
+				panelFloor.SetActive(true);
 				onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
@@ -296,6 +299,7 @@ public class MaxstSceneManager : MonoBehaviour
 				// hyojlee 2021/10/20
 				// 공간 인식이 완료된 시점이면 애니메이션이 꺼져야함.
 				panelBackground.SetActive(true);
+				panelFloor.SetActive(false);
 				eachTrackable.gameObject.SetActive(false);
 			}
 			currentLocalizerLocation = "";

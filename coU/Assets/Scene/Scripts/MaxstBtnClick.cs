@@ -59,4 +59,8 @@ public class MaxstBtnClick : MonoBehaviour
         MaxstSceneManager.ActivePanelChange();
     }
 
+    public void RefreshBtnOnClick()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
 }
