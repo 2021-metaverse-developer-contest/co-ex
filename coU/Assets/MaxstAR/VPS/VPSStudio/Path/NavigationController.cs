@@ -279,6 +279,77 @@ public class NavigationController : MonoBehaviour
 		return naviGameObject;
     }
 
+    void stopMotion(Animator animator, NavigationController.e_character characterType)
+    {
+        switch (characterType)
+		{
+            case e_character.none:
+                break;
+            case e_character.astronaut:
+				animator.ResetTrigger("AnimationPar");
+                break;
+            case e_character.coco:
+                animator.ResetTrigger("Walk");
+                break;
+            case e_character.rabbit:
+                animator.ResetTrigger("AnimIndex");
+                animator.ResetTrigger("Next");
+                break;
+        }
+	}
+
+    void runMotion(Animator animator, NavigationController.e_character characterType)
+    {
+        switch (characterType)
+        {
+            case e_character.none:
+                break;
+            case e_character.astronaut:
+                animator.SetInteger("AnimationPar", 1);
+                break;
+            case e_character.coco:
+                animator.SetInteger("Walk", 1);
+                break;
+            case e_character.rabbit:
+                break;
+        }
+    }
+
+    void showMessageWhenNaviTrackDestroy(NavigationController.e_character characterType)
+	{
+#if UNITY_EDITOR
+        switch (characterType)
+        {
+            case e_character.none:
+                break;
+            case e_character.astronaut:
+                Debug.Log("우주인이 길을 잃었습니다.");
+                break;
+            case e_character.coco:
+                Debug.Log("꼬꼬가 길을 잃었습니다.");
+                break;
+            case e_character.rabbit:
+                Debug.Log("토끼가 길을 잃었습니다.");
+                break;
+        }
+#elif UNITY_ANDROID && !UNITY_EDITOR
+        switch (characterType)
+        {
+            case e_character.none:
+                break;
+            case e_character.astronaut:
+                Toast.ShowToastMessage("우주인이 길을 잃었습니다.", 2000);
+                break;
+            case e_character.coco:
+                Toast.ShowToastMessage("꼬꼬가 잃었습니다.", 2000);
+                break;
+            case e_character.rabbit:
+                Toast.ShowToastMessage("토끼가 잃었습니다.", 2000);
+                break;
+        }
+#endif
+    }
+
     IEnumerator followTrack(List<GameObject> naviTracks, GameObject characterPrefab)
 	{
         if (characterPrefab == null)
@@ -292,48 +363,45 @@ public class NavigationController : MonoBehaviour
         Animator animator = character.GetComponent<Animator>();
         Vector3 dir = new Vector3();
 
-        if (NavigationController.characterType == e_character.rabbit)
-        {
-            animator.SetInteger("AnimIndex", 1);
-            animator.SetTrigger("Next");
-        }
+		if (NavigationController.characterType == e_character.rabbit)
+		{
+			animator.SetInteger("AnimIndex", 1);
+			animator.SetTrigger("Next");
+		}
+
         while (true)
         {
-            //print($"Distance: {Vector3.Distance(arrowGroupList[i].transform.position, arrow.transform.position)}");
-            if (Vector3.Distance(naviTracks[i].transform.position, character.transform.position) <= 0.1f)
+			if (naviTracks[i] == null)
+			{
+				showMessageWhenNaviTrackDestroy(NavigationController.characterType);
+				stopMotion(animator, NavigationController.characterType);
+				yield break;
+			}
+
+			//print($"Distance: {Vector3.Distance(arrowGroupList[i].transform.position, arrow.transform.position)}");
+			if (Vector3.Distance(naviTracks[i].transform.position, character.transform.position) <= 0.1f)
             {
                 i++;
                 print($"{i}번째 track following");
                 if (i == count)
-                {
-                    // 목적지에 도착하면 움직임을 멈추도록 수정
-                    //animator.ResetTrigger("AnimIndex"); 이런 뉘앙스
                     break;
-                }
             }
             else
             {
-                switch (NavigationController.characterType)
-                {
-                    case e_character.rabbit:
-                        break;
-                    case e_character.astronaut:
-                        animator.SetInteger("AnimationPar", 1);
-                        break;
-                    case e_character.coco:
-                        animator.SetInteger("Walk", 1);
-                        break;
-                }
-
+                // 나와의 거리가 가까운 경우
+                runMotion(animator, NavigationController.characterType);
                 dir = naviTracks[i].transform.position - character.transform.position;
-                character.transform.position += dir * characterMoveSpeed * Time.deltaTime;
                 dir.Normalize();
+                character.transform.position += dir * characterMoveSpeed * Time.deltaTime;
                 character.transform.forward = dir;
                 yield return null;
+                // 나와의 거리가 먼 경우
+                // 멈춰서(Motion Stop) 나를 기다리도록 구현해야 함
+
             }
         }
-        Destroy(character);
-		print("Character End");
+        stopMotion(animator, NavigationController.characterType);
+        print("Navigation End");
 		yield break;
 	}
     

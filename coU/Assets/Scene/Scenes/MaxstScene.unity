@@ -23515,7 +23515,7 @@ MonoBehaviour:
   astronautPrefab: {fileID: 1147752367711628, guid: 109331017b199405fbe8dfd8db3ec233,
     type: 3}
   cocoPrefab: {fileID: 1969419073538870, guid: d7f62278d5e4b4e5c9501d98bb6d7b10, type: 3}
-  characterMoveSpeed: 2.5
+  characterMoveSpeed: 2
   characterScale: 1
 --- !u!1 &1347568646
 GameObject:
@@ -35209,7 +35209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2146765963
