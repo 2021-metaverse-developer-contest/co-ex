@@ -90,7 +90,8 @@ public class ImgScrollingMini : MonoBehaviour
 		}
 		else
 		{
-			Texture2D texture = Resources.Load(store.logoPath, typeof(Texture2D)) as Texture2D;
+			string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
+			Texture2D texture = Resources.Load(logoPath, typeof(Texture2D)) as Texture2D;
 			if (texture == null)
 				texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
 			imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
