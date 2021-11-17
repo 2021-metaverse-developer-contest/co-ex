@@ -286,14 +286,14 @@ public class NavigationController : MonoBehaviour
             case e_character.none:
                 break;
             case e_character.astronaut:
-				animator.ResetTrigger("AnimationPar");
+                animator.SetInteger("AnimationPar", 0);
                 break;
             case e_character.coco:
-                animator.ResetTrigger("Walk");
+                animator.SetInteger("Walk", 0);
                 break;
             case e_character.rabbit:
-                animator.ResetTrigger("AnimIndex");
-                animator.ResetTrigger("Next");
+                animator.SetInteger("AnimIndex", 0);
+                animator.SetTrigger("Next");
                 break;
         }
 	}
