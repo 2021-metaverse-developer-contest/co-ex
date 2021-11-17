@@ -21,8 +21,6 @@ public class LoginSceneManager : MonoBehaviour
     // 임시로 로그인 정보 담아둠.
 	private void Start()
 	{
-        idField.text = "qkqh@qkqh.com";
-        pwField.text = "qkqh";
 	}
 
 	public static string GetKeyFromEmail(string email)

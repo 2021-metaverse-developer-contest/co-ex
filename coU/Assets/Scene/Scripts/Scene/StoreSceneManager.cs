@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.Video;
 
 public class StoreSceneManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class StoreSceneManager : MonoBehaviour
     public static string floor = "";
 
     public GameObject[] imgs = new GameObject[5];
+    public VideoPlayer[] videos = new VideoPlayer[3];
     List<StoreImg> storeImgList;
 
     List<Store> store;
@@ -69,6 +71,13 @@ public class StoreSceneManager : MonoBehaviour
 
         GameObject.Find("Btn_Next").GetComponent<Button>().onClick.AddListener(delegate { Right(); });
         GameObject.Find("Btn_Prev").GetComponent<Button>().onClick.AddListener(delegate { Left(); });
+
+        Debug.Log($"videos[0].isLooping = {videos[0].isLooping.ToString()}");
+        Debug.Log($"videos[1].isLooping = {videos[0].isLooping.ToString()}");
+        Debug.Log($"videos[2].isLooping = {videos[0].isLooping.ToString()}");
+        videos[0].loopPointReached += Replay;
+        videos[1].loopPointReached += Replay;
+        videos[2].loopPointReached += Replay;
         InitialContent();
     }
 
@@ -136,7 +145,7 @@ public class StoreSceneManager : MonoBehaviour
             Texture2D texture = Resources.Load(logoPath, typeof(Texture2D)) as Texture2D;
             if (texture == null)
                 texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
-            imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+            imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f));
             Debug.Log($"storeName {store.name}");
         }
         else
@@ -337,5 +346,10 @@ public class StoreSceneManager : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    void Replay(VideoPlayer vp)
+    {
+        vp.Play();
     }
 }
