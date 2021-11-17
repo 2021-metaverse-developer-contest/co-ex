@@ -312,13 +312,17 @@ public class MaxstSceneManager : MonoBehaviour
 				whichfloor = "B1";
 			else if (whichfloor == "b2")
 				whichfloor = "B2";
-			floorTextBox.text = whichfloor;
-			string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
-			#if UNITY_EDITOR
-				Debug.Log(toastMessage);
-			#elif UNITY_ANDROID && !UNITY_EDITOR
-				Toast.ShowToastMessage(toastMessage, 3000);
-			#endif
+
+			if (floorTextBox.text != whichfloor)
+			{
+				floorTextBox.text = whichfloor;
+				string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
+				#if UNITY_EDITOR
+					Debug.Log(toastMessage);
+				#elif UNITY_ANDROID && !UNITY_EDITOR
+					Toast.ShowToastMessage(toastMessage, 3000);
+				#endif
+			}
 		}
 	}
 
