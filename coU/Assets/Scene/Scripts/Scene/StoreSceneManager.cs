@@ -145,7 +145,7 @@ public class StoreSceneManager : MonoBehaviour
             Texture2D texture = Resources.Load(logoPath, typeof(Texture2D)) as Texture2D;
             if (texture == null)
                 texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
-            imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+            imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f));
             Debug.Log($"storeName {store.name}");
         }
         else
