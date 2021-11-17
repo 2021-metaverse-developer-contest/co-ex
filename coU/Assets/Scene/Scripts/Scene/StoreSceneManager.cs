@@ -171,8 +171,6 @@ public class StoreSceneManager : MonoBehaviour
                 content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
             pos = content.localPosition.x;
         }
-
-        InitialMenu(store.name);
     }
 
     void InitialContent()
@@ -192,6 +190,8 @@ public class StoreSceneManager : MonoBehaviour
         categoryMain = store[0].categoryMain;
         categorySub = store[0].categorySub;
         floor = store[0].floor;
+
+        InitialMenu(store[0].name);
 
         //이미지 띄우는 부분
         StartCoroutine(InitialImgs(store[0]));
