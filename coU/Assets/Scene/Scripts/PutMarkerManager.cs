@@ -143,7 +143,7 @@ public class PutMarkerManager : MonoBehaviour
             // 미니 캔버스의 렌더 모드는 world space이므로 이벤트 카메라를 붙여줘야함.
 
             canvasList.Add(canvas);
-            Transform infoParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreInfo");
+            Transform infoParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreInfoParent/Panel_StoreInfo");
             Transform menuParent = canvas.transform.Find("Panel_Whole").Find("Panel_StoreMenu").Find("Panel_Menu");
 
             TextMeshProUGUI name = infoParent.Find("TMP_StoreName").GetComponent<TextMeshProUGUI>();
