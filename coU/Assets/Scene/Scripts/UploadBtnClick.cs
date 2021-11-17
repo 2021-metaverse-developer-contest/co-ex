@@ -58,7 +58,7 @@ public class UploadBtnClick : MonoBehaviour
 #if UNITY_EDITOR
             UploadCoroutine(newPath);
 #elif UNITY_ANDROID
-            uploadCoroutine("file://" + newPath);
+            UploadCoroutine("file://" + newPath);
 #endif
             //GameObject newItem = Instantiate(item, GameObject.Find("Content").transform);
             //newItem.GetComponentInChildren<TextMeshProUGUI>().text = newPath;
