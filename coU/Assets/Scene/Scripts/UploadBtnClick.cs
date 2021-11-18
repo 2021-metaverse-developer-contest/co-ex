@@ -54,6 +54,8 @@ public class UploadBtnClick : MonoBehaviour
         NativeGallery.Permission permission = NativeGallery.GetMixedMediaFromGallery((path) =>
         {
             Debug.Log("Image path: " + path);
+            if (path == null || path == "")
+                return;
             newPath = path;
 #if UNITY_EDITOR
             UploadCoroutine(newPath);
