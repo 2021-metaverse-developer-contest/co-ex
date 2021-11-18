@@ -135,7 +135,8 @@ public class StoreSceneManager : MonoBehaviour
         FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
         firebaseRealtime.readStoreImgs(storeName, wait);
         yield return wait.waitServer();
-        count = firebaseRealtime.ListStoreImgs.ToArray().Length;
+        //count = firebaseRealtime.ListStoreImgs.ToArray().Length;
+        count = firebaseRealtime.ListStoreImgs.Count;
         int idx = count == 0 ? 1 : count;
 
         for ( ; idx < imgs.Length; idx++)
@@ -150,6 +151,10 @@ public class StoreSceneManager : MonoBehaviour
         }
         else
 		{
+            movepos = imgWidth * (count - 1) / 2;
+            while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
+                content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
+            pos = content.localPosition.x;
             firebaseRealtime.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
             int i = 0;
 
@@ -173,13 +178,6 @@ public class StoreSceneManager : MonoBehaviour
                 }
             }
 		}
-        if (count > 0)
-        {
-            movepos = imgWidth * (count - 1) / 2;
-            while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
-                content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
-            pos = content.localPosition.x;
-        }
     }
 
     void InitialContent()

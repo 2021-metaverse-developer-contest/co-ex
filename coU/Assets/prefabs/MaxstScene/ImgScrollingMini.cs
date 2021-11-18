@@ -52,6 +52,7 @@ public class ImgScrollingMini : MonoBehaviour
 	IEnumerator LoadImgs()
 	{
 		Store store = GetDBData.getStoresData($"Select * from Stores where name = '{tmpStoreName.text}';")[0];
+		string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
 		WaitServer wait = new WaitServer(isLoadScene: false);
 		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
 		firebaseRealtime.readStoreImgs(tmpStoreName.text, wait);
@@ -61,8 +62,21 @@ public class ImgScrollingMini : MonoBehaviour
 
 		for (; idx < imgs.Length; idx++)
 			imgs[idx].SetActive(false);
-		if (count > 0)
+		if (count < 1)
 		{
+			Texture2D texture = Resources.Load(logoPath, typeof(Texture2D)) as Texture2D;
+			if (texture == null)
+				texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
+			imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
+			Debug.Log($"storeName {store.name}");
+		}
+		else
+		{
+			movepos = imgWidth * (count - 1) / 2;
+			while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
+				content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
+			pos = content.localPosition.x;
+
 			firebaseRealtime.ListStoreImgs.Sort(StoreImg.sortOrdercmp);
 			int i = 0;
 
@@ -85,20 +99,8 @@ public class ImgScrollingMini : MonoBehaviour
 						new Vector2(.5f, .5f));
 				}
 			}
-			movepos = imgWidth * (count - 1) / 2;
-			while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
-				content.localPosition = Vector2.Lerp(content.localPosition, new Vector2(movepos, 0), Time.deltaTime * 5);
-			pos = content.localPosition.x;
 		}
-		else
-		{
-			string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
-			Texture2D texture = Resources.Load(logoPath, typeof(Texture2D)) as Texture2D;
-			if (texture == null)
-				texture = Resources.Load("default_logo", typeof(Texture2D)) as Texture2D;
-			imgs[0].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 100.0f);
-			Debug.Log($"storeName {store.name}");
-		}
+
 	}
 
 	void Right()
