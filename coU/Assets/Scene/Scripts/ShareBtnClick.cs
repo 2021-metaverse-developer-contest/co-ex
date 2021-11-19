@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Net;
 
 public class ShareBtnClick : MonoBehaviour
 {
@@ -30,7 +31,11 @@ public class ShareBtnClick : MonoBehaviour
 		// 카테고리메인에 "레스토랑&카페", 카테고리서브 "카페/디저트" &, / 쓰는 것을 조심해야함.
 		// string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?scene={0}&name={1}&categoryMain={2}&categorySub={3}",
 		// 					scene, name, categoryMain, categorySub);
-		string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",
+
+		name = WebUtility.UrlEncode(name);
+		categoryMain = WebUtility.UrlEncode(categoryMain);
+		categorySub = WebUtility.UrlEncode(categorySub);
+		string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?parameter={0},{1},{2}",
 		name, categoryMain, categorySub).Replace(" ","%20");
 		print(subject);
 		print(uri);
