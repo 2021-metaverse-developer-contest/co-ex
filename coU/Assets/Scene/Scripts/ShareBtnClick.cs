@@ -31,7 +31,7 @@ public class ShareBtnClick : MonoBehaviour
 		// string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?scene={0}&name={1}&categoryMain={2}&categorySub={3}",
 		// 					scene, name, categoryMain, categorySub);
 		string uri = string.Format("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",
-		name, categoryMain, categorySub);
+		name, categoryMain, categorySub).Replace(" ","%20");
 		print(subject);
 		print(uri);
 #if UNITY_ANDROID && !UNITY_EDITOR
