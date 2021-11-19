@@ -284,9 +284,6 @@ public class StoreSceneManager : MonoBehaviour
         //Debug.Log($"Start's right {content.rect.xMin + content.rect.xMax / count}");
         if (count > 0)
         {
-            Debug.Log($"content.rect.xMin {content.rect.xMin} | content.rect.xMax {content.rect.xMax}");
-            Debug.Log($"movepos {movepos} | calc값 {content.rect.xMin + content.rect.xMax / count}");
-
             if (Math.Round(content.rect.xMin + content.rect.xMax / count) == Math.Round(movepos))
             {
                 movepos = imgWidth * (count - 1) / 2;
