@@ -54,8 +54,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         print(deeplinkURL);
 
         string sceneName = "StoreScene";
-		// 현재 방식
-		// ("https://exgs.github.io/yunsleeMap/urlScheme.html?{0},{1},{2}",name,categoryMain,categorySub);
+        // 현재 url이 들어오는 방식: maxst://vpssdk?아쿠아리움,엔터테인먼트,아쿠아리움"
         string query = deeplinkURL.Split("?"[0])[1];
         PrimaryKeys pk = new PrimaryKeys();
         string[] parameters = query.Split(","[0]);

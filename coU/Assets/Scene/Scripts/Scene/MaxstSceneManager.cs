@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using maxstAR;
@@ -62,6 +62,10 @@ public class MaxstSceneManager : MonoBehaviour
 
 	//yunslee 2021.11.15
 	public TextMeshProUGUI floorTextBox;
+
+	// yunslee 2021.11.19
+	GameObject[] naviTrackArray;
+	public float trackVisableMaxRange = 25f;
 
 	void Awake()
 	{
@@ -230,10 +234,14 @@ public class MaxstSceneManager : MonoBehaviour
 			if (destination == null)
 			{
 				if (GameObject.Find("destination") != null)
+				{
 					destination = GameObject.Find("destination").gameObject;
+					naviTrackArray = GameObject.FindGameObjectsWithTag("naviTrack");
+				}
 			}
 			if (destination != null) //else가 아닌 이유: destination 찾자마자 실행되어야하므
 				destination.transform.forward = arCamera.transform.forward;
+			updateVisibleTrack();
 		}
 
 		TrackerManager.GetInstance().UpdateFrame();
@@ -321,13 +329,26 @@ public class MaxstSceneManager : MonoBehaviour
 
 		if (floorTextBox.text != whichfloor)
 		{
-			floorTextBox.text = whichfloor;
-			string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
-#if UNITY_EDITOR
-			Debug.Log(toastMessage);
-#elif UNITY_ANDROID && !UNITY_EDITOR
-					Toast.ShowToastMessage(toastMessage, 3000);
-#endif
+			string whichfloor = localizerLocation.Substring(localizerLocation.LastIndexOf("_") + 1);
+			if (whichfloor == "f1")
+				whichfloor = "1F";
+			else if (whichfloor == "outdoor")
+				whichfloor = "야외";
+			else if (whichfloor == "b1")
+				whichfloor = "B1";
+			else if (whichfloor == "b2")
+				whichfloor = "B2";
+
+			if (floorTextBox.text != whichfloor)
+			{
+				floorTextBox.text = whichfloor;
+				string toastMessage = $"코엑스 {whichfloor}으로 공간 인식했습니다.";
+				#if UNITY_EDITOR
+					Debug.Log(toastMessage);
+				#elif UNITY_ANDROID && !UNITY_EDITOR
+					Toast.ShowToastMessage(toastMessage, 8000);
+				#endif
+			}
 		}
 	}
 	
@@ -624,6 +645,7 @@ public class MaxstSceneManager : MonoBehaviour
         }
     }
 
+	/*
     void FixedUpdate()
 	{
 		if (Input.GetMouseButtonUp(0))
@@ -645,9 +667,28 @@ public class MaxstSceneManager : MonoBehaviour
 			maxstLogObject.transform.rotation = Quaternion.FromToRotation(Vector3.forward, vHit.normal) * Quaternion.Euler(-90.0f, 0.0f, 0.0f);
 		}
 	}
+	*/
 
     private void OnDisable()
     {
 		vPSTrackablesList = null;
+	}
+
+	public void updateVisibleTrack()
+	{
+		foreach (GameObject eachArrowItem in naviTrackArray)
+		{
+			Vector3 arCameraPosition = arCamera.transform.position;
+			Vector3 arrowPosition = eachArrowItem.transform.position;
+			float distacne = Vector3.Distance(arCameraPosition, arrowPosition);
+			if (distacne > trackVisableMaxRange)
+			{
+				eachArrowItem.SetActive(false);
+			}
+			else
+			{
+				eachArrowItem.SetActive(true);
+			}
+		}
 	}
 }
