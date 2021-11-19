@@ -385,19 +385,39 @@ public class NavigationController : MonoBehaviour
                 print($"{i}번째 track following");
                 if (i == count)
                     break;
-            }
-            else
+                #region Is there a navi Track in front of Character?
+                bool firstloop = true;
+				while (true)
+				{
+					if (naviTracks[i].activeSelf == false)
+					{
+                        if (firstloop == true)
+						{
+                            firstloop = false;
+                            stopMotion(animator, NavigationController.characterType);
+						}
+                        yield return null;
+					}
+					else
+					{
+                        if (NavigationController.characterType == e_character.rabbit)
+                        {
+                            animator.SetInteger("AnimIndex", 1);
+                            animator.SetTrigger("Next");
+                        }
+                        break;
+					}
+				}
+				#endregion
+			}
+			else
             {
-                // 나와의 거리가 가까운 경우
                 runMotion(animator, NavigationController.characterType);
                 dir = naviTracks[i].transform.position - character.transform.position;
                 dir.Normalize();
                 character.transform.position += dir * characterMoveSpeed * Time.deltaTime;
                 character.transform.forward = dir;
                 yield return null;
-                // 나와의 거리가 먼 경우
-                // 멈춰서(Motion Stop) 나를 기다리도록 구현해야 함
-
             }
         }
         stopMotion(animator, NavigationController.characterType);

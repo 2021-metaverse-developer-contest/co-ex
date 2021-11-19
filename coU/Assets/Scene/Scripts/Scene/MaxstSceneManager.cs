@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using maxstAR;
@@ -62,6 +62,10 @@ public class MaxstSceneManager : MonoBehaviour
 
 	//yunslee 2021.11.15
 	public TextMeshProUGUI floorTextBox;
+
+	// yunslee 2021.11.19
+	GameObject[] naviTrackArray;
+	public float trackVisableMaxRange = 25f;
 
 	void Awake()
 	{
@@ -230,10 +234,14 @@ public class MaxstSceneManager : MonoBehaviour
 			if (destination == null)
 			{
 				if (GameObject.Find("destination") != null)
+				{
 					destination = GameObject.Find("destination").gameObject;
+					naviTrackArray = GameObject.FindGameObjectsWithTag("naviTrack");
+				}
 			}
 			if (destination != null) //else가 아닌 이유: destination 찾자마자 실행되어야하므
 				destination.transform.forward = arCamera.transform.forward;
+			updateVisibleTrack();
 		}
 
 		TrackerManager.GetInstance().UpdateFrame();
@@ -648,5 +656,23 @@ public class MaxstSceneManager : MonoBehaviour
     private void OnDisable()
     {
 		vPSTrackablesList = null;
+	}
+
+	public void updateVisibleTrack()
+	{
+		foreach (GameObject eachArrowItem in naviTrackArray)
+		{
+			Vector3 arCameraPosition = arCamera.transform.position;
+			Vector3 arrowPosition = eachArrowItem.transform.position;
+			float distacne = Vector3.Distance(arCameraPosition, arrowPosition);
+			if (distacne > trackVisableMaxRange)
+			{
+				eachArrowItem.SetActive(false);
+			}
+			else
+			{
+				eachArrowItem.SetActive(true);
+			}
+		}
 	}
 }
