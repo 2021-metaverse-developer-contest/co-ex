@@ -631,6 +631,7 @@ public class MaxstSceneManager : MonoBehaviour
         }
     }
 
+	/*
     void FixedUpdate()
 	{
 		if (Input.GetMouseButtonUp(0))
@@ -652,6 +653,7 @@ public class MaxstSceneManager : MonoBehaviour
 			maxstLogObject.transform.rotation = Quaternion.FromToRotation(Vector3.forward, vHit.normal) * Quaternion.Euler(-90.0f, 0.0f, 0.0f);
 		}
 	}
+	*/
 
     private void OnDisable()
     {
