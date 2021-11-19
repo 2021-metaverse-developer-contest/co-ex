@@ -107,7 +107,7 @@ public class ImgScrollingMini : MonoBehaviour
 	{
 		if (count > 0)
 		{
-			if (content.rect.xMin + content.rect.xMax / count == Math.Round(movepos))
+			if (Math.Round(content.rect.xMin + content.rect.xMax / count) == Math.Round(movepos))
 			{
 				movepos = imgWidth * (count - 1) / 2;
 				while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
