@@ -305,31 +305,32 @@ public class MaxstSceneManager : MonoBehaviour
 			}
 			currentLocalizerLocation = "";
 		}
+	}
 
-		void showFloor(string localizerLocation)
+	void showFloor(string localizerLocation)
+	{
+		string whichfloor = localizerLocation.Substring(localizerLocation.LastIndexOf("_") + 1);
+		if (whichfloor == "f1")
+			whichfloor = "1F";
+		else if (whichfloor == "outdoor")
+			whichfloor = "야외";
+		else if (whichfloor == "b1")
+			whichfloor = "B1";
+		else if (whichfloor == "b2")
+			whichfloor = "B2";
+
+		if (floorTextBox.text != whichfloor)
 		{
-			string whichfloor = localizerLocation.Substring(localizerLocation.LastIndexOf("_") + 1);
-			if (whichfloor == "f1")
-				whichfloor = "1F";
-			else if (whichfloor == "outdoor")
-				whichfloor = "야외";
-			else if (whichfloor == "b1")
-				whichfloor = "B1";
-			else if (whichfloor == "b2")
-				whichfloor = "B2";
-
-			if (floorTextBox.text != whichfloor)
-			{
-				floorTextBox.text = whichfloor;
-				string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
-				#if UNITY_EDITOR
-					Debug.Log(toastMessage);
-				#elif UNITY_ANDROID && !UNITY_EDITOR
+			floorTextBox.text = whichfloor;
+			string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
+#if UNITY_EDITOR
+			Debug.Log(toastMessage);
+#elif UNITY_ANDROID && !UNITY_EDITOR
 					Toast.ShowToastMessage(toastMessage, 3000);
-				#endif
-			}
+#endif
 		}
 	}
+	
 
 	static class FloorConstants
 	{
