@@ -3266,6 +3266,7 @@ GameObject:
   - component: {fileID: 4791567971945122000}
   - component: {fileID: 391726927987933420}
   - component: {fileID: 9035773223700414379}
+  - component: {fileID: 2055165476832111761}
   m_Layer: 5
   m_Name: Img_bell
   m_TagString: Untagged
@@ -3287,11 +3288,11 @@ RectTransform:
   m_Father: {fileID: 2191148785650398564}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -250, y: 400}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -769.9585, y: 308.98328}
   m_SizeDelta: {x: 400, y: 700}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &391726927987933420
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3330,6 +3331,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &2055165476832111761
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2383533295012913648}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5b9ff3589dbde496fab94cfe55e39d60, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2470295194476541114
 GameObject:
   m_ObjectHideFlags: 0
