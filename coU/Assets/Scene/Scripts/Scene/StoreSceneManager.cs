@@ -25,7 +25,6 @@ public class StoreSceneManager : MonoBehaviour
     int backCount = 0;
 
     public RectTransform content; //움직일 오브젝트
-    Button nextBtn;
     private int count = 0; //나눠야할 값
     private float pos; //content의 LocalPosition
     private float movepos; //움직일 값
@@ -36,7 +35,6 @@ public class StoreSceneManager : MonoBehaviour
 
     private void Awake()
 	{
-		nextBtn = GameObject.Find("Btn_Next").GetComponent<Button>();
         storeImgList = new List<StoreImg>();
         List<Store> curStr = GetDBData.getStoresData($"Select * from Stores where name = '{storeName}';");
         categoryMain = curStr[0].categoryMain;
@@ -286,7 +284,10 @@ public class StoreSceneManager : MonoBehaviour
         //Debug.Log($"Start's right {content.rect.xMin + content.rect.xMax / count}");
         if (count > 0)
         {
-            if (content.rect.xMin + content.rect.xMax / count == Math.Round(movepos))
+            Debug.Log($"content.rect.xMin {content.rect.xMin} | content.rect.xMax {content.rect.xMax}");
+            Debug.Log($"movepos {movepos} | calc값 {content.rect.xMin + content.rect.xMax / count}");
+
+            if (Math.Round(content.rect.xMin + content.rect.xMax / count) == Math.Round(movepos))
             {
                 movepos = imgWidth * (count - 1) / 2;
                 while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
@@ -313,7 +314,7 @@ public class StoreSceneManager : MonoBehaviour
         //Debug.Log($"Start's left {content.rect.xMax - content.rect.xMax / count}");
         if (count > 0)
         {
-            if (content.rect.xMax - content.rect.xMax / count == Math.Round(movepos))
+            if (Math.Round(content.rect.xMax - content.rect.xMax / count) == Math.Round(movepos))
             {
                 movepos = imgWidth * (count - 1) / 2 * -1;
                 while (Vector2.Distance(content.localPosition, new Vector2(movepos, 0)) >= 0.1f)
