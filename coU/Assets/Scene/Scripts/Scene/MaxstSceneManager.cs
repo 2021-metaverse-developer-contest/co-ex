@@ -321,11 +321,11 @@ public class MaxstSceneManager : MonoBehaviour
 			if (floorTextBox.text != whichfloor)
 			{
 				floorTextBox.text = whichfloor;
-				string toastMessage = $"코엑스 {whichfloor}로 공간 인식했습니다.";
+				string toastMessage = $"코엑스 {whichfloor}으로 공간 인식했습니다.";
 				#if UNITY_EDITOR
 					Debug.Log(toastMessage);
 				#elif UNITY_ANDROID && !UNITY_EDITOR
-					Toast.ShowToastMessage(toastMessage, 3000);
+					Toast.ShowToastMessage(toastMessage, 8000);
 				#endif
 			}
 		}
