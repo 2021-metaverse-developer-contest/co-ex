@@ -85,7 +85,8 @@ public class PutMarkerManager : MonoBehaviour
                     }
                 }
                 Color bellColor = canvas.transform.Find("Panel_Whole/Panel_StoreInfoParent/Img_bell").GetComponent<Image>().color;
-                bellColor.a = 1;
+                if (bellColor.a > 0.5)
+                    bellColor.a = 1;
                 canvas.transform.Find("Panel_Whole/Panel_StoreInfoParent/Img_bell").GetComponent<Image>().color = bellColor;
             }
             else
