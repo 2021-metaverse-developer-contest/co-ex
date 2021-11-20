@@ -333,7 +333,7 @@ public class MaxstSceneManager : MonoBehaviour
 				#if UNITY_EDITOR
 					Debug.Log(toastMessage);
 				#elif UNITY_ANDROID && !UNITY_EDITOR
-					Toast.ShowToastMessage(toastMessage, 8000);
+					StartCoroutine(Toast.ShowToastMessageCoroutine(toastMessage, 15000));
 				#endif
 			}
 		}
@@ -379,6 +379,7 @@ public class MaxstSceneManager : MonoBehaviour
 		{
 			CameraDevice.GetInstance().Stop();
 			TrackerManager.GetInstance().StopTracker();
+			SceneManager.LoadScene("MaxstScene");
 		}
 		else
 		{

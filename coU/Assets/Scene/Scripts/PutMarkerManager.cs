@@ -52,6 +52,8 @@ public class PutMarkerManager : MonoBehaviour
     {
         foreach (GameObject canvas in canvasList)
         {
+            if (canvas == null)
+                break;
             if (isValidDistance(canvas.transform.position) == true)
             {
                 canvas.SetActive(true);
@@ -104,14 +106,15 @@ public class PutMarkerManager : MonoBehaviour
         if (isfinishDetect == false)
         {
             if (GameObject.Find("Canvas_Overlay").transform.Find("Panel_Background").gameObject.active == false)
-                isfinishDetect = true;
-            if (isfinishDetect == true)
-            {
+			{
                 timetoDraw();
-            }
+                isfinishDetect = true;
+			}
         }
-        if (isfinishDetect == true)
+        else
+		{
             drawTransparent();
+		}
     }
 
     private bool isValidDistance(Vector3 storePosition)
@@ -208,23 +211,23 @@ public class PutMarkerManager : MonoBehaviour
         return (arTransform);
     }
 
-    //bool isPause = false;
-
-    //private void OnApplicationPause(bool pause)
-    //{
-    //    if (pause)
-    //    {
-    //        isPause = true;           
-    //        foreach (var i in GameObject.FindGameObjectsWithTag("minicanvas"))
-    //            Destroy(i);
-    //        canvasList.Clear();
-    //    }
-    //    else
-    //    {
-    //        if (isPause)
-    //            isfinishDetect = false;
-    //        isPause = false;
-    //    }
-
-    //}
+    // 혹시 몰라서 멤버변수 canvasList를 날림
+	private void OnApplicationPause(bool pause)
+	{
+		if (pause)
+		{
+		}
+		else
+		{
+            isfinishDetect = false;
+            if (canvasList.Count != 0)
+            {
+                foreach (var i in canvasList)
+                {
+                    Destroy(i);
+                }
+            }
+            canvasList.Clear();
+		}
+	}
 }
