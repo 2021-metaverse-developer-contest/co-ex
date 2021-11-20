@@ -171,8 +171,11 @@ public class StoreSceneManager : MonoBehaviour
                 else
                 {
                     Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                    imgs[i++].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height),
+                    imgs[i].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height),
                         new Vector2(.5f, .5f));
+                    imgs[i].GetComponent<ImgClick>().storeName = store.name;
+                    imgs[i++].GetComponent<ImgClick>().uri = uri;
+                    Debug.Log($"{i - 1}번째 URI {uri.ToString()}");
                 }
             }
 		}
