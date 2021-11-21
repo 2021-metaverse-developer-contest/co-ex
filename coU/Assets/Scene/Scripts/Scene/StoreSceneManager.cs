@@ -108,7 +108,7 @@ public class StoreSceneManager : MonoBehaviour
 #if UNITY_EDITOR
                 Debug.Log("한 번 더 누르시면 종료됩니다.");
 #elif UNITY_ANDROID
-			    Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 300);
+			    Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.");
 #endif
             }
 

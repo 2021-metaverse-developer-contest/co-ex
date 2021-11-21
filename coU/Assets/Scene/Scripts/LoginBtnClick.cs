@@ -38,7 +38,7 @@ public class LoginBtnClick : MonoBehaviour
 #if UNITY_EDITOR
 				Debug.Log(loginUser.id.Split('@')[0] + "으로 로그인했습니다.");
 #elif UNITY_ANDROID
-				Toast.ShowToastMessage(loginUser.id.Split('@')[0] + "으로 로그인했습니다.", 3000);
+				Toast.ShowToastMessage(loginUser.id.Split('@')[0] + "으로 로그인했습니다.");
 #endif
 			}
 			else

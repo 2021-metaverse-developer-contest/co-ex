@@ -338,13 +338,13 @@ public class NavigationController : MonoBehaviour
             case e_character.none:
                 break;
             case e_character.astronaut:
-                Toast.ShowToastMessage("우주인이 길을 잃었습니다.", 2000);
+                Toast.ShowToastMessage("우주인이 길을 잃었습니다.");
                 break;
             case e_character.coco:
-                Toast.ShowToastMessage("꼬꼬가 길을 잃었습니다.", 2000);
+                Toast.ShowToastMessage("꼬꼬가 길을 잃었습니다.");
                 break;
             case e_character.rabbit:
-                Toast.ShowToastMessage("토끼가 길을 잃었습니다.", 2000);
+                Toast.ShowToastMessage("토끼가 길을 잃었습니다.");
                 break;
         }
 #endif

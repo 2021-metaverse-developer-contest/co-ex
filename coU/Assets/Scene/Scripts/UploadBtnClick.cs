@@ -45,7 +45,7 @@ public class UploadBtnClick : MonoBehaviour
 #if UNITY_EDITOR
             Debug.Log("올릴 수 있는 콘텐츠의 개수는 최대 5개입니다.");
 #elif UNITY_ANDROID
-            Toast.ShowToastMessage("올릴 수 있는 콘텐츠의 개수는 최대 5개입니다.", 3000);
+            Toast.ShowToastMessage("올릴 수 있는 콘텐츠의 개수는 최대 5개입니다.");
 #endif
             return;
         }
@@ -209,7 +209,7 @@ public class UploadBtnClick : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("저장되었습니다.");
 #elif UNITY_ANDROID
-		Toast.ShowToastMessage("저장되었습니다.", 3000);
+		Toast.ShowToastMessage("저장되었습니다.");
 #endif
         if (UploadSceneManager.isBeforeMenu)
         {
