@@ -689,4 +689,80 @@ public class MaxstSceneManager : MonoBehaviour
 			}
 		}
 	}
+
+
+	public static void StartToiletNavigation(GameObject location)
+	{
+		string floor = MaxstSceneManager.floor;
+		floor = "B2"; //지워야 함;
+		bool noPath = false;
+
+		if (currentLocalizerLocation != null)
+		{
+
+			NavigationController navigationController = GameObject.Find("SceneManager").GetComponent<NavigationController>();
+			navigationController.MakePath(currentLocalizerLocation, arCamera.transform.position, getEndLocation(floor), location.transform.position, vPSTrackablesList.ToArray(),
+			() =>
+			{
+				Debug.Log("No Path");
+			});
+			//}, "coex_outdoor");
+		}
+		if (!noPath)
+			ActivePanelChange();
+	}
+
+	public static GameObject closestBathroom()
+	{
+		//string floor = floorTextBox.text;
+		string floor = MaxstSceneManager.floor;
+		floor = "B2"; //지워야 함;
+		string query = $"Select * from Facilities Where floor='{floor}' AND type='toilet'";
+		List<Facility> bathroomList = GetDBData.getFacilitiesData(query);
+
+		Vector3 tempVectorZero = new Vector3();
+		string parentObjectName = floor + "_Stores";
+		GameObject parentCriterion = GameObject.Find(parentObjectName);
+		GameObject empty = new GameObject();
+		float closestDistance = 0f;
+		foreach (var i in bathroomList)
+		{
+			float calculation = 0f;
+			GameObject child = Instantiate(empty, parentCriterion.transform);
+			child.name = "toilet";
+			Vector3 rawLocation = new Vector3(((float)i.modifiedX), ((float)i.modifiedY), 0);
+			child.transform.localPosition = rawLocation;
+			//i.distance = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+			calculation = Vector3.Distance(child.transform.position, tempVectorZero);
+			if (closestDistance > calculation)
+				Destroy(child);
+			else
+			{
+				closestDistance = calculation;
+				//closeObject = child;
+			}
+		}
+		Destroy(empty);
+		return GameObject.Find("toilet");
+	}
+
+	private static string getEndLocation(string floor)
+	{
+		if (floor == "B1")
+			return ("landmark_coex_b1");
+		else if (floor == "B2")
+			return ("landmark_coex_b2");
+		else if (floor == "1F")
+			return ("landmark_coex_f1");
+		else
+			return ("outdoor");
+	}
+
+	public static void bathroomBtnClick()
+	{
+		GameObject temp = closestBathroom();
+		Debug.Log($"temp.name: {temp.name}");
+		StartToiletNavigation(temp);
+	}
+
 }

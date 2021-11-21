@@ -43,6 +43,15 @@ public class GetDBData : MonoBehaviour
         db.Dispose();
         return getClass;
     }
+
+    public static List<Facility> getFacilitiesData(string query)
+    {
+        string persistentDBTotalPath = Path.Combine(Application.persistentDataPath, dbName);
+        SQLiteConnection db = new SQLiteConnection(persistentDBTotalPath);
+        List<Facility> getClass = db.Query<Facility>(query);
+        db.Dispose();
+        return getClass;
+    }
 }
 
 
