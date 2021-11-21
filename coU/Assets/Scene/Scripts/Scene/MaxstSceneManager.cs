@@ -228,6 +228,12 @@ public class MaxstSceneManager : MonoBehaviour
 #endif
 		}
 
+		// yunslee 2021.11.21
+		if (chkNaviBtnClick == true && panelBackground.activeSelf == false)
+		{
+			chkNaviBtnClick = false;
+			StartNavigation(resetNaviValue); // 스토어씬에서 호출된 네비게이션
+		}
 		//hyojlee 2021.10.23
 		if (chkNavi)
 		{
@@ -294,11 +300,6 @@ public class MaxstSceneManager : MonoBehaviour
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				if (prefabRendering == false)
 					disableRenderer(currentLocalizerLocation);
-				if (chkNaviBtnClick == true)
-				{
-					chkNaviBtnClick = false;
-					StartNavigation(resetNaviValue); // 스토어씬에서 호출된 네비게이션
-				}
 			}
 		}
 		else

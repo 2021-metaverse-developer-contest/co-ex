@@ -56,7 +56,14 @@ public class StoreSceneBtnClick : MonoBehaviour
         MaxstSceneManager.chkNaviBtnClick = true;
         //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub));
         Stack.Instance.Clear(); // MaxstScene에서는 언제나 바로 종료되므로
-        SceneManager.LoadScene("MaxstScene");
+        if (SceneManager.sceneCount == 1)
+		{
+            SceneManager.LoadScene("MaxstScene");
+		}
+        else
+		{
+            SceneManager.UnloadScene("StoreScene");
+        }
     }
 
     public void NaviPopCloseBtnOnClick()
