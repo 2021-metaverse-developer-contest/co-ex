@@ -333,7 +333,7 @@ public class MaxstSceneManager : MonoBehaviour
 				#if UNITY_EDITOR
 					Debug.Log(toastMessage);
 				#elif UNITY_ANDROID && !UNITY_EDITOR
-					StartCoroutine(Toast.ShowToastMessageCoroutine(toastMessage, 15000));
+					StartCoroutine(Toast.ShowToastMessageCoroutine(toastMessage, 8));
 				#endif
 			}
 		}
