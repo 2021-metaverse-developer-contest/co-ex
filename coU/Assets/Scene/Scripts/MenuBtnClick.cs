@@ -73,7 +73,7 @@ public class MenuBtnClick : MonoBehaviour
 #if UNITY_EDITOR
         Debug.Log("로그아웃 되었습니다.");
 #elif UNITY_ANDROID
-        Toast.ShowToastMessage("로그아웃 되었습니다.", 3000);
+        Toast.ShowToastMessage("로그아웃 되었습니다.");
 #endif
     }
 }

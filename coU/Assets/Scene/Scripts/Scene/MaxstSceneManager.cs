@@ -84,7 +84,7 @@ public class MaxstSceneManager : MonoBehaviour
 #if UNITY_EDITOR
 			Debug.Log("권한을 허용해주세요!");
 #elif UNITY_ANDROID
-			Toast.ShowToastMessage("권한을 허용해주세요!", 700);
+			Toast.ShowToastMessage("권한을 허용해주세요!");
 #endif
 			AndroidRuntimePermissions.RequestPermissions("android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION");
 		}
@@ -224,7 +224,7 @@ public class MaxstSceneManager : MonoBehaviour
 #if UNITY_EDITOR
 			Debug.Log("한 번 더 누르시면 종료됩니다.");
 #elif UNITY_ANDROID
-			Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", 300);
+			Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.");
 #endif
 		}
 
