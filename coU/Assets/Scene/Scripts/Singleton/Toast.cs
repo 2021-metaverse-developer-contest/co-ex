@@ -33,25 +33,32 @@ public class Toast
     }
 
 
-    public static IEnumerator ShowToastMessageCoroutine(string message, int showTime)
+    public static IEnumerator ShowToastMessageCoroutine(string message, int seconds)
     {
 #if UNITY_ANDROID
         AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 0);
 
+        float toastIntervalTime = 3.0f;
         if (unityActivity != null)
         {
-            unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            int i = 0;
+            while (i++ < (int)(seconds / toastIntervalTime))
             {
-                toast.Call("show");
-            }));
-            yield return new WaitForSeconds(showTime / 1000.0f);
-            unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
-            {
-                toast.Call("cancel");
-            }));
+                AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 1);
+                unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+                {
+                    toast.Call("show");
+                }));
+                //yield return new WaitForSeconds(2f * Time.deltaTime);
+                yield return new WaitForSecondsRealtime(toastIntervalTime * 0.6f);
+                //yield return null;
+            }
+            //unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            //{
+            //    toast.Call("cancel");
+            //}));
         }
 #endif
     }
