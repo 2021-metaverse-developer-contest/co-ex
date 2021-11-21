@@ -14,11 +14,18 @@ public class ImgClick : MonoBehaviour, IPointerClickHandler
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		uriString = uri.ToString();
-		transName = WebUtility.UrlEncode(storeName);
-		Debug.Log($"storeName {storeName}, transName {transName}");
-		uriString = uriString.Replace(storeName, transName);
-		Debug.Log($"URI {uriString}");
-		Application.OpenURL(uriString);
+		try
+		{
+			uriString = uri.ToString();
+			transName = WebUtility.UrlEncode(storeName);
+			Debug.Log($"storeName {storeName}, transName {transName}");
+			uriString = uriString.Replace(storeName, transName);
+			Debug.Log($"URI {uriString}");
+			Application.OpenURL(uriString);
+		}
+		catch (Exception e)
+		{
+			Debug.LogError($"Image Click Error: {e.StackTrace}");
+		}
 	}
 }
