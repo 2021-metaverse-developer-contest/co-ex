@@ -30,9 +30,12 @@ public class SpeedControl : MonoBehaviour
 
 				if (Physics.Raycast(ray, out hit))
 				{
-					touchCount = (touchCount + 1) % 4;
-					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
-					Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+					if (hit.collider.tag == "naviTrack")
+					{
+						touchCount = (touchCount + 1) % 4;
+						GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
+						Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+					}
 				}
 			}
 		}
@@ -43,9 +46,12 @@ public class SpeedControl : MonoBehaviour
 
 			if (Physics.Raycast(ray, out hit))
 			{
-				touchCount = (touchCount + 1) % 4;
-				GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
-				Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+				if (hit.collider.tag == "naviTrack")
+				{
+					touchCount = (touchCount + 1) % 4;
+					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
+					Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+				}
 			}
 		}
 	}
