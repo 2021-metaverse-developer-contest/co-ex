@@ -53,6 +53,7 @@ public class MaxstSceneManager : MonoBehaviour
 	int backCount = 0;
 	GameObject panelBackground;
 	GameObject panelFloor;
+	GameObject panelToilet;
 	public static bool onceDetectARLocation = false;
 
 	//hyojlee 2021.10.23
@@ -160,7 +161,9 @@ public class MaxstSceneManager : MonoBehaviour
 		//hyojlee 2021/10/19
 		panelBackground = GameObject.Find("Panel_Background").gameObject;
 		panelFloor = GameObject.Find("Panel_Floor");
+		panelToilet = GameObject.Find("Panel_Toilet");
 		panelFloor.SetActive(false);
+		panelToilet.SetActive(false);
 
 		if (isOcclusion)
 		{
@@ -295,6 +298,7 @@ public class MaxstSceneManager : MonoBehaviour
 				}
 				panelBackground.SetActive(false);
 				panelFloor.SetActive(true);
+				panelToilet.SetActive(true);
 				onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
@@ -310,6 +314,7 @@ public class MaxstSceneManager : MonoBehaviour
 				// 공간 인식이 완료된 시점이면 애니메이션이 꺼져야함.
 				panelBackground.SetActive(true);
 				panelFloor.SetActive(false);
+				panelToilet.SetActive(false);
 				eachTrackable.gameObject.SetActive(false);
 			}
 			currentLocalizerLocation = "";
@@ -614,12 +619,15 @@ public class MaxstSceneManager : MonoBehaviour
         Transform parentTransform = GameObject.Find("Canvas_Overlay").transform;
         GameObject panelNavi = parentTransform.Find("Panel_Navi").gameObject;
         GameObject panelOn = parentTransform.Find("Panel_On").gameObject;
+		GameObject panelToilet = parentTransform.Find("Panel_RightUp/Panel_Toilet").gameObject;
 
 		if (panelNavi.active)
         {
 			chkNavi = false;
             panelNavi.SetActive(false);
             panelOn.SetActive(true);
+			panelToilet.SetActive(true);
+
 			foreach (VPSTrackable vps in vPSTrackablesList)
 			{
 				Debug.Log("VPSNAME " + vps.gameObject.name);
@@ -631,6 +639,7 @@ public class MaxstSceneManager : MonoBehaviour
         {
             panelNavi.SetActive(true);
             panelOn.SetActive(false);
+			panelToilet.SetActive(false);
         }
     }
 
