@@ -19,6 +19,8 @@ public class SpeedControl : MonoBehaviour
 
 	void clickHandler()
 	{
+		float changedSpeed;
+
 		if (Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
@@ -33,8 +35,14 @@ public class SpeedControl : MonoBehaviour
 					if (hit.collider.tag == "naviTrack")
 					{
 						touchCount = (touchCount + 1) % 4;
-						GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
-						Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+						changedSpeed = 1f + (0.5f * touchCount);
+						GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
+#if UNITY_EDITOR
+						Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
+#elif UNITY_ANDROID
+					Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속");
+#endif
+						Debug.Log($"Speed {changedSpeed}");
 					}
 				}
 			}
@@ -49,8 +57,14 @@ public class SpeedControl : MonoBehaviour
 				if (hit.collider.tag == "naviTrack")
 				{
 					touchCount = (touchCount + 1) % 4;
-					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
-					Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
+					changedSpeed = 1f + (0.5f * touchCount);
+					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
+#if UNITY_EDITOR
+					Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
+#elif UNITY_ANDROID
+					Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속");
+#endif
+					Debug.Log($"Speed {changedSpeed}");
 				}
 			}
 		}
@@ -72,4 +86,16 @@ public class SpeedControl : MonoBehaviour
 	//	GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = 1f + (0.5f * touchCount);
 	//	Debug.Log($"Speed {GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed}");
 	//}
+
+	public static string GetCharacterName()
+	{
+		string retName = "";
+		if (NavigationController.characterType == NavigationController.e_character.astronaut)
+			retName = "우주인";
+		else if (NavigationController.characterType == NavigationController.e_character.rabbit)
+			retName = "토끼";
+		else if (NavigationController.characterType == NavigationController.e_character.coco)
+			retName = "꼬꼬";
+		return retName;
+	}
 }

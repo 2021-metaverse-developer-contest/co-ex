@@ -354,9 +354,18 @@ public class NavigationController : MonoBehaviour
 	{
         if (characterPrefab == null)
             yield break;
+        else
+		{
+#if UNITY_EDITOR
+            Debug.Log($"{SpeedControl.GetCharacterName()}의 속도를 높이려면 캐릭터를 클릭하세요!");
+#elif UNITY_ANDROID
+			Toast.ShowToastMessage($"{SpeedControl.GetCharacterName()}의 속도를 높이려면 캐릭터를 클릭하세요!");
+#endif
+        }
         GameObject character = Instantiate(characterPrefab);
         character.transform.localPosition = naviTracks[0].transform.localPosition;
         character.transform.localScale = character.transform.localScale * characterScale;
+
 
         int i = 0;
         int count = naviTracks.Count;
