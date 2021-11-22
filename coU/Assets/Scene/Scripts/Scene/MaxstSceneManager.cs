@@ -697,13 +697,14 @@ public class MaxstSceneManager : MonoBehaviour
 	}
 
 
+	#region toiletCode_yunslee
+	public GameObject toiletPrefab;
 	void StartToiletNavigation(GameObject location)
 	{
-		string floor = MaxstSceneManager.floor;
-		floor = "B2"; //지워야 함;
+		string floor = floorTextBox.text;
 		bool noPath = false;
 
-		if (currentLocalizerLocation != null)
+		if (currentLocalizerLocation != "" && currentLocalizerLocation != null)
 		{
 
 			NavigationController navigationController = GameObject.Find("SceneManager").GetComponent<NavigationController>();
@@ -720,36 +721,49 @@ public class MaxstSceneManager : MonoBehaviour
 
 	GameObject closestBathroom()
 	{
-		//string floor = floorTextBox.text;
-		string floor = MaxstSceneManager.floor;
-		floor = "B2"; //지워야 함;
+		string floor = floorTextBox.text;
 		string query = $"Select * from Facilities Where floor='{floor}' AND type='toilet'";
 		List<Facility> bathroomList = GetDBData.getFacilitiesData(query);
 
 		Vector3 tempVectorZero = new Vector3();
 		string parentObjectName = floor + "_Stores";
 		GameObject parentCriterion = GameObject.Find(parentObjectName);
-		GameObject empty = new GameObject();
+
 		float closestDistance = 0f;
-		foreach (var i in bathroomList)
+		GameObject closestToilet = null;
+		GameObject child = null;
+		Vector3 rawLocation = new Vector3();
+
+		for (int i = 0; i < bathroomList.Count; i++)
 		{
-			float calculation = 0f;
-			GameObject child = Instantiate(empty, parentCriterion.transform);
+			float calculation = 0;
+			if (i == 0)
+			{
+				child = Instantiate(toiletPrefab, parentCriterion.transform);
+				child.name = "toilet";
+				rawLocation = new Vector3(((float)bathroomList[i].modifiedX), ((float)bathroomList[i].modifiedY), 0);
+				child.transform.localPosition = rawLocation;
+				calculation = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+				closestToilet = child;
+				closestDistance = calculation;
+				child.SetActive(false);
+				continue;
+			}
+
+			child = Instantiate(toiletPrefab, parentCriterion.transform);
 			child.name = "toilet";
-			Vector3 rawLocation = new Vector3(((float)i.modifiedX), ((float)i.modifiedY), 0);
+			rawLocation = new Vector3(((float)bathroomList[i].modifiedX), ((float)bathroomList[i].modifiedY), 0);
 			child.transform.localPosition = rawLocation;
-			//i.distance = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
-			calculation = Vector3.Distance(child.transform.position, tempVectorZero);
+			calculation = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
 			if (closestDistance > calculation)
-				Destroy(child);
-			else
 			{
 				closestDistance = calculation;
-				//closeObject = child;
+				closestToilet = child;
 			}
+			child.SetActive(false);
 		}
-		Destroy(empty);
-		return GameObject.Find("toilet");
+		closestToilet.name = "closestToilet";
+		return closestToilet;
 	}
 
 	private static string getEndLocation(string floor)
@@ -766,9 +780,9 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void bathroomBtnClick()
 	{
-		GameObject temp = closestBathroom();
-		Debug.Log($"temp.name: {temp.name}");
-		StartToiletNavigation(temp);
+		GameObject toilet = closestBathroom();
+		Debug.Log($"toilet.name: {toilet.name}");
+		StartToiletNavigation(toilet);
 	}
-
+	#endregion
 }
