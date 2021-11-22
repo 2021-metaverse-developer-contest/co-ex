@@ -162,6 +162,9 @@ public class MaxstSceneManager : MonoBehaviour
 		panelBackground = GameObject.Find("Panel_Background").gameObject;
 		panelFloor = GameObject.Find("Panel_Floor");
 		panelToilet = GameObject.Find("Panel_Toilet");
+
+		panelToilet.GetComponent<Button>().onClick.AddListener(delegate { bathroomBtnClick(); });
+
 		panelFloor.SetActive(false);
 		panelToilet.SetActive(false);
 
@@ -691,7 +694,7 @@ public class MaxstSceneManager : MonoBehaviour
 	}
 
 
-	public static void StartToiletNavigation(GameObject location)
+	void StartToiletNavigation(GameObject location)
 	{
 		string floor = MaxstSceneManager.floor;
 		floor = "B2"; //지워야 함;
@@ -712,7 +715,7 @@ public class MaxstSceneManager : MonoBehaviour
 			ActivePanelChange();
 	}
 
-	public static GameObject closestBathroom()
+	GameObject closestBathroom()
 	{
 		//string floor = floorTextBox.text;
 		string floor = MaxstSceneManager.floor;
@@ -758,7 +761,7 @@ public class MaxstSceneManager : MonoBehaviour
 			return ("outdoor");
 	}
 
-	public static void bathroomBtnClick()
+	void bathroomBtnClick()
 	{
 		GameObject temp = closestBathroom();
 		Debug.Log($"temp.name: {temp.name}");
