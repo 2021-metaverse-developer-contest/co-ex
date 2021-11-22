@@ -40,7 +40,7 @@ public class SpeedControl : MonoBehaviour
 #if UNITY_EDITOR
 						Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
 #elif UNITY_ANDROID
-					Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속");
+					//Toast.ShowToastMessage_Short($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
 #endif
 						Debug.Log($"Speed {changedSpeed}");
 					}
@@ -62,7 +62,7 @@ public class SpeedControl : MonoBehaviour
 #if UNITY_EDITOR
 					Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
 #elif UNITY_ANDROID
-					Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속");
+					//Toast.ShowToastMessage_Short($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
 #endif
 					Debug.Log($"Speed {changedSpeed}");
 				}

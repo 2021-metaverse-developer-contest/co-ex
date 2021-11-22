@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Toast
 {
+    public enum Term
+    {
+        shortTerm = 0,
+        longTerm,
+    };
     /// <summary>
     /// Show toast Message
     /// </summary>
     /// <param name="message">Showing message</param>
     /// <param name="showTime">Time to show(milliseconds)</param>
-    public static void ShowToastMessage(string message)
+    public static void ShowToastMessage(string message, Term flag)
     {
 #if UNITY_ANDROID
 		AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 1);
+        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, flag);
 
         if (unityActivity != null)
         {
@@ -27,14 +32,13 @@ public class Toast
 #endif
 	}
 
-
 	public static IEnumerator ShowToastMessageCoroutine(string message, int seconds)
     {
 #if UNITY_ANDROID
         AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        ShowToastMessage(message); // 한번은 무조건 호출
+        ShowToastMessage(message, Term.longTerm); // 한번은 무조건 호출
         float toastIntervalTime = 3.0f;
         if (unityActivity != null)
         {
