@@ -7,7 +7,7 @@ public class Toast
     public enum Term
     {
         shortTerm = 0,
-        longTerm,
+        longTerm
     };
     /// <summary>
     /// Show toast Message
@@ -16,11 +16,16 @@ public class Toast
     /// <param name="showTime">Time to show(milliseconds)</param>
     public static void ShowToastMessage(string message, Term flag)
     {
+		int value;
+		if (flag == Term.longTerm)
+			value = 1;
+		else
+			value = 0;
 #if UNITY_ANDROID
 		AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
-        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, flag);
+        AndroidJavaObject toast = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, value);
 
         if (unityActivity != null)
         {
