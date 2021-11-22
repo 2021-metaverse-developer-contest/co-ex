@@ -20,7 +20,27 @@ public class SpeedControl : MonoBehaviour
 	void clickHandler()
 	{
 		float changedSpeed;
+#if UNITY_EDITOR
+		if (Input.GetMouseButtonDown(0))
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
 
+			if (Physics.Raycast(ray, out hit))
+			{
+				if (hit.collider.tag == "Character")
+				{
+					touchCount = (touchCount + 1) % 4;
+					changedSpeed = 1f + (0.5f * touchCount);
+					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
+					Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
+					Debug.Log($"Speed {changedSpeed}");
+				}
+			}
+		}
+#endif
+
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if (Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
@@ -32,42 +52,17 @@ public class SpeedControl : MonoBehaviour
 
 				if (Physics.Raycast(ray, out hit))
 				{
-					if (hit.collider.tag == "naviTrack")
+					if (hit.collider.tag == "Character")
 					{
 						touchCount = (touchCount + 1) % 4;
 						changedSpeed = 1f + (0.5f * touchCount);
 						GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
-#if UNITY_EDITOR
-						Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
-#elif UNITY_ANDROID
-					//Toast.ShowToastMessage_Short($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
-#endif
-						Debug.Log($"Speed {changedSpeed}");
+						Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
 					}
 				}
 			}
 		}
-		else if (Input.GetMouseButtonDown(0))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			if (Physics.Raycast(ray, out hit))
-			{
-				if (hit.collider.tag == "naviTrack")
-				{
-					touchCount = (touchCount + 1) % 4;
-					changedSpeed = 1f + (0.5f * touchCount);
-					GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
-#if UNITY_EDITOR
-					Debug.Log($"{GetCharacterName()} 속도: {changedSpeed}배속");
-#elif UNITY_ANDROID
-					//Toast.ShowToastMessage_Short($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
 #endif
-					Debug.Log($"Speed {changedSpeed}");
-				}
-			}
-		}
 	}
 
 	//}
