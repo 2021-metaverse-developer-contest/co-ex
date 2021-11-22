@@ -4111,7 +4111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 2191148785382147465, guid: 30c5ee38534f14fa89c950b78c02608c, type: 3}
-  distanceRadius: 35
+  distanceRadius: 40
 --- !u!1 &241058781
 GameObject:
   m_ObjectHideFlags: 0
