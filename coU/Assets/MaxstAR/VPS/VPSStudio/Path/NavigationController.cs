@@ -338,13 +338,13 @@ public class NavigationController : MonoBehaviour
             case e_character.none:
                 break;
             case e_character.astronaut:
-                Toast.ShowToastMessage("우주인이 길을 잃었습니다.");
+                Toast.ShowToastMessage("우주인이 길을 잃었습니다.", Toast.Term.shortTerm);
                 break;
             case e_character.coco:
-                Toast.ShowToastMessage("꼬꼬가 길을 잃었습니다.");
+                Toast.ShowToastMessage("꼬꼬가 길을 잃었습니다.", Toast.Term.shortTerm);
                 break;
             case e_character.rabbit:
-                Toast.ShowToastMessage("토끼가 길을 잃었습니다.");
+                Toast.ShowToastMessage("토끼가 길을 잃었습니다.", Toast.Term.shortTerm);
                 break;
         }
 #endif
@@ -359,7 +359,7 @@ public class NavigationController : MonoBehaviour
 #if UNITY_EDITOR
             Debug.Log($"{SpeedControl.GetCharacterName()}의 속도를 높이려면 캐릭터를 클릭하세요!");
 #elif UNITY_ANDROID
-			Toast.ShowToastMessage($"{SpeedControl.GetCharacterName()}의 속도를 높이려면 캐릭터를 클릭하세요!");
+			Toast.ShowToastMessage($"{SpeedControl.GetCharacterName()}의 속도를 높이려면 캐릭터를 클릭하세요!", Toast.Term.longTerm);
 #endif
         }
         GameObject character = Instantiate(characterPrefab);

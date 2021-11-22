@@ -85,7 +85,7 @@ public class MaxstSceneManager : MonoBehaviour
 #if UNITY_EDITOR
 			Debug.Log("권한을 허용해주세요!");
 #elif UNITY_ANDROID
-			Toast.ShowToastMessage("권한을 허용해주세요!");
+			Toast.ShowToastMessage("권한을 허용해주세요!", Toast.Term.shortTerm);
 #endif
 			AndroidRuntimePermissions.RequestPermissions("android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION");
 		}
@@ -230,7 +230,7 @@ public class MaxstSceneManager : MonoBehaviour
 #if UNITY_EDITOR
 			Debug.Log("한 번 더 누르시면 종료됩니다.");
 #elif UNITY_ANDROID
-			Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.");
+			Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
 #endif
 		}
 
@@ -344,7 +344,7 @@ public class MaxstSceneManager : MonoBehaviour
 			#if UNITY_EDITOR
 				Debug.Log(toastMessage);
 			#elif UNITY_ANDROID && !UNITY_EDITOR
-				StartCoroutine(Toast.ShowToastMessageCoroutine(toastMessage, 8));
+				StartCoroutine(Toast.ShowToastMessageCoroutine(toastMessage, 5));
 			#endif
 		}
 	}
@@ -409,11 +409,11 @@ public class MaxstSceneManager : MonoBehaviour
 			{
 				if (CameraDevice.GetInstance().IsFusionSupported(CameraDevice.FusionType.ARCamera))
 				{
-//#if UNITY_EDITOR
-//					Debug.Log("같은 위치에서 인식해주세요!", 300);
-//#elif UNITY_ANDROID
-//					Toast.ShowToastMessage("같은 위치에서 인식해주세요!", 300);
-//#endif
+					//#if UNITY_EDITOR
+					//					Debug.Log("같은 위치에서 인식해주세요!", 300);
+					//#elif UNITY_ANDROID
+					//					Toast.ShowToastMessage("같은 위치에서 인식해주세요!", Toast.Term.shortTerm);
+					//#endif
 					CameraDevice.GetInstance().Start();
 				}
 				else
