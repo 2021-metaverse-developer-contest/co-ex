@@ -24069,7 +24069,7 @@ PrefabInstance:
     - target: {fileID: 7068059249072869786, guid: 9486b87e123b44ce5875be626132b942,
         type: 3}
       propertyPath: vpsPath
-      value: /Users/hyojlee/co-ex/coU/Assets/../../VPSData/VPSMap/coex_indoor_b1
+      value: /Users/yunslee/co-ex2/coU/Assets/../../VPSData/VPSMap/coex_indoor_b1
       objectReference: {fileID: 0}
     - target: {fileID: 7068059249072869786, guid: 9486b87e123b44ce5875be626132b942,
         type: 3}
@@ -24094,7 +24094,7 @@ PrefabInstance:
     - target: {fileID: 7068059249072869786, guid: 9486b87e123b44ce5875be626132b942,
         type: 3}
       propertyPath: vpsSimulatePath
-      value: /Users/hyojlee/co-ex/coU/Assets/../../VPSData/VPSSimulationData/coex_indoor_b1/coex_indoor_b1f_sim_port_00020_210707
+      value: /Users/yunslee/co-ex2/coU/Assets/../../VPSData/VPSSimulationData/coex_indoor_b1/coex_indoor_b1f_sim_port_00020_210707
       objectReference: {fileID: 0}
     - target: {fileID: 7068059249072869786, guid: 9486b87e123b44ce5875be626132b942,
         type: 3}
