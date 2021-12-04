@@ -17,9 +17,9 @@ public class ShareBtnClick : MonoBehaviour
 		string sceneName = SceneManager.GetActiveScene().name;
 		if (sceneName.Contains("StoreScene") || (SceneManager.sceneCount > 1 && sceneName.Contains("MaxstScene")))
 		{
-			name = StoreSceneManager.storeName;
-			categoryMain = StoreSceneManager.categoryMain;
-			categorySub = StoreSceneManager.categorySub;
+			name = DontDestroyManager.StoreScene.storeName;
+			categoryMain = DontDestroyManager.StoreScene.categoryMain;
+			categorySub = DontDestroyManager.StoreScene.categorySub;
 		}
 		else
 		{

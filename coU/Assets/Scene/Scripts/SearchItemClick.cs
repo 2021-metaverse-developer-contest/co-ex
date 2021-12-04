@@ -21,9 +21,9 @@ public class SearchItemClick : MonoBehaviour
     public void ResultItemOnClick()
     {
         GameObject cur = EventSystem.current.currentSelectedGameObject;
-        
-        StoreSceneManager.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
-        StoreSceneManager.categorySub = "";
+
+        DontDestroyManager.StoreScene.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
+        DontDestroyManager.StoreScene.categorySub = "";
         Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, DontDestroyManager.SearchScene.searchStr, true));
         SceneManager.LoadScene("StoreScene");
     }

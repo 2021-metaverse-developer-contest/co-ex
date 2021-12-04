@@ -18,7 +18,7 @@ public class TopBtnClick : MonoBehaviour
         SceneInfo curInfo;
 
         if (currentScene.name.Contains("StoreScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub);
+            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreScene.storeName, DontDestroyManager.StoreScene.categorySub);
         else if (currentScene.name.Contains("StoreListScene"))
             curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreList.categorySub, false);
         else
@@ -49,8 +49,8 @@ public class TopBtnClick : MonoBehaviour
         
         if (beforePath.Contains("StoreScene"))
         {
-            StoreSceneManager.storeName = before.storeName;
-            StoreSceneManager.categorySub = before.categorySub;
+            DontDestroyManager.StoreScene.storeName = before.storeName;
+            DontDestroyManager.StoreScene.categorySub = before.categorySub;
         }
         else if (beforePath.Contains("StoreListScene"))
             DontDestroyManager.StoreList.categorySub = before.categorySub;

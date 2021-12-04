@@ -55,7 +55,7 @@ public class ImgScrolling : MonoBehaviour
 	{
 		WaitServer wait = new WaitServer();
 		FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
-		firebaseRealtime.readStoreImgs(StoreSceneManager.storeName, wait);
+		firebaseRealtime.readStoreImgs(DontDestroyManager.StoreScene.storeName, wait);
 		yield return wait.waitServer();
 		count = firebaseRealtime.ListStoreImgs.ToArray().Length;
 		Debug.Log($"ImgScrolling count {count}");

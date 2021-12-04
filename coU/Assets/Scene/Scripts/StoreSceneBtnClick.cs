@@ -49,12 +49,12 @@ public class StoreSceneBtnClick : MonoBehaviour
             NavigationController.characterType = NavigationController.e_character.coco;
 
 
-        Debug.Log("Navigation Btn click " + StoreSceneManager.floor);
-        MaxstSceneManager.naviStoreName = StoreSceneManager.storeName;
-        MaxstSceneManager.naviStoreCategorySub = StoreSceneManager.categorySub;
-        MaxstSceneManager.naviStoreFloor = StoreSceneManager.floor;
+        Debug.Log("Navigation Btn click " + DontDestroyManager.StoreScene.floor);
+        MaxstSceneManager.naviStoreName = DontDestroyManager.StoreScene.storeName;
+        MaxstSceneManager.naviStoreCategorySub = DontDestroyManager.StoreScene.categorySub;
+        MaxstSceneManager.naviStoreFloor = DontDestroyManager.StoreScene.floor;
         MaxstSceneManager.chkNaviBtnClick = true;
-        //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub));
+        //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, DontDestroyManager.DontDestroyManager.StoreScene.storeName, StoreSceneManager.categorySub));
         Stack.Instance.Clear(); // MaxstScene에서는 언제나 바로 종료되므로
         if (SceneManager.sceneCount == 1)
 		{
