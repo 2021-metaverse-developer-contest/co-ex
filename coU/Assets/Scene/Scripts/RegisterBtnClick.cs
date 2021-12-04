@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class RegisterBtnClick : MonoBehaviour
 {
-	static bool isDupChk = false; //중복확인 버튼을 클릭했는가?
-	static bool isDupEmail = false; //이미 가입된 이메일인가?
-	static bool isDone = false;
+	private bool isDupChk = false; //중복확인 버튼을 클릭했는가?
+	private bool isDupEmail = false; //이미 가입된 이메일인가?
+	private bool isDone = false;
 
 	void ChkDupEmailCoroutine(TMP_InputField idField, TextMeshProUGUI txtMsg)
 	{
