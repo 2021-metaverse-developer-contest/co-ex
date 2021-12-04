@@ -27,7 +27,5 @@ public class MenuSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.UnloadSceneAsync("MenuScene");
     }
 }

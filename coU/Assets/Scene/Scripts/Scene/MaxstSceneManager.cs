@@ -211,29 +211,6 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Update()
 	{
-		// 2021/10/18 hyojlee
-		// MaxstScene에서 뒤로가기 연속 클릭 시 앱 종료하는 부분
-		// 한 번 누르면 종료하지 않고 안드로이드의 토스트 메시지 뜨도록 함
-		if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-		{
-			backCount++;
-			if (!IsInvoking("ResetBackCount"))
-				Invoke("ResetBackCount", 1.0f);
-			if (backCount == 2)
-			{
-				CancelInvoke("ResetBackCount");
-				Application.Quit();
-#if !UNITY_EDITOR
-	System.Diagnostics.Process.GetCurrentProcess().Kill();
-#endif
-			}
-#if UNITY_EDITOR
-			Debug.Log("한 번 더 누르시면 종료됩니다.");
-#elif UNITY_ANDROID
-			Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
-#endif
-		}
-
 		// yunslee 2021.11.21
 		if (chkNaviBtnClick == true && panelBackground.activeSelf == false)
 		{
