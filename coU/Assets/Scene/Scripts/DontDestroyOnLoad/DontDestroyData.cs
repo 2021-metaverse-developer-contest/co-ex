@@ -22,4 +22,9 @@ public class DontDestroyData
         public bool isBeforeMenu { get; set; } = false;
     }
 
+    public class StoreListSceneData
+    {
+        public string categorySub { get; set; } = "";
+    }
+
 }

@@ -271,7 +271,7 @@ public class StoreSceneManager : MonoBehaviour
             if (beforePath.Contains("SearchScene"))
                 SearchSceneManager.searchStr = before.storeName;
             else if (beforePath.Contains("StoreListScene"))
-                StoreListSceneManager.categorySub = before.categorySub;
+                DontDestroyManager.StoreList.categorySub = before.categorySub;
             else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
                 Stack.Instance.Clear();
             SceneManager.LoadScene(before.beforeScene);
