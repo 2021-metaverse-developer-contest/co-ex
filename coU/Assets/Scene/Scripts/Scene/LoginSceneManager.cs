@@ -21,6 +21,14 @@ public class LoginSceneManager : MonoBehaviour
     // 임시로 로그인 정보 담아둠.
 	private void Start()
 	{
+		//NewMethod();
+	}
+
+	private static void NewMethod()
+	{
+		isLogin = DontDestroyManager.LoginScene.isLogin;
+		user = DontDestroyManager.LoginScene.user;
+		isAdvertise = DontDestroyManager.LoginScene.isAdvertise;
 	}
 
 	public static string GetKeyFromEmail(string email)
