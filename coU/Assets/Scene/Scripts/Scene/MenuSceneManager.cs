@@ -11,11 +11,11 @@ public class MenuSceneManager : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
 
         GameObject panelLoginParent = GameObject.Find("Panel_MenuScene");
-        if (LoginSceneManager.isLogin)
+        if (DontDestroyManager.LoginScene.isLogin)
         {
             panelLoginParent.transform.Find("Panel_Login").gameObject.SetActive(false);
             Transform panelLogout = panelLoginParent.transform.Find("Panel_Logout");
-            panelLogout.Find("Panel_User/TMP_User").GetComponent<TextMeshProUGUI>().text = LoginSceneManager.user.id.Split('@')[0] + "님";
+            panelLogout.Find("Panel_User/TMP_User").GetComponent<TextMeshProUGUI>().text = DontDestroyManager.LoginScene.user.id.Split('@')[0] + "님";
             panelLogout.gameObject.SetActive(true);
         }
         else

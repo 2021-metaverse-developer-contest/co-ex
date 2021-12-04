@@ -13,9 +13,9 @@ public class MenuBtnClick : MonoBehaviour
     public void AdvertiseBtnOnClick()
     {
         Debug.Log("AdvertiseButton Click");
-        LoginSceneManager.isAdvertise = true;
+        DontDestroyManager.LoginScene.isAdvertise = true;
         //if (!Login.Instance.GetIsLogin())
-        if (!LoginSceneManager.isLogin)
+        if (!DontDestroyManager.LoginScene.isLogin)
             GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject.SetActive(true);
         else
         {
@@ -55,9 +55,9 @@ public class MenuBtnClick : MonoBehaviour
 
     public void LogoutBtnOnClick()
     {
-        LoginSceneManager.isLogin = false;
-        LoginSceneManager.user = null;
-        LoginSceneManager.isAdvertise = false;
+        DontDestroyManager.LoginScene.isLogin = false;
+        DontDestroyManager.LoginScene.user = null;
+        DontDestroyManager.LoginScene.isAdvertise = false;
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
         {
