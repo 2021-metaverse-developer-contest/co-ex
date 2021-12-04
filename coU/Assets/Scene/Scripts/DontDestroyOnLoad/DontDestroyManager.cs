@@ -11,6 +11,7 @@ public class DontDestroyManager : MonoBehaviour
     static public DontDestroyData.SelectSceneData SelectStoreScene;
     static public DontDestroyData.RegisterSceneData RegisterScene;
     static public DontDestroyData.StoreSceneData StoreScene;
+    static public DontDestroyData.MaxstSceneData MaxstScene;
 
 
     void Awake()
@@ -31,6 +32,6 @@ public class DontDestroyManager : MonoBehaviour
         SearchScene = new DontDestroyData.SearchSceneData();
         SelectStoreScene = new DontDestroyData.SelectSceneData();
         RegisterScene = new DontDestroyData.RegisterSceneData();
-        StoreScene = new DontDestroyData.StoreSceneData();
+        MaxstScene = new DontDestroyData.MaxstSceneData();
     }
 }

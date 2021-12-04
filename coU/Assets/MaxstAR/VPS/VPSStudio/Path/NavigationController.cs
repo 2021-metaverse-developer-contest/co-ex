@@ -250,7 +250,7 @@ public class NavigationController : MonoBehaviour
         //destination.transform.forward = -v3;
         destination.transform.rotation *= Quaternion.Euler(new Vector3(-80f, 0f, 0f));
         destination.name = "destination";
-        MaxstSceneManager.chkNavi = true;
+        DontDestroyManager.MaxstScene.chkNavi = true;
         MaxstSceneManager.DestroyFakeDestination();
 		//
 		// yunslee 2021.11.14 animation 적용
