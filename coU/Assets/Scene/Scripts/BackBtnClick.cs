@@ -138,7 +138,7 @@ public class BackBtnClick : MonoBehaviour
                             else
                             {
                                 if (beforePath.Contains("SearchScene"))
-                                    SearchSceneManager.searchStr = before.storeName;
+                                    DontDestroyManager.SearchScene.searchStr = before.storeName;
                                 else if (beforePath.Contains("StoreListScene"))
                                     DontDestroyManager.StoreList.categorySub = before.categorySub;
                                 else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
