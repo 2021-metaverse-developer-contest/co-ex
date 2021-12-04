@@ -217,7 +217,7 @@ public class UploadBtnClick : MonoBehaviour
             //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));
         }
         SceneManager.LoadSceneAsync("StoreScene");
-        StoreSceneManager.storeName = DontDestroyManager.LoginScene.user.storeName;
+        DontDestroyManager.StoreScene.storeName = DontDestroyManager.LoginScene.user.storeName;
     }
 
     public void CloseUploadBtnOnClick()

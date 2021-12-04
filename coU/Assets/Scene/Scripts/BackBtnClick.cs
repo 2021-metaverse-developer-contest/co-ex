@@ -94,8 +94,8 @@ public class BackBtnClick : MonoBehaviour
 
                     if (beforePath.Contains("StoreScene"))
                     {
-                        StoreSceneManager.storeName = before.storeName;
-                        StoreSceneManager.categorySub = before.categorySub;
+                        DontDestroyManager.StoreScene.storeName = before.storeName;
+                        DontDestroyManager.StoreScene.categorySub = before.categorySub;
                     }
                     else if (beforePath.Contains("StoreListScene"))
                     {

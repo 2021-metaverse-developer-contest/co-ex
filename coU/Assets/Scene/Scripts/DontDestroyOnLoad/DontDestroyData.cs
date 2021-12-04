@@ -39,7 +39,15 @@ public class DontDestroyData
 
     public class RegisterSceneData
     {
-        // 내부적으로 모두 해결되는 변수만 가지고 있음
+        // 내부적으로 모두 해결되는 변수만 가지고 있
+    }
+
+    public class StoreSceneData
+	{
+        public string storeName = "사봉";
+        public string categoryMain = "뷰티";
+        public string categorySub = "바디&향수";
+        public string floor = "";
     }
 
 }

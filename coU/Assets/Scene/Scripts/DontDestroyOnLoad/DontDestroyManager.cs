@@ -10,6 +10,7 @@ public class DontDestroyManager : MonoBehaviour
     static public DontDestroyData.SearchSceneData SearchScene;
     static public DontDestroyData.SelectSceneData SelectStoreScene;
     static public DontDestroyData.RegisterSceneData RegisterScene;
+    static public DontDestroyData.StoreSceneData StoreScene;
 
 
     void Awake()
@@ -30,5 +31,6 @@ public class DontDestroyManager : MonoBehaviour
         SearchScene = new DontDestroyData.SearchSceneData();
         SelectStoreScene = new DontDestroyData.SelectSceneData();
         RegisterScene = new DontDestroyData.RegisterSceneData();
+        StoreScene = new DontDestroyData.StoreSceneData();
     }
 }
