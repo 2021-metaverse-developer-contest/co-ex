@@ -42,27 +42,6 @@ public class SearchSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-            BackBtnOnClick();
-    }
-
-    void BackBtnOnClick()
-    {
-        SceneInfo before = Stack.Instance.Pop();
-        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
-
-        if (beforePath.Contains("StoreScene"))
-        {
-            StoreSceneManager.storeName = before.storeName;
-            StoreSceneManager.categorySub = before.categorySub;
-        }
-        else if (beforePath.Contains("StoreListScene"))
-        {
-            StoreListSceneManager.categorySub = before.categorySub;
-        }
-        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
-            Stack.Instance.Clear();
-        SceneManager.LoadScene(before.beforeScene);
     }
 
     public void ShowList(string inputText)

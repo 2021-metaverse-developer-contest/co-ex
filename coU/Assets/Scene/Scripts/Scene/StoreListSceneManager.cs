@@ -68,13 +68,7 @@ public class StoreListSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-            BackBtnOnClick();
-    }
-
-    void BackBtnOnClick()
-    {
-        SceneManager.LoadScene("AllCategoryScene");
+        
     }
 
     void ChkNoDataFloor()
