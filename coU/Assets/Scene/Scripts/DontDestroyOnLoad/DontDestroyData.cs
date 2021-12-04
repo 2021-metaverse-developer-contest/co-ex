@@ -27,4 +27,9 @@ public class DontDestroyData
         public string categorySub { get; set; } = "";
     }
 
+    public class SearchSceneData
+    {
+        public string searchStr { get; set; } = "";
+    }
+
 }

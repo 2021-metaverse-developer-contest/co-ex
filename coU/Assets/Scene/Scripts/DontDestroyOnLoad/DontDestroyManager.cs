@@ -7,6 +7,7 @@ public class DontDestroyManager : MonoBehaviour
     static public DontDestroyData.LoginSceneData LoginScene;
     static public DontDestroyData.UploadSceneData UploadScene;
     static public DontDestroyData.StoreListSceneData StoreList;
+    static public DontDestroyData.SearchSceneData SearchScene;
 
 
     void Awake()
@@ -24,5 +25,6 @@ public class DontDestroyManager : MonoBehaviour
         LoginScene = new DontDestroyData.LoginSceneData();
         UploadScene = new DontDestroyData.UploadSceneData();
         StoreList = new DontDestroyData.StoreListSceneData();
+        SearchScene = new DontDestroyData.SearchSceneData();
     }
 }
