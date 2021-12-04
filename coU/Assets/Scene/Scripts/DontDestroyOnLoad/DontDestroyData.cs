@@ -17,4 +17,9 @@ public class DontDestroyData
         public bool isAdvertise { get; set; } = false; //우리 매장 홍보하기를 누르고 로그인을 했나?
     }
 
+    public class UploadSceneData
+    {
+        public bool isBeforeMenu { get; set; } = false;
+    }
+
 }
