@@ -5,7 +5,7 @@ using UnityEngine;
 public class DontDestroyManager : MonoBehaviour
 {
     static public DontDestroyData.LoginSceneData LoginScene;
-
+    static public DontDestroyData.UploadSceneData UploadScene;
 
     void Awake()
     {
@@ -20,5 +20,6 @@ public class DontDestroyManager : MonoBehaviour
     void Start()
     {
         LoginScene = new DontDestroyData.LoginSceneData();
+        UploadScene = new DontDestroyData.UploadSceneData();
     }
 }

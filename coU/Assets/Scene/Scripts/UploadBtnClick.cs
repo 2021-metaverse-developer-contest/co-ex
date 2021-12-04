@@ -211,7 +211,7 @@ public class UploadBtnClick : MonoBehaviour
 #elif UNITY_ANDROID
 		Toast.ShowToastMessage("저장되었습니다.", Toast.Term.shortTerm);
 #endif
-        if (UploadSceneManager.isBeforeMenu)
+        if (DontDestroyManager.UploadScene.isBeforeMenu == true)
         {
             Stack.Instance.Clear();
             //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));

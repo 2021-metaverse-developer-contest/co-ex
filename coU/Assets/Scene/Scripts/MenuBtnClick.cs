@@ -14,6 +14,7 @@ public class MenuBtnClick : MonoBehaviour
     {
         Debug.Log("AdvertiseButton Click");
         DontDestroyManager.LoginScene.isAdvertise = true;
+
         //if (!Login.Instance.GetIsLogin())
         if (!DontDestroyManager.LoginScene.isLogin)
             GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject.SetActive(true);
@@ -21,7 +22,7 @@ public class MenuBtnClick : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync("MenuScene");
             SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
-            UploadSceneManager.isBeforeMenu = true;
+            DontDestroyManager.UploadScene.isBeforeMenu = true;
             //컨텐츠 업로드 페이지로 이동
         }
     }

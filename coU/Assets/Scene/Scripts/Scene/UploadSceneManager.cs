@@ -15,7 +15,6 @@ public class UploadSceneManager : MonoBehaviour
 	[SerializeField]
 	private GameObject item;
 	Transform itemParent;
-	public static bool isBeforeMenu = false;
 
 	public static List<StoreImg> ListStoreImgs;
 	public string storeName;
