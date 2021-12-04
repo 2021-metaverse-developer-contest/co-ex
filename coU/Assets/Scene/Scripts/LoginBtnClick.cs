@@ -33,8 +33,8 @@ public class LoginBtnClick : MonoBehaviour
 			if (loginUser.id == loginId && loginUser.pw == loginPw)
 			{
 				Debug.Log($"{loginUser.id}님 안녕하세요."); // 여기서 출력된다.
-				LoginSceneManager.user = loginUser;
-				LoginSceneManager.isLogin = true;
+				DontDestroyManager.LoginScene.user = loginUser;
+				DontDestroyManager.LoginScene.isLogin = true;
 #if UNITY_EDITOR
 				Debug.Log(loginUser.id.Split('@')[0] + "으로 로그인했습니다.");
 #elif UNITY_ANDROID
@@ -59,12 +59,12 @@ public class LoginBtnClick : MonoBehaviour
 		}
 
 		//
-		if (LoginSceneManager.isLogin == true)
+		if (DontDestroyManager.LoginScene.isLogin == true)
 		{
 			if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("MaxstScene"))
 				SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 			// 로그인이 된 다음에 씬전환
-			if (LoginSceneManager.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
+			if (DontDestroyManager.LoginScene.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
 				SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
 			//else // 2. 로그인 버튼을 통해 들어온건가?
 			//	SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
