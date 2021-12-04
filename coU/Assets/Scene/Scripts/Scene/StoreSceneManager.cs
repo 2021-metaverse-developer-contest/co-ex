@@ -57,11 +57,11 @@ public class StoreSceneManager : MonoBehaviour
         foreach (GameObject it in gameObjects)
         {
             print("This is GameObject" + it.name);
-            if (it.name == "Canvas_Main")
+            if (it.name == "Canvas_Parent")
             {
-                Menu = it.gameObject.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_MenuParent/Panel_Menu").gameObject;
+                Menu = it.gameObject.transform.Find("Canvas_Main/Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_MenuParent/Panel_Menu").gameObject;
                 if (LoginSceneManager.IsPermission(storeName))
-                    it.transform.Find("Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Info/Panel_Name/Btn_Upload").gameObject.SetActive(true);
+                    it.transform.Find("Canvas_Main/Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Info/Panel_Name/Btn_Upload").gameObject.SetActive(true);
             }
         }
         Debug.Log("StoreSceneManager start: StoreName " + storeName);
