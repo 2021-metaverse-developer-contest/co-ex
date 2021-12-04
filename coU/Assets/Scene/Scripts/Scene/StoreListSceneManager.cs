@@ -41,7 +41,7 @@ public class StoreListSceneManager : MonoBehaviour
         f1_list = GetDBData.getStoresData(query + "1F' order by name");
         b1_list = GetDBData.getStoresData(query + "B1' order by name");
         b2_list = GetDBData.getStoresData(query + "B2' order by name");
-        if (MaxstSceneManager.onceDetectARLocation == true)
+        if (DontDestroyManager.MaxstScene.onceDetectARLocation == true)
             FillContent(true);
         else
             FillContent(false);
@@ -91,8 +91,8 @@ public class StoreListSceneManager : MonoBehaviour
             print(i.name);
             print("child.transform.position: " + child.transform.position);
             print("child.transform.localpostion: " + child.transform.localPosition);
-            print("AR camer: " + MaxstSceneManager.vAR);
-            i.distance = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+            print("AR camer: " + DontDestroyManager.MaxstScene.vAR);
+            i.distance = Vector3.Distance(child.transform.position, DontDestroyManager.MaxstScene.vAR);
             print("-----------");
         }
         Destroy(empty);
@@ -182,7 +182,7 @@ public class StoreListSceneManager : MonoBehaviour
     //    while (true)
     //    {
     //        Debug.Log("Distance Update");
-    //        if (MaxstSceneManager.onceDetectARLocation == true)
+    //        if (DontDestroyManager.MaxstScene.onceDetectARLocation == true)
     //        {
     //            addDistance(f1_list);
     //            addDistance(b1_list);
