@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DontDestroyData
 {
-    // FirstScene, LoadingScene을 제외한 9개의 Scene에 대한 데이터
+    // FirstScene, LoadingScene, MenuScene을 제외한 9개의 Scene에 대한 데이터
     class AllCategoryData
 	{
         // SQLite DB에서 값을 가져오기 때문에 필요가 없다.
@@ -35,6 +35,11 @@ public class DontDestroyData
     public class SelectSceneData
     {
         public string searchStr { get; set; } = "";
+    }
+
+    public class RegisterSceneData
+    {
+        // 내부적으로 모두 해결되는 변수만 가지고 있음
     }
 
 }
