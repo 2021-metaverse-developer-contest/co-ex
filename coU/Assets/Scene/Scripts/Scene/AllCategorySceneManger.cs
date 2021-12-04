@@ -21,18 +21,6 @@ public class AllCategorySceneManger : MonoBehaviour
         Debug.Log("AllCategorySceneManager start!");
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-            BackBtnClick();
-    }
-
-    void BackBtnClick()
-    {
-        Stack.Instance.Clear();
-        SceneManager.LoadScene("MaxstScene");
-    }
-
     void InitialCategorySub(string categoryMain)
     {
         string query = "Select distinct categorySub from Stores where categoryMain = '" + categoryMain + "'";

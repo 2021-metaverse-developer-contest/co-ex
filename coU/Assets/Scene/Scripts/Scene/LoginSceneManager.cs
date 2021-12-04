@@ -38,9 +38,4 @@ public class LoginSceneManager : MonoBehaviour
         return (true);
     }
 
-	private void Update()
-	{
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.UnloadSceneAsync("LoginScene");
-	}
 }
