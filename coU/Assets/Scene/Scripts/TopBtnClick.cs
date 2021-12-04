@@ -20,7 +20,7 @@ public class TopBtnClick : MonoBehaviour
         if (currentScene.name.Contains("StoreScene"))
             curInfo = new SceneInfo(currentScene.buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub);
         else if (currentScene.name.Contains("StoreListScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, StoreListSceneManager.categorySub, false);
+            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreList.categorySub, false);
         else
             curInfo = new SceneInfo(currentScene.buildIndex);
         Stack.Instance.Push(curInfo);
@@ -53,7 +53,7 @@ public class TopBtnClick : MonoBehaviour
             StoreSceneManager.categorySub = before.categorySub;
         }
         else if (beforePath.Contains("StoreListScene"))
-            StoreListSceneManager.categorySub = before.categorySub;
+            DontDestroyManager.StoreList.categorySub = before.categorySub;
         else if (beforePath.Contains("SearchScene"))
             SearchSceneManager.searchStr = before.storeName;
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
