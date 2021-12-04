@@ -32,4 +32,9 @@ public class DontDestroyData
         public string searchStr { get; set; } = "";
     }
 
+    public class SelectSceneData
+    {
+        public string searchStr { get; set; } = "";
+    }
+
 }
