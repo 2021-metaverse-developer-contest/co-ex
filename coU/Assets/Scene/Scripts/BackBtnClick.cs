@@ -99,7 +99,7 @@ public class BackBtnClick : MonoBehaviour
                     }
                     else if (beforePath.Contains("StoreListScene"))
                     {
-                        DontDestroyManager.StoreList.categorySub = before.categorySub;
+                        DontDestroyManager.StoreListScene.categorySub = before.categorySub;
                     }
                     else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
                         Stack.Instance.Clear();
@@ -140,7 +140,7 @@ public class BackBtnClick : MonoBehaviour
                                 if (beforePath.Contains("SearchScene"))
                                     DontDestroyManager.SearchScene.searchStr = before.storeName;
                                 else if (beforePath.Contains("StoreListScene"))
-                                    DontDestroyManager.StoreList.categorySub = before.categorySub;
+                                    DontDestroyManager.StoreListScene.categorySub = before.categorySub;
                                 else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
                                     Stack.Instance.Clear();
                                 SceneManager.LoadScene(before.beforeScene);
