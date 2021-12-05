@@ -6,7 +6,7 @@ public class DontDestroyManager : MonoBehaviour
 {
     static public DontDestroyData.LoginSceneData LoginScene;
     static public DontDestroyData.UploadSceneData UploadScene;
-    static public DontDestroyData.StoreListSceneData StoreList;
+    static public DontDestroyData.StoreListSceneData StoreListScene;
     static public DontDestroyData.SearchSceneData SearchScene;
     static public DontDestroyData.SelectSceneData SelectStoreScene;
     static public DontDestroyData.RegisterSceneData RegisterScene;
@@ -28,7 +28,7 @@ public class DontDestroyManager : MonoBehaviour
     {
         LoginScene = new DontDestroyData.LoginSceneData();
         UploadScene = new DontDestroyData.UploadSceneData();
-        StoreList = new DontDestroyData.StoreListSceneData();
+        StoreListScene = new DontDestroyData.StoreListSceneData();
         SearchScene = new DontDestroyData.SearchSceneData();
         SelectStoreScene = new DontDestroyData.SelectSceneData();
         RegisterScene = new DontDestroyData.RegisterSceneData();
