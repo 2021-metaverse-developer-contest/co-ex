@@ -15,7 +15,6 @@ public class UploadSceneManager : MonoBehaviour
 	[SerializeField]
 	private GameObject item;
 	Transform itemParent;
-	public static bool isBeforeMenu = false;
 
 	public static List<StoreImg> ListStoreImgs;
 	public string storeName;
@@ -25,7 +24,7 @@ public class UploadSceneManager : MonoBehaviour
 		if (ListStoreImgs == null)
 			ListStoreImgs = new List<StoreImg>();
 		ListStoreImgs.Clear();
-		this.storeName = LoginSceneManager.user?.storeName;
+		this.storeName = DontDestroyManager.LoginScene.user?.storeName;
 		Debug.Log("UploadScene StoreName " + storeName);
 	}
 

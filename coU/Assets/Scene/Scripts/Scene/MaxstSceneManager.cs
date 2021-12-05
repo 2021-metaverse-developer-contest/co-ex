@@ -12,17 +12,10 @@ using System.Threading;
 
 public class MaxstSceneManager : MonoBehaviour
 {
-	// navi 기능을 위해서 추가함
-	public static string naviStoreName = "";
-	public static string naviStoreCategorySub = "";
-	public static string naviStoreFloor = "";
-	public static bool chkNaviBtnClick = false;
-
 	public TextMeshProUGUI storeNameTextBox;
 	public TextMeshProUGUI storeFloorTextBox;
 	public GameObject marker;
 	//
-	public static Vector3 vAR = new Vector3();
 
 	[SerializeField]
 	private bool prefabRendering = false;
@@ -54,12 +47,9 @@ public class MaxstSceneManager : MonoBehaviour
 	GameObject panelBackground;
 	GameObject panelFloor;
 	GameObject panelToilet;
-	public static bool onceDetectARLocation = false;
 
 	//hyojlee 2021.10.23
-	public static bool chkNavi = false;
 	GameObject destination = null;
-	public static string floor;
 
 	//yunslee 2021.11.15
 	public TextMeshProUGUI floorTextBox;
@@ -70,7 +60,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 	void Awake()
 	{
-		onceDetectARLocation = false;
+		DontDestroyManager.MaxstScene.onceDetectARLocation = false;
 		if (vPSTrackablesList == null)
 			vPSTrackablesList = new List<VPSTrackable>();
 		QualitySettings.vSyncCount = 0;
@@ -146,7 +136,7 @@ public class MaxstSceneManager : MonoBehaviour
     {
 		while (true)
         {
-			vAR = arCamera.transform.position;
+			DontDestroyManager.MaxstScene.vAR = arCamera.transform.position;
 			yield return new WaitForSeconds(0.1f);
         }
     }
@@ -212,13 +202,13 @@ public class MaxstSceneManager : MonoBehaviour
 	void Update()
 	{
 		// yunslee 2021.11.21
-		if (chkNaviBtnClick == true && panelBackground.activeSelf == false)
+		if (DontDestroyManager.MaxstScene.chkNaviBtnClick == true && panelBackground.activeSelf == false)
 		{
-			chkNaviBtnClick = false;
+			DontDestroyManager.MaxstScene.chkNaviBtnClick = false;
 			StartNavigation(resetNaviValue); // 스토어씬에서 호출된 네비게이션
 		}
 		//hyojlee 2021.10.23
-		if (chkNavi)
+		if (DontDestroyManager.MaxstScene.chkNavi)
 		{
 			if (destination == null)
 			{
@@ -279,7 +269,7 @@ public class MaxstSceneManager : MonoBehaviour
 				panelBackground.SetActive(false);
 				panelFloor.SetActive(true);
 				panelToilet.SetActive(true);
-				onceDetectARLocation = true;
+				DontDestroyManager.MaxstScene.onceDetectARLocation = true;
 				string substr = currentLocalizerLocation.Substring(currentLocalizerLocation.LastIndexOf('_') + 1).ToUpper();
 				PutMarkerManager.floor = (substr == "F1") ? "1F" : substr;
 				if (prefabRendering == false)
@@ -459,17 +449,16 @@ public class MaxstSceneManager : MonoBehaviour
 
 	private Action resetNaviValue = () =>
 	{
-		naviStoreName = "";
-		naviStoreFloor = "";
-		naviStoreCategorySub = "";
+		DontDestroyManager.MaxstScene.naviStoreName = "";
+		DontDestroyManager.MaxstScene.naviStoreFloor = "";
+		DontDestroyManager.MaxstScene.naviStoreCategorySub = "";
 		return;
 	};
 
 	public void StartNavigation(Action action)
 	{
 		bool noPath = false;
-		NavigationDest naviDest = new NavigationDest(MaxstSceneManager.naviStoreName, MaxstSceneManager.naviStoreFloor, MaxstSceneManager.naviStoreCategorySub);
-		floor = naviDest.floor;
+		NavigationDest naviDest = new NavigationDest(DontDestroyManager.MaxstScene.naviStoreName, DontDestroyManager.MaxstScene.naviStoreFloor, DontDestroyManager.MaxstScene.naviStoreCategorySub);
 		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.categorySub == "") == true)
 		{
 			print("세가지 값 중 하나라도 전달되지 않으면 에러");
@@ -524,7 +513,8 @@ public class MaxstSceneManager : MonoBehaviour
     /// </summary>
 	public static void DestroyFakeDestination()
 	{
-		floor = floor == "1F" ? "F1" : floor; 
+		string floor;
+		floor = DontDestroyManager.MaxstScene.floor == "1F" ? "F1" : DontDestroyManager.MaxstScene.floor; 
 		foreach (VPSTrackable vpsTrack in vPSTrackablesList)
 		{
 			Debug.Log("Destroy the canvas_arrival of the destination floor " + vpsTrack.gameObject.name);
@@ -606,7 +596,7 @@ public class MaxstSceneManager : MonoBehaviour
 
 		if (panelNavi.active)
         {
-			chkNavi = false;
+			DontDestroyManager.MaxstScene.chkNavi = false;
             panelNavi.SetActive(false);
             panelOn.SetActive(true);
 			panelToilet.SetActive(true);
@@ -720,7 +710,7 @@ public class MaxstSceneManager : MonoBehaviour
 				child.name = "toilet";
 				rawLocation = new Vector3(((float)bathroomList[i].modifiedX), ((float)bathroomList[i].modifiedY), 0);
 				child.transform.localPosition = rawLocation;
-				calculation = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+				calculation = Vector3.Distance(child.transform.position, DontDestroyManager.MaxstScene.vAR);
 				closestToilet = child;
 				closestDistance = calculation;
 				child.SetActive(false);
@@ -731,7 +721,7 @@ public class MaxstSceneManager : MonoBehaviour
 			child.name = "toilet";
 			rawLocation = new Vector3(((float)bathroomList[i].modifiedX), ((float)bathroomList[i].modifiedY), 0);
 			child.transform.localPosition = rawLocation;
-			calculation = Vector3.Distance(child.transform.position, MaxstSceneManager.vAR);
+			calculation = Vector3.Distance(child.transform.position, DontDestroyManager.MaxstScene.vAR);
 			if (closestDistance > calculation)
 			{
 				closestDistance = calculation;

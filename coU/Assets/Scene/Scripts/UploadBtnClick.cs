@@ -23,7 +23,7 @@ public class UploadBtnClick : MonoBehaviour
     IEnumerator Upload(string srcFullPath)
     {
         string imgType = srcFullPath.Substring(srcFullPath.LastIndexOf(".") + 1);
-        StoreImg data = new StoreImg(LoginSceneManager.user?.storeName, imgType, 0);
+        StoreImg data = new StoreImg(DontDestroyManager.LoginScene.user?.storeName, imgType, 0);
 		WaitServer wait = new WaitServer();
         FirebaseStorageManager firebaseStorage = new FirebaseStorageManager();
         firebaseStorage.uploadFile(data, srcFullPath, wait);
@@ -177,7 +177,7 @@ public class UploadBtnClick : MonoBehaviour
 
 		WaitServer wait = new WaitServer();
         FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
-        firebaseRealtime.deleteStoreImgs(LoginSceneManager.user.storeName, wait);
+        firebaseRealtime.deleteStoreImgs(DontDestroyManager.LoginScene.user.storeName, wait);
         yield return wait.waitServer();
 
         for (int i = 0; i < itemsParent.childCount; i++)
@@ -211,13 +211,13 @@ public class UploadBtnClick : MonoBehaviour
 #elif UNITY_ANDROID
 		Toast.ShowToastMessage("저장되었습니다.", Toast.Term.shortTerm);
 #endif
-        if (UploadSceneManager.isBeforeMenu)
+        if (DontDestroyManager.UploadScene.isBeforeMenu == true)
         {
             Stack.Instance.Clear();
             //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));
         }
         SceneManager.LoadSceneAsync("StoreScene");
-        StoreSceneManager.storeName = LoginSceneManager.user.storeName;
+        DontDestroyManager.StoreScene.storeName = DontDestroyManager.LoginScene.user.storeName;
     }
 
     public void CloseUploadBtnOnClick()

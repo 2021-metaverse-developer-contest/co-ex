@@ -10,11 +10,6 @@ using UnityEngine.Video;
 
 public class StoreSceneManager : MonoBehaviour
 {
-    public static string storeName = "사봉";
-    public static string categoryMain = "뷰티";
-    public static string categorySub = "바디&향수";
-    public static string floor = "";
-
     public GameObject[] imgs = new GameObject[5];
     public VideoPlayer[] videos = new VideoPlayer[3];
     List<StoreImg> storeImgList;
@@ -36,15 +31,15 @@ public class StoreSceneManager : MonoBehaviour
     private void Awake()
 	{
         storeImgList = new List<StoreImg>();
-        List<Store> curStr = GetDBData.getStoresData($"Select * from Stores where name = '{storeName}';");
-        categoryMain = curStr[0].categoryMain;
-        categorySub = curStr[0].categorySub;
-        floor = curStr[0].floor;
+        List<Store> curStr = GetDBData.getStoresData($"Select * from Stores where name = '{DontDestroyManager.StoreScene.storeName}';");
+        DontDestroyManager.StoreScene.categoryMain = curStr[0].categoryMain;
+        DontDestroyManager.StoreScene.categorySub = curStr[0].categorySub;
+        DontDestroyManager.StoreScene.floor = curStr[0].floor;
     }
 
 	void Start()
     {
-        Debug.Log($"Current Store {storeName}");
+        Debug.Log($"Current Store {DontDestroyManager.StoreScene.storeName}");
         nextTime = Time.time + timeLeft;
 		imgWidth = imgs[0].GetComponent<RectTransform>().rect.width;
         Screen.orientation = ScreenOrientation.Portrait;
@@ -60,12 +55,12 @@ public class StoreSceneManager : MonoBehaviour
             if (it.name == "Canvas_Parent")
             {
                 Menu = it.gameObject.transform.Find("Canvas_Main/Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_MenuParent/Panel_Menu").gameObject;
-                if (LoginSceneManager.IsPermission(storeName))
+                if (LoginSceneManager.IsPermission(DontDestroyManager.StoreScene.storeName))
                     it.transform.Find("Canvas_Main/Panel_Whole/Panel_Main/ScrollView_Main/Viewport/Content/Panel_Info/Panel_Name/Btn_Upload").gameObject.SetActive(true);
             }
         }
-        Debug.Log("StoreSceneManager start: StoreName " + storeName);
-        Debug.Log("StoreSceneManager start: categorySub " + categorySub);
+        Debug.Log("StoreSceneManager start: StoreName " + DontDestroyManager.StoreScene.storeName);
+        Debug.Log("StoreSceneManager start: categorySub " + DontDestroyManager.StoreScene.categorySub);
 
         GameObject.Find("Btn_Next").GetComponent<Button>().onClick.AddListener(delegate { Right(); });
         GameObject.Find("Btn_Prev").GetComponent<Button>().onClick.AddListener(delegate { Left(); });
@@ -131,7 +126,7 @@ public class StoreSceneManager : MonoBehaviour
         string logoPath = store.logoPath.Substring(0, store.logoPath.LastIndexOf("."));
 		WaitServer wait = new WaitServer();
         FirebaseRealtimeManager firebaseRealtime = new FirebaseRealtimeManager();
-        firebaseRealtime.readStoreImgs(storeName, wait);
+        firebaseRealtime.readStoreImgs(DontDestroyManager.StoreScene.storeName, wait);
         yield return wait.waitServer();
         //count = firebaseRealtime.ListStoreImgs.ToArray().Length;
         count = firebaseRealtime.ListStoreImgs.Count;
@@ -183,8 +178,8 @@ public class StoreSceneManager : MonoBehaviour
 
     void InitialContent()
     {
-        string query = "Select * from Stores Where name = '" + storeName + "'";
-        query += " AND categorySub like '%" + categorySub + "%'"; //빈 문자열일 수도 있으니까
+        string query = "Select * from Stores Where name = '" + DontDestroyManager.StoreScene.storeName + "'";
+        query += " AND categorySub like '%" + DontDestroyManager.StoreScene.categorySub + "%'"; //빈 문자열일 수도 있으니까
         Debug.Log("StoreSceneManager query = " + query);
 
         store = GetDBData.getStoresData(query);
@@ -194,10 +189,10 @@ public class StoreSceneManager : MonoBehaviour
         GameObject.Find("TMP_Floor").GetComponent<TextMeshProUGUI>().text = store[0].floor;
         GameObject.Find("TMP_Phone").GetComponent<TextMeshProUGUI>().text = store[0].phoneNumber;
         GameObject.Find("TMP_Hour").GetComponent<TextMeshProUGUI>().text = store[0].openHour;
-        storeName = store[0].name;
-        categoryMain = store[0].categoryMain;
-        categorySub = store[0].categorySub;
-        floor = store[0].floor;
+        DontDestroyManager.StoreScene.storeName = store[0].name;
+        DontDestroyManager.StoreScene.categoryMain = store[0].categoryMain;
+        DontDestroyManager.StoreScene.categorySub = store[0].categorySub;
+        DontDestroyManager.StoreScene.floor = store[0].floor;
 
         InitialMenu(store[0].name);
 
@@ -269,9 +264,9 @@ public class StoreSceneManager : MonoBehaviour
         else
         {
             if (beforePath.Contains("SearchScene"))
-                SearchSceneManager.searchStr = before.storeName;
+                DontDestroyManager.SearchScene.searchStr = before.storeName;
             else if (beforePath.Contains("StoreListScene"))
-                StoreListSceneManager.categorySub = before.categorySub;
+                DontDestroyManager.StoreList.categorySub = before.categorySub;
             else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
                 Stack.Instance.Clear();
             SceneManager.LoadScene(before.beforeScene);

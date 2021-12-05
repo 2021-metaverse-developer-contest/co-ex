@@ -17,7 +17,6 @@ public class SearchSceneManager : MonoBehaviour
 
     GameObject[] items;
     GameObject[] results;
-    public static string searchStr = "";
 
     void Start()
     {
@@ -33,10 +32,10 @@ public class SearchSceneManager : MonoBehaviour
         inputOuter.onSelect.AddListener(delegate { FocusInputField(); });
         btnSearch.onClick.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
 
-        if (searchStr != "")
+        if (DontDestroyManager.SearchScene.searchStr != "")
         {
-            SearchBtnOnClick(searchStr);
-            inputOuter.text = searchStr;
+            SearchBtnOnClick(DontDestroyManager.SearchScene.searchStr);
+            inputOuter.text = DontDestroyManager.SearchScene.searchStr;
         }
     }
 
@@ -49,7 +48,7 @@ public class SearchSceneManager : MonoBehaviour
         try
         {
             print("inputOuter " + inputOuter.text);
-            searchStr = inputText;
+            DontDestroyManager.SearchScene.searchStr = inputText;
             for (int i = 0; items != null && i < items.Length; i++)
                 DestroyImmediate(items[i]);
             string query = "Select * from Stores where name like '%" + inputText.Trim() + "%'";
