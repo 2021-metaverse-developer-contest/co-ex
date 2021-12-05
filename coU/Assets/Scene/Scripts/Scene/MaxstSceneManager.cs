@@ -358,7 +358,7 @@ public class MaxstSceneManager : MonoBehaviour
 			TrackerManager.GetInstance().StopTracker();
 			if (SceneManager.sceneCount == 1)
 			{
-				SceneManager.LoadScene("MaxstScene");
+				SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
 			}
 		}
 		else

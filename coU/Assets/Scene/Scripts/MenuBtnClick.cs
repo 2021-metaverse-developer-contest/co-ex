@@ -1,13 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MenuBtnClick : MonoBehaviour
 {
     public void CloseBtnOnClick()
     {
-        SceneManager.UnloadScene("MenuScene");
+        if (Stack.Instance.Count() == 0)
+        {
+            GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (var obj in gameObjects)
+                if (obj.name == "Canvas_Parent")
+                    obj.SetActive(true);
+        }
+        else
+        {
+            SceneInfo before = Stack.Instance.Pop();
+            string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+            if (beforePath.Contains("StoreScene"))
+            {
+                DontDestroyManager.StoreScene.storeName = before.storeName;
+                DontDestroyManager.StoreScene.categorySub = before.categorySub;
+            }
+            else if (beforePath.Contains("StoreListScene"))
+                DontDestroyManager.StoreListScene.categorySub = before.categorySub;
+            else if (beforePath.Contains("SearchScene"))
+                DontDestroyManager.SearchScene.searchStr = before.storeName;
+            else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                Stack.Instance.Clear();
+            SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
+        }
+        SceneManager.UnloadSceneAsync("MenuScene");
     }
 
     public void AdvertiseBtnOnClick()
@@ -20,8 +45,8 @@ public class MenuBtnClick : MonoBehaviour
             GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject.SetActive(true);
         else
         {
-            SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
-            SceneManager.UnloadScene("MenuScene");
+            SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("MenuScene");
             DontDestroyManager.UploadScene.isBeforeMenu = true;
             //컨텐츠 업로드 페이지로 이동
         }
@@ -50,12 +75,13 @@ public class MenuBtnClick : MonoBehaviour
 
         // 2021.11.10
         // 로그인 씬으로 이동 시 메뉴 씬은 언로드하고 로그인 씬을 Additive모드로 로드하고자함.
-        SceneManager.LoadScene("LoginScene", LoadSceneMode.Additive);
-        SceneManager.UnloadScene("MenuScene");
+        SceneManager.LoadSceneAsync("LoginScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("MenuScene");
     }
 
     public void LogoutBtnOnClick()
     {
+        Scene curScene = EventSystem.current.currentSelectedGameObject.scene;
         DontDestroyManager.LoginScene.isLogin = false;
         DontDestroyManager.LoginScene.user = null;
         DontDestroyManager.LoginScene.isAdvertise = false;
@@ -71,8 +97,8 @@ public class MenuBtnClick : MonoBehaviour
         //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //    //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
         //}
-        SceneManager.UnloadScene("MenuScene");
-        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(curScene);
 #if UNITY_EDITOR
         Debug.Log("로그아웃 되었습니다.");
 #elif UNITY_ANDROID

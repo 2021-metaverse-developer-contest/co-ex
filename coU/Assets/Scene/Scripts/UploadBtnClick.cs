@@ -211,11 +211,11 @@ public class UploadBtnClick : MonoBehaviour
 #elif UNITY_ANDROID
 		Toast.ShowToastMessage("저장되었습니다.", Toast.Term.shortTerm);
 #endif
-        SceneManager.LoadScene("StoreScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
         DontDestroyManager.StoreScene.storeName = DontDestroyManager.LoginScene.user.storeName;
         if (!DontDestroyManager.UploadScene.isBeforeMenu)
             Stack.Instance.Pop();
-        SceneManager.UnloadScene("UploadScene");
+        SceneManager.UnloadSceneAsync("UploadScene");
         //if (DontDestroyManager.UploadScene.isBeforeMenu == true)
         //{
         //    Stack.Instance.Clear();
@@ -235,6 +235,21 @@ public class UploadBtnClick : MonoBehaviour
 
     public void OKCloseBtnOnClick()
     {
-        SceneManager.UnloadScene("UploadScene");
+        SceneInfo before;
+        if (!DontDestroyManager.UploadScene.isBeforeMenu)
+        {
+            before = Stack.Instance.Pop();
+            SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
+            DontDestroyManager.StoreScene.storeName = before.storeName;
+            DontDestroyManager.StoreScene.categorySub = before.categorySub;
+        }
+        SceneManager.UnloadSceneAsync("UploadScene");
+        if (Stack.Instance.Count() == 0)
+        {
+            GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (var obj in gameObjects)
+                if (obj.name == "Canvas_Parent")
+                    obj.SetActive(true);
+        }
     }
 }

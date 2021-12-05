@@ -15,8 +15,8 @@ public class TopBtnClick : MonoBehaviour
     {
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
         Stack.Instance.Clear();
-        SceneManager.LoadScene("AllCategoryScene", LoadSceneMode.Additive);
-        SceneManager.UnloadScene(clickObj.scene);
+        SceneManager.LoadSceneAsync("AllCategoryScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(clickObj.scene);
     }
 
     public void SearchBtnOnClick()
@@ -29,12 +29,14 @@ public class TopBtnClick : MonoBehaviour
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.StoreScene.storeName, categorySub_: DontDestroyManager.StoreScene.categorySub);
         else if (curScene.Contains("StoreListScene"))
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
-        else if (!curScene.Contains("MaxstScene") && !curScene.Contains("MenuScene")) //MaxstScene과 MenuScene은 스택에 넣지 않음
+        else if (curScene.Contains("MaxstScene"))
+            GameObject.Find("Canvas_Parent").SetActive(false);
+        else if (!curScene.Contains("MenuScene")) //MenuScene은 스택에 넣지 않음
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
         DontDestroyManager.SearchScene.searchStr = "";
-        SceneManager.LoadScene("SearchScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("SearchScene", LoadSceneMode.Additive);
         if (!curScene.Contains("MaxstScene"))
-            SceneManager.UnloadScene(curScene);
+            SceneManager.UnloadSceneAsync(curScene);
     }
 
     public void BackBtnOnClick()
@@ -44,7 +46,12 @@ public class TopBtnClick : MonoBehaviour
         //string curScene = SceneManager.GetActiveScene().name;
         if (Stack.Instance.Count() == 0) //Stack이 비워져있다는 얘기는 무조건 UnloadScene
         {
-            SceneManager.UnloadScene(curScene);
+            GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (var obj in gameObjects)
+                if (obj.name == "Canvas_Parent")
+                    obj.SetActive(true);
+            
+            SceneManager.UnloadSceneAsync(curScene);
             //SceneManager.LoadScene("AllCategoryScene");
             return;
         }
@@ -60,7 +67,7 @@ public class TopBtnClick : MonoBehaviour
         if (curScene.Contains("MaxstScene") && beforePath.Contains("MaxstScene"))
         {
             Stack.Instance.Clear();
-            SceneManager.UnloadScene("StoreScene");
+            SceneManager.UnloadSceneAsync("StoreScene");
             return;
         }
          */
@@ -76,15 +83,14 @@ public class TopBtnClick : MonoBehaviour
             DontDestroyManager.SearchScene.searchStr = before.storeName;
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
             Stack.Instance.Clear();
-        SceneManager.LoadScene(before.beforeScene, LoadSceneMode.Additive);
-        SceneManager.UnloadScene(curScene);
-
+        SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(curScene);
     }
 
     public void ARBtnOnClick()
     {
         Stack.Instance.Clear();
-        SceneManager.LoadScene("MaxstScene", LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
     }
 
     public void MenuBtnOnclick()
@@ -98,10 +104,12 @@ public class TopBtnClick : MonoBehaviour
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
         else if (curScene.Contains("SearchScene"))
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.SearchScene.searchStr);
-        else if (!curScene.Contains("MaxstScene")) //MaxstScene은 스택에 넣지 않음
+        else if (curScene.Contains("MaxstScene")) //MaxstScene은 스택에 넣지 않음
+            GameObject.Find("Canvas_Parent").SetActive(false);
+        else //MaxstScene은 스택에 넣지 않음
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
-        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
         if (!curScene.Contains("MaxstScene"))
-            SceneManager.UnloadScene(curScene);
+            SceneManager.UnloadSceneAsync(curScene);
     }
 }

@@ -25,6 +25,7 @@ public class SearchItemClick : MonoBehaviour
         DontDestroyManager.StoreScene.storeName = cur.transform.Find("TMP_Result").GetComponent<TextMeshProUGUI>().text;
         DontDestroyManager.StoreScene.categorySub = "";
         DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.SearchScene.searchStr);
-        SceneManager.LoadScene("StoreScene");
+        SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(cur.scene);
     }
 }
