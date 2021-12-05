@@ -459,6 +459,7 @@ public class MaxstSceneManager : MonoBehaviour
 	{
 		bool noPath = false;
 		NavigationDest naviDest = new NavigationDest(DontDestroyManager.MaxstScene.naviStoreName, DontDestroyManager.MaxstScene.naviStoreFloor, DontDestroyManager.MaxstScene.naviStoreCategorySub);
+		DontDestroyManager.MaxstScene.floor = naviDest.floor;
 		if ((naviDest.name == "" || naviDest.floor == "" || naviDest.categorySub == "") == true)
 		{
 			print("세가지 값 중 하나라도 전달되지 않으면 에러");
@@ -514,7 +515,7 @@ public class MaxstSceneManager : MonoBehaviour
 	public static void DestroyFakeDestination()
 	{
 		string floor;
-		floor = DontDestroyManager.MaxstScene.floor == "1F" ? "F1" : DontDestroyManager.MaxstScene.floor; 
+		floor = DontDestroyManager.MaxstScene.floor == "1F" ? "F1" : DontDestroyManager.MaxstScene.floor;
 		foreach (VPSTrackable vpsTrack in vPSTrackablesList)
 		{
 			Debug.Log("Destroy the canvas_arrival of the destination floor " + vpsTrack.gameObject.name);
