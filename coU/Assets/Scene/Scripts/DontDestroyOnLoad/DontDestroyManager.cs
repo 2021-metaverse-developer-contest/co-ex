@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DontDestroyManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DontDestroyManager : MonoBehaviour
     static public DontDestroyData.StoreSceneData StoreScene;
     static public DontDestroyData.MaxstSceneData MaxstScene;
 
+    private string currentSceneName;
 
     void Awake()
     {
@@ -23,6 +25,7 @@ public class DontDestroyManager : MonoBehaviour
 		}
 		else
 			Destroy(this);
+        currentSceneName = "MaxstScene";
 	}
     void Start()
     {
@@ -34,5 +37,26 @@ public class DontDestroyManager : MonoBehaviour
         RegisterScene = new DontDestroyData.RegisterSceneData();
         StoreScene = new DontDestroyData.StoreSceneData();
         MaxstScene = new DontDestroyData.MaxstSceneData();
+    }
+
+
+
+
+
+    static public void newPush(string sceneName_, string storeName_ = "", string categorySub_ = "")
+	{
+        SceneInfo element = new SceneInfo(beforeSceneStr: sceneName_, storeName: storeName_, categorySub: categorySub_);
+        Stack.Instance.Push(element);
+    }
+
+    static public SceneInfo newPop()
+    {
+        return (Stack.Instance.Pop());
+    }
+
+    static public string getSceneName(EventSystem cur)
+    {
+        GameObject clickObj = cur.currentSelectedGameObject;
+        return (clickObj.scene.name);
     }
 }
