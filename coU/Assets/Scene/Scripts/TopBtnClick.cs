@@ -32,7 +32,7 @@ public class TopBtnClick : MonoBehaviour
             return;
         }
         SceneInfo before = Stack.Instance.Pop();
-        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.sceneIndex);
+        string beforePath = before.sceneName;
 
         //if (curScene.Contains("StoreScene") && beforePath.Contains("MaxstScene"))
         if (curScene.Contains("MaxstScene") && beforePath.Contains("MaxstScene"))
@@ -53,7 +53,7 @@ public class TopBtnClick : MonoBehaviour
             DontDestroyManager.SearchScene.searchStr = before.storeName;
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
             Stack.Instance.Clear();
-        SceneManager.LoadScene(before.sceneIndex);
+        SceneManager.LoadScene(before.sceneName);
 
     }
 

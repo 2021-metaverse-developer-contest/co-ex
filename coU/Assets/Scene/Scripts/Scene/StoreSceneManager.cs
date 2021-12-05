@@ -255,7 +255,7 @@ public class StoreSceneManager : MonoBehaviour
             return;
         }
         SceneInfo before = Stack.Instance.Pop();
-        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.sceneIndex);
+        string beforePath = before.sceneName;
         if (beforePath.Contains("MaxstScene"))
         {
             Stack.Instance.Clear();
@@ -269,7 +269,7 @@ public class StoreSceneManager : MonoBehaviour
                 DontDestroyManager.StoreListScene.categorySub = before.categorySub;
             else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
                 Stack.Instance.Clear();
-            SceneManager.LoadScene(before.sceneIndex);
+            SceneManager.LoadScene(before.sceneName);
         }
     }
 

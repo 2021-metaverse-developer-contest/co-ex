@@ -75,7 +75,7 @@ public class BackBtnClick : MonoBehaviour
                 void BackBtnOnClick()
                 {
                     SceneInfo before = Stack.Instance.Pop();
-                    string beforePath = SceneUtility.GetScenePathByBuildIndex(before.sceneIndex);
+                    string beforePath = before.sceneName;
 
                     if (beforePath.Contains("StoreScene"))
                     {
@@ -88,7 +88,7 @@ public class BackBtnClick : MonoBehaviour
                     }
                     else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
                         Stack.Instance.Clear();
-                    SceneManager.LoadScene(before.sceneIndex);
+                    SceneManager.LoadScene(before.sceneName);
                 }
                 break;
             case SceneName.StoreListScene:
@@ -114,7 +114,7 @@ public class BackBtnClick : MonoBehaviour
                                 return;
                             }
                             SceneInfo before = Stack.Instance.Pop();
-                            string beforePath = SceneUtility.GetScenePathByBuildIndex(before.sceneIndex);
+                            string beforePath = before.sceneName;
                             if (beforePath.Contains("MaxstScene"))
                             {
                                 Stack.Instance.Clear();
@@ -128,7 +128,7 @@ public class BackBtnClick : MonoBehaviour
                                     DontDestroyManager.StoreListScene.categorySub = before.categorySub;
                                 else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
                                     Stack.Instance.Clear();
-                                SceneManager.LoadScene(before.sceneIndex);
+                                SceneManager.LoadScene(before.sceneName);
                             }
                         }
                     }
