@@ -76,7 +76,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
 
         if (validScene == true)
         {
-            SceneManager.LoadScene(pk.scene);
+            SceneManager.LoadSceneAsync(pk.scene);
             DontDestroyManager.StoreScene.storeName = pk.name;
 			DontDestroyManager.StoreScene.categoryMain = pk.categoryMain;
             DontDestroyManager.StoreScene.categorySub = pk.categorySub;

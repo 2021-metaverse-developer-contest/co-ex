@@ -18,10 +18,13 @@ public class BackBtnClick : MonoBehaviour
         switch (this.gameObject.scene.name)
 		{
             case SceneName.AllCategoryScene:
-                if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-				{
-                    Stack.Instance.Clear();
-                    SceneManager.LoadScene("MaxstScene");
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+                    foreach (var obj in gameObjects)
+                        if (obj.name == "Canvas_Parent")
+                            obj.SetActive(true);
+                    SceneManager.UnloadSceneAsync(this.gameObject.scene);
                 }
                 break;
             case SceneName.FirstScene:
@@ -30,13 +33,16 @@ public class BackBtnClick : MonoBehaviour
                 break;
             case SceneName.LoginScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
-                    SceneManager.UnloadScene("LoginScene");
+                {
+                    SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+                    SceneManager.UnloadSceneAsync("LoginScene");
+                }
                 break;
             case SceneName.MaxstScene:
                 // 2021/10/18 hyojlee
                 // MaxstScene에서 뒤로가기 연속 클릭 시 앱 종료하는 부분
                 // 한 번 누르면 종료하지 않고 안드로이드의 토스트 메시지 뜨도록 함
-                if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     backCount++;
                     if (!IsInvoking("ResetBackCount"))
@@ -58,7 +64,33 @@ public class BackBtnClick : MonoBehaviour
                 break;
             case SceneName.MenuScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
-                    SceneManager.UnloadScene("MenuScene");
+                {
+                    if (Stack.Instance.Count() == 0)
+                    {
+                        GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+                        foreach (var obj in gameObjects)
+                            if (obj.name == "Canvas_Parent")
+                                obj.SetActive(true);
+                    }
+                    else
+                    {
+                        SceneInfo before = Stack.Instance.Pop();
+                        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+                        if (beforePath.Contains("StoreScene"))
+                        {
+                            DontDestroyManager.StoreScene.storeName = before.storeName;
+                            DontDestroyManager.StoreScene.categorySub = before.categorySub;
+                        }
+                        else if (beforePath.Contains("StoreListScene"))
+                            DontDestroyManager.StoreListScene.categorySub = before.categorySub;
+                        else if (beforePath.Contains("SearchScene"))
+                            DontDestroyManager.SearchScene.searchStr = before.storeName;
+                        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                            Stack.Instance.Clear();
+                        SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
+                    }
+                    SceneManager.UnloadSceneAsync("MenuScene");
+                }
                 break;
             case SceneName.RegisterScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
@@ -70,69 +102,49 @@ public class BackBtnClick : MonoBehaviour
                 }
                 break;
             case SceneName.SearchScene:
-                if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
+                if (Input.GetKeyDown(KeyCode.Escape))
                     BackBtnOnClick();
                 void BackBtnOnClick()
                 {
-                    SceneInfo before = Stack.Instance.Pop();
-                    string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+                    if (Stack.Instance.Count() == 0)
+                    {
+                        GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+                        foreach (var obj in gameObjects)
+                            if (obj.name == "Canvas_Parent")
+                                obj.SetActive(true);
+                    }
+                    else
+                    {
+                        SceneInfo before = Stack.Instance.Pop();
+                        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
 
-                    if (beforePath.Contains("StoreScene"))
-                    {
-                        DontDestroyManager.StoreScene.storeName = before.storeName;
-                        DontDestroyManager.StoreScene.categorySub = before.categorySub;
+                        if (beforePath.Contains("StoreScene"))
+                        {
+                            DontDestroyManager.StoreScene.storeName = before.storeName;
+                            DontDestroyManager.StoreScene.categorySub = before.categorySub;
+                        }
+                        else if (beforePath.Contains("StoreListScene"))
+                        {
+                            DontDestroyManager.StoreListScene.categorySub = before.categorySub;
+                        }
+                        else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                            Stack.Instance.Clear();
+                        SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
                     }
-                    else if (beforePath.Contains("StoreListScene"))
-                    {
-                        DontDestroyManager.StoreListScene.categorySub = before.categorySub;
-                    }
-                    else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
-                        Stack.Instance.Clear();
-                    SceneManager.LoadScene(before.beforeScene);
+                    SceneManager.UnloadSceneAsync("SearchScene");
                 }
                 break;
             case SceneName.StoreListScene:
-                if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.sceneCount < 2)
-                    SceneManager.LoadScene("AllCategoryScene");
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    SceneManager.LoadSceneAsync("AllCategoryScene");
+                    SceneManager.UnloadSceneAsync("StoreListScene");
+                }
                 break;
             case SceneName.StoreScene:
-                if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 1
-                   || (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene")))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    if (GameObject.Find("Panel_ChooseWhole") != null)
-                    {
-                        GameObject.Find("Panel_ChooseWhole").SetActive(false);
-                    }
-                    else if (Stack.Instance.Count() > 0)
-                    {
-                        BackBtnOnClick2();
-                        void BackBtnOnClick2()
-                        {
-                            if (Stack.Instance.Count() == 0)
-                            {
-                                SceneManager.LoadScene("AllCategoryScene");
-                                return;
-                            }
-                            SceneInfo before = Stack.Instance.Pop();
-                            string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
-                            if (beforePath.Contains("MaxstScene"))
-                            {
-                                Stack.Instance.Clear();
-                                SceneManager.UnloadScene("StoreScene");
-                            }
-                            else
-                            {
-                                if (beforePath.Contains("SearchScene"))
-                                    DontDestroyManager.SearchScene.searchStr = before.storeName;
-                                else if (beforePath.Contains("StoreListScene"))
-                                    DontDestroyManager.StoreListScene.categorySub = before.categorySub;
-                                else //MaxstScene?? ??, AllCategoryScene?? ?? ?? ???? ?.
-                                    Stack.Instance.Clear();
-                                SceneManager.LoadScene(before.beforeScene);
-                            }
-                        }
-                    }
-                    else
+                    if (SceneManager.sceneCount == 1)
                     {
                         backCount++;
                         if (!IsInvoking("ResetBackCount"))
@@ -141,17 +153,44 @@ public class BackBtnClick : MonoBehaviour
                         {
                             CancelInvoke("ResetBackCount");
                             Application.Quit();
-                            #if !UNITY_EDITOR
-	                            System.Diagnostics.Process.GetCurrentProcess().Kill();
-                            #endif
+#if !UNITY_EDITOR
+	                        System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
                         }
-                        #if UNITY_EDITOR
-                            Debug.Log("한 번 더 누르시면 종료됩니다.");
-                        #elif UNITY_ANDROID
-                            Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
-                        #endif
+#if UNITY_EDITOR
+                        Debug.Log("한 번 더 누르시면 종료됩니다.");
+#elif UNITY_ANDROID
+                        Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
+#endif
                     }
-
+                    else
+                    {
+                        if (Stack.Instance.Count() == 0)
+                        {
+                            GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+                            foreach (var obj in gameObjects)
+                                if (obj.name == "Canvas_Parent")
+                                    obj.SetActive(true);
+                        }
+                        else
+                        {
+                            SceneInfo before = Stack.Instance.Pop();
+                            string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+                            if (beforePath.Contains("StoreScene"))
+                            {
+                                DontDestroyManager.StoreScene.storeName = before.storeName;
+                                DontDestroyManager.StoreScene.categorySub = before.categorySub;
+                            }
+                            else if (beforePath.Contains("StoreListScene"))
+                                DontDestroyManager.StoreListScene.categorySub = before.categorySub;
+                            else if (beforePath.Contains("SearchScene"))
+                                DontDestroyManager.SearchScene.searchStr = before.storeName;
+                            else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                                Stack.Instance.Clear();
+                            SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
+                        }
+                        SceneManager.UnloadSceneAsync("StoreScene");
+                    }
                 }
                 break;
             case SceneName.UploadScene:
