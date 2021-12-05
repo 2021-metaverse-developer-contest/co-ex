@@ -89,7 +89,7 @@ public class StoreListClick : MonoBehaviour
 
         DontDestroyManager.StoreScene.storeName = storeName;
         DontDestroyManager.StoreScene.categorySub = categorySub;
-        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, storeName, categorySub));
+        DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_:storeName, categorySub_:categorySub);
         SceneManager.LoadScene("StoreScene");
     }
 }
