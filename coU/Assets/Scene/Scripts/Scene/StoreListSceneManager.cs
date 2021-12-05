@@ -29,14 +29,14 @@ public class StoreListSceneManager : MonoBehaviour
         parentCriterion = GameObject.Find("parentCriterion");
         Screen.orientation = ScreenOrientation.Portrait;
 
-        GameObject.Find("TMP_SubCategory").GetComponent<TextMeshProUGUI>().text = DontDestroyManager.StoreList.categorySub;
+        GameObject.Find("TMP_SubCategory").GetComponent<TextMeshProUGUI>().text = DontDestroyManager.StoreListScene.categorySub;
         f1 = GameObject.Find("ScrollView_F1").gameObject;
         b1 = GameObject.Find("ScrollView_B1").gameObject;
         b2 = GameObject.Find("ScrollView_B2").gameObject;
         PanelFloor = GameObject.Find("Panel_Floor").gameObject;
-        Debug.Log("StoreListSceneManager start: categorySub " + DontDestroyManager.StoreList.categorySub);
+        Debug.Log("StoreListSceneManager start: categorySub " + DontDestroyManager.StoreListScene.categorySub);
 
-        string query = "Select * from Stores where categorySub = '" + DontDestroyManager.StoreList.categorySub + "'";
+        string query = "Select * from Stores where categorySub = '" + DontDestroyManager.StoreListScene.categorySub + "'";
         query += " AND floor = '";
         f1_list = GetDBData.getStoresData(query + "1F' order by name");
         b1_list = GetDBData.getStoresData(query + "B1' order by name");
