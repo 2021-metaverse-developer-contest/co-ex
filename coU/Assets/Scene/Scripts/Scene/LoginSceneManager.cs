@@ -14,14 +14,12 @@ public class LoginSceneManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField pwField;
 
-    public static bool isLogin { get; set; } = false;
-    public static User user;
-    public static bool isAdvertise = false; //우리 매장 홍보하기를 누르고 로그인을 했나?
-
     // 임시로 로그인 정보 담아둠.
 	private void Start()
 	{
+		
 	}
+
 
 	public static string GetKeyFromEmail(string email)
     {
@@ -33,9 +31,8 @@ public class LoginSceneManager : MonoBehaviour
     // UploadScene에 접근할 때 사용함
     public static bool IsPermission(string storeName)
     {
-        if (!isLogin || storeName != user.storeName)
+        if (!DontDestroyManager.LoginScene.isLogin || storeName != DontDestroyManager.LoginScene.user.storeName)
             return (false);
         return (true);
     }
-
 }

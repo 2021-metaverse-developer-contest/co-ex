@@ -18,13 +18,13 @@ public class TopBtnClick : MonoBehaviour
         SceneInfo curInfo;
 
         if (currentScene.name.Contains("StoreScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, StoreSceneManager.storeName, StoreSceneManager.categorySub);
+            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreScene.storeName, DontDestroyManager.StoreScene.categorySub);
         else if (currentScene.name.Contains("StoreListScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, StoreListSceneManager.categorySub, false);
+            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreList.categorySub, false);
         else
             curInfo = new SceneInfo(currentScene.buildIndex);
         Stack.Instance.Push(curInfo);
-        SearchSceneManager.searchStr = "";
+        DontDestroyManager.SearchScene.searchStr = "";
         SceneManager.LoadScene("SearchScene");
     }
 
@@ -49,13 +49,13 @@ public class TopBtnClick : MonoBehaviour
         
         if (beforePath.Contains("StoreScene"))
         {
-            StoreSceneManager.storeName = before.storeName;
-            StoreSceneManager.categorySub = before.categorySub;
+            DontDestroyManager.StoreScene.storeName = before.storeName;
+            DontDestroyManager.StoreScene.categorySub = before.categorySub;
         }
         else if (beforePath.Contains("StoreListScene"))
-            StoreListSceneManager.categorySub = before.categorySub;
+            DontDestroyManager.StoreList.categorySub = before.categorySub;
         else if (beforePath.Contains("SearchScene"))
-            SearchSceneManager.searchStr = before.storeName;
+            DontDestroyManager.SearchScene.searchStr = before.storeName;
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
             Stack.Instance.Clear();
         SceneManager.LoadScene(before.beforeScene);
