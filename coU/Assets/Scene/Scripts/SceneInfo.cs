@@ -15,12 +15,12 @@ public class SceneInfo : MonoBehaviour
     public SceneInfo(string beforeSceneStr, int beforeScene = -1, string storeName = "", string categorySub = "")
     {
         this.beforeSceneStr = beforeSceneStr;
-        print($"beforeSceneStr: {beforeSceneStr}");
+        //print($"beforeSceneStr: {beforeSceneStr}");
         if (beforeScene == -1)
             this.beforeScene = SceneUtility.GetBuildIndexByScenePath(beforeSceneStr);
         else
             this.beforeScene = beforeScene;
-        print($"SceneInfo:: {this.beforeScene}:{beforeSceneStr + ".unity"}");
+        //print($"SceneInfo:: {this.beforeScene}:{beforeSceneStr + ".unity"}");
         this.storeName = storeName;
         this.categorySub = categorySub;
     }
