@@ -85,7 +85,7 @@ public class StoreListClick : MonoBehaviour
     {
         GameObject click = EventSystem.current.currentSelectedGameObject;
         string storeName = click.transform.Find("Panel_Name").GetComponentInChildren<TextMeshProUGUI>().text;
-        string categorySub = DontDestroyManager.StoreList.categorySub;
+        string categorySub = DontDestroyManager.StoreListScene.categorySub;
 
         DontDestroyManager.StoreScene.storeName = storeName;
         DontDestroyManager.StoreScene.categorySub = categorySub;
