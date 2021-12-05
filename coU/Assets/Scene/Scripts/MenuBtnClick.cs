@@ -97,8 +97,11 @@ public class MenuBtnClick : MonoBehaviour
         //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //    //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
         //}
-        SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync(curScene);
+
+        GameObject panelLoginParent = GameObject.Find("Panel_MenuScene");
+        GameObject.Find("MenuSceneManager").GetComponent<MenuSceneManager>().ChangeLogin(panelLoginParent);
+        //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+        //SceneManager.UnloadSceneAsync(curScene);
 #if UNITY_EDITOR
         Debug.Log("로그아웃 되었습니다.");
 #elif UNITY_ANDROID
