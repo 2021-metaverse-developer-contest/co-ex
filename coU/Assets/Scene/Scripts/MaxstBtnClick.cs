@@ -26,7 +26,7 @@ public class MaxstBtnClick : MonoBehaviour
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
 
         TextMeshProUGUI storeName = clickObj.transform.Find("Panel_StoreInfoParent/Panel_StoreInfo").GetComponentInChildren<TextMeshProUGUI>();
-        SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("StoreScene", LoadSceneMode.Additive);
         DontDestroyManager.StoreScene.storeName = storeName.text;
         DontDestroyManager.StoreScene.categorySub = "";
         Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));

@@ -56,7 +56,7 @@ public class WaitServer
 
 			//SceneManager.UnloadSceneAsync(loadedScene);
 
-			SceneManager.UnloadSceneAsync("LoadingScene");
+			SceneManager.UnloadScene("LoadingScene");
         }
         else
         {

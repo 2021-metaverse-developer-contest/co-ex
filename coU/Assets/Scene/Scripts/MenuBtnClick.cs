@@ -7,7 +7,7 @@ public class MenuBtnClick : MonoBehaviour
 {
     public void CloseBtnOnClick()
     {
-        SceneManager.UnloadSceneAsync("MenuScene");
+        SceneManager.UnloadScene("MenuScene");
     }
 
     public void AdvertiseBtnOnClick()
@@ -20,8 +20,8 @@ public class MenuBtnClick : MonoBehaviour
             GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject.SetActive(true);
         else
         {
-            SceneManager.UnloadSceneAsync("MenuScene");
-            SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+            SceneManager.UnloadScene("MenuScene");
+            SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
             DontDestroyManager.UploadScene.isBeforeMenu = true;
             //컨텐츠 업로드 페이지로 이동
         }
@@ -50,8 +50,8 @@ public class MenuBtnClick : MonoBehaviour
 
         // 2021.11.10
         // 로그인 씬으로 이동 시 메뉴 씬은 언로드하고 로그인 씬을 Additive모드로 로드하고자함.
-        SceneManager.LoadSceneAsync("LoginScene", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("MenuScene");
+        SceneManager.LoadScene("LoginScene", LoadSceneMode.Additive);
+        SceneManager.UnloadScene("MenuScene");
     }
 
     public void LogoutBtnOnClick()
@@ -64,11 +64,11 @@ public class MenuBtnClick : MonoBehaviour
         {
             //GameObject.Find("Panel_MenuScene").transform.Find("Panel_Login").gameObject.SetActive(true);
             //GameObject.Find("Panel_Logout").SetActive(false);
-            SceneManager.UnloadSceneAsync("MenuScene");
+            SceneManager.UnloadScene("MenuScene");
         }
         else
         {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
         }
 #if UNITY_EDITOR

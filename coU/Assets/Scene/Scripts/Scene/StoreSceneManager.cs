@@ -259,7 +259,7 @@ public class StoreSceneManager : MonoBehaviour
         if (beforePath.Contains("MaxstScene"))
         {
             Stack.Instance.Clear();
-            SceneManager.UnloadSceneAsync("StoreScene");
+            SceneManager.UnloadScene("StoreScene");
         }
         else
         {
