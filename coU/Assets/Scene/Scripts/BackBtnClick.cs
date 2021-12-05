@@ -45,7 +45,7 @@ public class BackBtnClick : MonoBehaviour
                 break;
             case SceneName.LoginScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
-                    SceneManager.UnloadSceneAsync("LoginScene");
+                    SceneManager.UnloadScene("LoginScene");
                 break;
             case SceneName.MaxstScene:
                 // 2021/10/18 hyojlee
@@ -73,7 +73,7 @@ public class BackBtnClick : MonoBehaviour
                 break;
             case SceneName.MenuScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
-                    SceneManager.UnloadSceneAsync("MenuScene");
+                    SceneManager.UnloadScene("MenuScene");
                 break;
             case SceneName.RegisterScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
@@ -133,7 +133,7 @@ public class BackBtnClick : MonoBehaviour
                             if (beforePath.Contains("MaxstScene"))
                             {
                                 Stack.Instance.Clear();
-                                SceneManager.UnloadSceneAsync("StoreScene");
+                                SceneManager.UnloadScene("StoreScene");
                             }
                             else
                             {

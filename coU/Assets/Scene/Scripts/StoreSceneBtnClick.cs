@@ -27,7 +27,7 @@ public class StoreSceneBtnClick : MonoBehaviour
 
     public void UploadBtnOnClick()
     {
-        SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
         DontDestroyManager.UploadScene.isBeforeMenu = false;
     }
 

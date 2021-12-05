@@ -33,7 +33,7 @@ public class TopBtnClick : MonoBehaviour
         string curScene = SceneManager.GetActiveScene().name;
         if (Stack.Instance.Count() == 0)
         {
-            SceneManager.LoadSceneAsync("AllCategoryScene");
+            SceneManager.LoadScene("AllCategoryScene");
             return;
         }
         SceneInfo before = Stack.Instance.Pop();
@@ -43,7 +43,7 @@ public class TopBtnClick : MonoBehaviour
         if (curScene.Contains("MaxstScene") && beforePath.Contains("MaxstScene"))
         {
             Stack.Instance.Clear();
-            SceneManager.UnloadSceneAsync("StoreScene");
+            SceneManager.UnloadScene("StoreScene");
             return;
         }
         
@@ -70,6 +70,6 @@ public class TopBtnClick : MonoBehaviour
 
     public void MenuBtnOnclick()
     {
-        SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 }
