@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class TopBtnClick : MonoBehaviour
@@ -18,12 +19,12 @@ public class TopBtnClick : MonoBehaviour
         SceneInfo curInfo;
 
         if (currentScene.name.Contains("StoreScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreScene.storeName, DontDestroyManager.StoreScene.categorySub);
+            curInfo = new SceneInfo(beforeSceneStr: DontDestroyManager.getSceneName(EventSystem.current), storeName: DontDestroyManager.StoreScene.storeName, categorySub: DontDestroyManager.StoreScene.categorySub);
         else if (currentScene.name.Contains("StoreListScene"))
-            curInfo = new SceneInfo(currentScene.buildIndex, DontDestroyManager.StoreListScene.categorySub, false);
+            curInfo = new SceneInfo(beforeSceneStr: DontDestroyManager.getSceneName(EventSystem.current), categorySub: DontDestroyManager.StoreListScene.categorySub);
         else
-            curInfo = new SceneInfo(currentScene.buildIndex);
-        Stack.Instance.Push(curInfo);
+            curInfo = new SceneInfo(beforeSceneStr: DontDestroyManager.getSceneName(EventSystem.current));
+        DontDestroyManager.newPush(curInfo);
         DontDestroyManager.SearchScene.searchStr = "";
         SceneManager.LoadScene("SearchScene");
     }

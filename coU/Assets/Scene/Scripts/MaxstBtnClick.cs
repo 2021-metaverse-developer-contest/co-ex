@@ -29,7 +29,7 @@ public class MaxstBtnClick : MonoBehaviour
         SceneManager.LoadScene("StoreScene", LoadSceneMode.Additive);
         DontDestroyManager.StoreScene.storeName = storeName.text;
         DontDestroyManager.StoreScene.categorySub = "";
-        Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex));
+        DontDestroyManager.newPush(new SceneInfo(beforeSceneStr: DontDestroyManager.getSceneName(EventSystem.current)));
     }
 
     public void NaviQuitBtnOnClick()
