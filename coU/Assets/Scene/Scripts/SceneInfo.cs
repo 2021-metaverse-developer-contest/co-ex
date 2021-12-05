@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneInfo : MonoBehaviour
 {
-    public int beforeScene { get; }
-    public string beforeSceneStr { get; }
+    public string sceneName { get; }
+    public int sceneIndex { get; }
     public string storeName { get; }
     public string categorySub { get; }
 
 
     // yunslee 12.5
-    public SceneInfo(string beforeSceneStr, int beforeScene = -1, string storeName = "", string categorySub = "")
+    public SceneInfo(string sceneName, int sceneIndex = -1, string storeName = "", string categorySub = "")
     {
-        this.beforeSceneStr = beforeSceneStr;
-        if (beforeScene == -1)
-            this.beforeScene = SceneUtility.GetBuildIndexByScenePath(beforeSceneStr);
+        this.sceneName = sceneName;
+        if (sceneIndex == -1)
+            this.sceneIndex = SceneUtility.GetBuildIndexByScenePath(sceneName);
         else
-            this.beforeScene = beforeScene;
+            this.sceneIndex = sceneIndex;
         this.storeName = storeName;
         this.categorySub = categorySub;
     }

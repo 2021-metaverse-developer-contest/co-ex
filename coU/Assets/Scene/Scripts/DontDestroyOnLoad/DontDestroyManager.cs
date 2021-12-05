@@ -46,19 +46,19 @@ public class DontDestroyManager : MonoBehaviour
         switch (sceneName_)
         {
             case SceneName.AllCategoryScene:
-                element = new SceneInfo(beforeSceneStr: sceneName_, categorySub: DontDestroyManager.StoreListScene.categorySub);
+                element = new SceneInfo(sceneName: sceneName_, categorySub: DontDestroyManager.StoreListScene.categorySub);
                 break;
             case SceneName.MaxstScene:
-                element = new SceneInfo(beforeSceneStr: sceneName_);
+                element = new SceneInfo(sceneName: sceneName_);
                 break;
             case SceneName.SearchScene:
-                element = new SceneInfo(beforeSceneStr: sceneName_, storeName: DontDestroyManager.StoreScene.storeName);
+                element = new SceneInfo(sceneName: sceneName_, storeName: DontDestroyManager.StoreScene.storeName);
                 break;
             case SceneName.StoreListScene:
-                element = new SceneInfo(beforeSceneStr: sceneName_, categorySub: DontDestroyManager.StoreScene.categorySub);
+                element = new SceneInfo(sceneName: sceneName_, categorySub: DontDestroyManager.StoreScene.categorySub);
                 break;
             case SceneName.StoreScene:
-                element = new SceneInfo(beforeSceneStr: sceneName_, storeName: DontDestroyManager.StoreScene.storeName, categorySub: DontDestroyManager.StoreScene.categorySub);
+                element = new SceneInfo(sceneName: sceneName_, storeName: DontDestroyManager.StoreScene.storeName, categorySub: DontDestroyManager.StoreScene.categorySub);
                 break;
             default:
                 break;
@@ -69,7 +69,7 @@ public class DontDestroyManager : MonoBehaviour
 
     static public void newPush(string sceneName_, string storeName_ = "", string categorySub_ = "")
 	{
-		SceneInfo element = new SceneInfo(beforeSceneStr: sceneName_, storeName: storeName_, categorySub: categorySub_);
+		SceneInfo element = new SceneInfo(sceneName: sceneName_, storeName: storeName_, categorySub: categorySub_);
 		Stack.Instance.Push(element);
 	}
 
