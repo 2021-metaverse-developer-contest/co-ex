@@ -40,8 +40,12 @@ public class DontDestroyManager : MonoBehaviour
     }
 
 
-    static public void newPush(SceneInfo element)
-    {
+
+
+
+    static public void newPush(string sceneName_, string storeName_ = "", string categorySub_ = "")
+	{
+        SceneInfo element = new SceneInfo(beforeSceneStr: sceneName_, storeName: storeName_, categorySub: categorySub_);
         Stack.Instance.Push(element);
     }
 
