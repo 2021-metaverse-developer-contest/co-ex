@@ -32,6 +32,7 @@ public class DontDestroyManager : MonoBehaviour
         SearchScene = new DontDestroyData.SearchSceneData();
         SelectStoreScene = new DontDestroyData.SelectSceneData();
         RegisterScene = new DontDestroyData.RegisterSceneData();
+        StoreScene = new DontDestroyData.StoreSceneData();
         MaxstScene = new DontDestroyData.MaxstSceneData();
     }
 }
