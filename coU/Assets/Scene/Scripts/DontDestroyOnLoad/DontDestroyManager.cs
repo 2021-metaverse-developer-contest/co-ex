@@ -40,14 +40,38 @@ public class DontDestroyManager : MonoBehaviour
     }
 
 
-
+    static public void newPush2(string sceneName_)
+    {
+        SceneInfo element = null;
+        switch (sceneName_)
+        {
+            case SceneName.AllCategoryScene:
+                element = new SceneInfo(beforeSceneStr: sceneName_, categorySub: DontDestroyManager.StoreListScene.categorySub);
+                break;
+            case SceneName.MaxstScene:
+                element = new SceneInfo(beforeSceneStr: sceneName_);
+                break;
+            case SceneName.SearchScene:
+                element = new SceneInfo(beforeSceneStr: sceneName_, storeName: DontDestroyManager.StoreScene.storeName);
+                break;
+            case SceneName.StoreListScene:
+                element = new SceneInfo(beforeSceneStr: sceneName_, categorySub: DontDestroyManager.StoreScene.categorySub);
+                break;
+            case SceneName.StoreScene:
+                element = new SceneInfo(beforeSceneStr: sceneName_, storeName: DontDestroyManager.StoreScene.storeName, categorySub: DontDestroyManager.StoreScene.categorySub);
+                break;
+            default:
+                break;
+        }
+        Stack.Instance.Push(element);
+    }
 
 
     static public void newPush(string sceneName_, string storeName_ = "", string categorySub_ = "")
 	{
-        SceneInfo element = new SceneInfo(beforeSceneStr: sceneName_, storeName: storeName_, categorySub: categorySub_);
-        Stack.Instance.Push(element);
-    }
+		SceneInfo element = new SceneInfo(beforeSceneStr: sceneName_, storeName: storeName_, categorySub: categorySub_);
+		Stack.Instance.Push(element);
+	}
 
     static public SceneInfo newPop()
     {

@@ -18,12 +18,7 @@ public class TopBtnClick : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneInfo curInfo;
 
-        if (currentScene.name.Contains("StoreScene"))
-            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.StoreScene.storeName, categorySub_: DontDestroyManager.StoreScene.categorySub);
-        else if (currentScene.name.Contains("StoreListScene"))
-            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
-        else
-            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
+        DontDestroyManager.newPush2(DontDestroyManager.getSceneName(EventSystem.current));
         DontDestroyManager.SearchScene.searchStr = "";
         SceneManager.LoadScene("SearchScene");
     }
