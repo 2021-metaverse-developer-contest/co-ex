@@ -7,38 +7,55 @@ using UnityEngine.SceneManagement;
 
 public class TopBtnClick : MonoBehaviour
 {
+    /// <summary>
+	/// MaxstScene에는 홈버튼이 존재하지 않기 때문에 MaxstScene에서 눌렸는지 확인해줄 필요 없음
+	/// 홈으로 가면 뒤로가기도 무조건 맥스트씬이기 때문에 Stack을 Clear함.
+	/// </summary>
     public void HomeBtnOnClick()
     {
+        GameObject clickObj = EventSystem.current.currentSelectedGameObject;
         Stack.Instance.Clear();
-        SceneManager.LoadScene("AllCategoryScene");
+        SceneManager.LoadScene("AllCategoryScene", LoadSceneMode.Additive);
+        SceneManager.UnloadScene(clickObj.scene);
     }
 
     public void SearchBtnOnClick()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneInfo curInfo;
+        GameObject clickObj = EventSystem.current.currentSelectedGameObject;
+        string curScene = clickObj.scene.name;
+        //Scene currentScene = SceneManager.GetActiveScene();
 
-        if (currentScene.name.Contains("StoreScene"))
+        if (curScene.Contains("StoreScene"))
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.StoreScene.storeName, categorySub_: DontDestroyManager.StoreScene.categorySub);
-        else if (currentScene.name.Contains("StoreListScene"))
+        else if (curScene.Contains("StoreListScene"))
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
-        else
+        else if (!curScene.Contains("MaxstScene") && !curScene.Contains("MenuScene")) //MaxstScene과 MenuScene은 스택에 넣지 않음
             DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
         DontDestroyManager.SearchScene.searchStr = "";
-        SceneManager.LoadScene("SearchScene");
+        SceneManager.LoadScene("SearchScene", LoadSceneMode.Additive);
+        if (!curScene.Contains("MaxstScene"))
+            SceneManager.UnloadScene(curScene);
     }
 
     public void BackBtnOnClick()
     {
-        string curScene = SceneManager.GetActiveScene().name;
-        if (Stack.Instance.Count() == 0)
+        GameObject clickObj = EventSystem.current.currentSelectedGameObject;
+        string curScene = clickObj.scene.name;
+        //string curScene = SceneManager.GetActiveScene().name;
+        if (Stack.Instance.Count() == 0) //Stack이 비워져있다는 얘기는 무조건 UnloadScene
         {
-            SceneManager.LoadScene("AllCategoryScene");
+            SceneManager.UnloadScene(curScene);
+            //SceneManager.LoadScene("AllCategoryScene");
             return;
         }
         SceneInfo before = Stack.Instance.Pop();
         string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
 
+        /*
+         * hyojlee 2021/12/5
+         * MaxstScene을 항상 active하게 함으로써 Stack의 count가 0인 경우에는 위에서의 처리로 해결됨
+         * 즉, 아래의 코드는 MaxstScene에서 매장 프리뷰를 클릭했을 경우를 의미하므로 굳이 필요하지 않음
+          
         //if (curScene.Contains("StoreScene") && beforePath.Contains("MaxstScene"))
         if (curScene.Contains("MaxstScene") && beforePath.Contains("MaxstScene"))
         {
@@ -46,7 +63,8 @@ public class TopBtnClick : MonoBehaviour
             SceneManager.UnloadScene("StoreScene");
             return;
         }
-        
+         */
+
         if (beforePath.Contains("StoreScene"))
         {
             DontDestroyManager.StoreScene.storeName = before.storeName;
@@ -58,18 +76,32 @@ public class TopBtnClick : MonoBehaviour
             DontDestroyManager.SearchScene.searchStr = before.storeName;
         else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
             Stack.Instance.Clear();
-        SceneManager.LoadScene(before.beforeScene);
+        SceneManager.LoadScene(before.beforeScene, LoadSceneMode.Additive);
+        SceneManager.UnloadScene(curScene);
 
     }
 
     public void ARBtnOnClick()
     {
         Stack.Instance.Clear();
-        SceneManager.LoadScene("MaxstScene");
+        SceneManager.LoadScene("MaxstScene", LoadSceneMode.Single);
     }
 
     public void MenuBtnOnclick()
     {
+        GameObject clickObj = EventSystem.current.currentSelectedGameObject;
+        string curScene = clickObj.scene.name;
+
+        if (curScene.Contains("StoreScene"))
+            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.StoreScene.storeName, categorySub_: DontDestroyManager.StoreScene.categorySub);
+        else if (curScene.Contains("StoreListScene"))
+            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
+        else if (curScene.Contains("SearchScene"))
+            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current), storeName_: DontDestroyManager.SearchScene.searchStr);
+        else if (!curScene.Contains("MaxstScene")) //MaxstScene은 스택에 넣지 않음
+            DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        if (!curScene.Contains("MaxstScene"))
+            SceneManager.UnloadScene(curScene);
     }
 }

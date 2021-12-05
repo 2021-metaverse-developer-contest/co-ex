@@ -80,7 +80,7 @@ public class UploadBtnClick : MonoBehaviour
         Debug.Log($"Content child count {content.childCount}");
         if (content.childCount > 0)
         {
-            if (deleteClr == new Color32(198, 215, 255, 76))
+            if (deleteClr == new Color32(198, 215, 255, 76)) //삭제할 아이템이 클릭되어있는지 확인
             {
                 Debug.Log("0 is not null");
                 Debug.Log($"0 is {content.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text}");
@@ -211,13 +211,16 @@ public class UploadBtnClick : MonoBehaviour
 #elif UNITY_ANDROID
 		Toast.ShowToastMessage("저장되었습니다.", Toast.Term.shortTerm);
 #endif
-        if (DontDestroyManager.UploadScene.isBeforeMenu == true)
-        {
-            Stack.Instance.Clear();
-            //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));
-        }
-        SceneManager.LoadScene("StoreScene");
+        SceneManager.LoadScene("StoreScene", LoadSceneMode.Additive);
         DontDestroyManager.StoreScene.storeName = DontDestroyManager.LoginScene.user.storeName;
+        if (!DontDestroyManager.UploadScene.isBeforeMenu)
+            Stack.Instance.Pop();
+        SceneManager.UnloadScene("UploadScene");
+        //if (DontDestroyManager.UploadScene.isBeforeMenu == true)
+        //{
+        //    Stack.Instance.Clear();
+        //    //Stack.Instance.Push(new SceneInfo(SceneManager.GetSceneByName("AllCategoryScene")));
+        //}
     }
 
     public void CloseUploadBtnOnClick()

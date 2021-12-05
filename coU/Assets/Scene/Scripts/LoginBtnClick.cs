@@ -58,18 +58,24 @@ public class LoginBtnClick : MonoBehaviour
 			}
 		}
 
-		//
+		// 로그인 성공
 		if (DontDestroyManager.LoginScene.isLogin == true)
 		{
-			if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("MaxstScene"))
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-			// 로그인이 된 다음에 씬전환
-			if (DontDestroyManager.LoginScene.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
+			if (DontDestroyManager.LoginScene.isAdvertise)
 				SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
-			//else // 2. 로그인 버튼을 통해 들어온건가?
-			//	SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
-			if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
-				SceneManager.UnloadScene("LoginScene");
+			else
+				SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+			SceneManager.UnloadScene("LoginScene");
+
+			//if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("MaxstScene"))
+			//	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			//// 로그인이 된 다음에 씬전환
+			//if (DontDestroyManager.LoginScene.isAdvertise) // 1. 우리 매장 홍보하기를 통해 들어온건가?
+			//	SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
+			////else // 2. 로그인 버튼을 통해 들어온건가?
+			////	SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+			//if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
+			//	SceneManager.UnloadScene("LoginScene");
 		}
 		else
 		{
@@ -132,6 +138,7 @@ public class LoginBtnClick : MonoBehaviour
 
 	public void CloseBtnOnClick()
 	{
+		SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
 		SceneManager.UnloadScene("LoginScene");
 	}
 }

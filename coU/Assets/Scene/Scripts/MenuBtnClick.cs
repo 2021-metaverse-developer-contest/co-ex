@@ -20,8 +20,8 @@ public class MenuBtnClick : MonoBehaviour
             GameObject.Find("Canvas_Pop").transform.Find("Panel_PopWhole").gameObject.SetActive(true);
         else
         {
-            SceneManager.UnloadScene("MenuScene");
             SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
+            SceneManager.UnloadScene("MenuScene");
             DontDestroyManager.UploadScene.isBeforeMenu = true;
             //컨텐츠 업로드 페이지로 이동
         }
@@ -60,17 +60,19 @@ public class MenuBtnClick : MonoBehaviour
         DontDestroyManager.LoginScene.user = null;
         DontDestroyManager.LoginScene.isAdvertise = false;
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
-        {
-            //GameObject.Find("Panel_MenuScene").transform.Find("Panel_Login").gameObject.SetActive(true);
-            //GameObject.Find("Panel_Logout").SetActive(false);
-            SceneManager.UnloadScene("MenuScene");
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
-        }
+        //if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MaxstScene"))
+        //{
+        //    //GameObject.Find("Panel_MenuScene").transform.Find("Panel_Login").gameObject.SetActive(true);
+        //    //GameObject.Find("Panel_Logout").SetActive(false);
+        //    SceneManager.UnloadScene("MenuScene");
+        //}
+        //else
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //    //SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+        //}
+        SceneManager.UnloadScene("MenuScene");
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
 #if UNITY_EDITOR
         Debug.Log("로그아웃 되었습니다.");
 #elif UNITY_ANDROID
