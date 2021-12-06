@@ -34,7 +34,7 @@ public class StoreListSceneManager : MonoBehaviour
         f1 = GameObject.Find("ScrollView_F1").gameObject;
         b1 = GameObject.Find("ScrollView_B1").gameObject;
         b2 = GameObject.Find("ScrollView_B2").gameObject;
-        PanelFloor = GameObject.Find("Panel_Floor").gameObject;
+        PanelFloor = GameObject.Find("Panel_Floor_List").gameObject;
         Debug.Log("StoreListSceneManager start: categorySub " + DontDestroyManager.StoreListScene.categorySub);
 
         string query = "Select * from Stores where categorySub = '" + DontDestroyManager.StoreListScene.categorySub + "'";

@@ -4191,7 +4191,7 @@ GameObject:
   - component: {fileID: 2059170031}
   - component: {fileID: 2059170030}
   m_Layer: 5
-  m_Name: Panel_Floor
+  m_Name: Panel_Floor_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
