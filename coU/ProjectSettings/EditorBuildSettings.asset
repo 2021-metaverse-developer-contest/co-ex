@@ -33,9 +33,6 @@ EditorBuildSettings:
     path: Assets/Scene/Scenes/RegisterScene.unity
     guid: 63396155da53c4cd4bf017ac41146b16
   - enabled: 1
-    path: Assets/Scene/Scenes/SelectStoreScene.unity
-    guid: 7336332e2058544aaa9cfe34ee1c447a
-  - enabled: 1
     path: Assets/Scene/Scenes/LoadingScene.unity
     guid: e8d01a124c27842968103aba3b5f768e
   - enabled: 1
