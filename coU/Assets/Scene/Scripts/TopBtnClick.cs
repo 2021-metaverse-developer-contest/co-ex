@@ -43,6 +43,8 @@ public class TopBtnClick : MonoBehaviour
     {
         GameObject clickObj = EventSystem.current.currentSelectedGameObject;
         string curScene = clickObj.scene.name;
+
+        Debug.Log($"Stack count {Stack.Instance.Count()}");
         //string curScene = SceneManager.GetActiveScene().name;
         if (Stack.Instance.Count() == 0) //Stack이 비워져있다는 얘기는 무조건 UnloadScene
         {
