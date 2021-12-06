@@ -21,7 +21,12 @@ public class ImgClick : MonoBehaviour, IPointerClickHandler
 			Debug.Log($"storeName {storeName}, transName {transName}");
 			uriString = uriString.Replace(storeName, transName);
 			Debug.Log($"URI {uriString}");
+#if UNITY_EDITOR
 			Application.OpenURL(uriString);
+#elif !UNITY_EDITOR && UNITY_ANDROID
+			WebView temp = new WebView(storeName, uriString);
+			temp.WebViewUnity();
+#endif
 		}
 		catch (Exception e)
 		{
