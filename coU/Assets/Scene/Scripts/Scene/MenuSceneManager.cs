@@ -11,6 +11,23 @@ public class MenuSceneManager : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
 
         GameObject panelLoginParent = GameObject.Find("Panel_MenuScene");
+        ChangeLogin(panelLoginParent);
+        //if (DontDestroyManager.LoginScene.isLogin)
+        //{
+        //    panelLoginParent.transform.Find("Panel_Login").gameObject.SetActive(false);
+        //    Transform panelLogout = panelLoginParent.transform.Find("Panel_Logout");
+        //    panelLogout.Find("Panel_User/TMP_User").GetComponent<TextMeshProUGUI>().text = DontDestroyManager.LoginScene.user.id.Split('@')[0] + "님";
+        //    panelLogout.gameObject.SetActive(true);
+        //}
+        //else
+        //{
+        //    panelLoginParent.transform.Find("Panel_Login").gameObject.SetActive(true);
+        //    panelLoginParent.transform.Find("Panel_Logout").gameObject.SetActive(false);
+        //}
+    }
+
+    public void ChangeLogin(GameObject panelLoginParent)
+    {
         if (DontDestroyManager.LoginScene.isLogin)
         {
             panelLoginParent.transform.Find("Panel_Login").gameObject.SetActive(false);
@@ -23,9 +40,5 @@ public class MenuSceneManager : MonoBehaviour
             panelLoginParent.transform.Find("Panel_Login").gameObject.SetActive(true);
             panelLoginParent.transform.Find("Panel_Logout").gameObject.SetActive(false);
         }
-    }
-
-    void Update()
-    {
     }
 }

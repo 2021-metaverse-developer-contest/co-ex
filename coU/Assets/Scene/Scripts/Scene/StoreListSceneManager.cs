@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using maxstAR;
+using UnityEngine.EventSystems;
 
 public class StoreListSceneManager : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class StoreListSceneManager : MonoBehaviour
             else
                 StoreListClick.clickFloor = "F1";
         }
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("Btn_" + StoreListClick.clickFloor));
         StoreListClick.FloorBtnOnClick();
     }
 
