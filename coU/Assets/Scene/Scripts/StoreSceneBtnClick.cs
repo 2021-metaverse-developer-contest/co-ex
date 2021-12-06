@@ -27,7 +27,10 @@ public class StoreSceneBtnClick : MonoBehaviour
 
     public void UploadBtnOnClick()
     {
-        SceneManager.LoadScene("UploadScene", LoadSceneMode.Additive);
+        Scene curScene = EventSystem.current.currentSelectedGameObject.scene;
+        DontDestroyManager.newPush(curScene.name, DontDestroyManager.StoreScene.storeName, DontDestroyManager.StoreScene.categorySub);
+        SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(curScene);
         DontDestroyManager.UploadScene.isBeforeMenu = false;
     }
 
@@ -56,14 +59,21 @@ public class StoreSceneBtnClick : MonoBehaviour
         DontDestroyManager.MaxstScene.chkNaviBtnClick = true;
         //Stack.Instance.Push(new SceneInfo(SceneManager.GetActiveScene().buildIndex, DontDestroyManager.DontDestroyManager.StoreScene.storeName, StoreSceneManager.categorySub));
         Stack.Instance.Clear(); // MaxstScene에서는 언제나 바로 종료되므로
-        if (SceneManager.sceneCount == 1)
-		{
-            SceneManager.LoadScene("MaxstScene");
-		}
-        else
-		{
-            SceneManager.UnloadScene("StoreScene");
-        }
+        SceneManager.UnloadSceneAsync("StoreScene");
+
+        GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (var obj in gameObjects)
+            if (obj.name == "Canvas_Parent")
+                obj.SetActive(true);
+
+        //      if (SceneManager.sceneCount == 1)
+        //{
+        //          SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
+        //}
+        //      else
+        //{
+        //          SceneManager.UnloadSceneAsync("StoreScene");
+        //      }
     }
 
     public void NaviPopCloseBtnOnClick()

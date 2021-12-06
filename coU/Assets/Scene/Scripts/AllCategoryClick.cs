@@ -41,6 +41,7 @@ public class AllCategoryClick : MonoBehaviour
         print("clickObj " + clickObj.transform.Find("Panel_Left").GetComponentInChildren<TextMeshProUGUI>().text);
         DontDestroyManager.StoreListScene.categorySub = clickObj.transform.Find("Panel_Left").GetComponentInChildren<TextMeshProUGUI>().text;
         DontDestroyManager.newPush(sceneName_:DontDestroyManager.getSceneName(EventSystem.current), categorySub_: DontDestroyManager.StoreListScene.categorySub);
-        SceneManager.LoadScene("StoreListScene");
+        SceneManager.LoadSceneAsync("StoreListScene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(clickObj.scene);
     }
 }

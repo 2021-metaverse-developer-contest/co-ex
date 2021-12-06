@@ -76,39 +76,6 @@ public class StoreSceneManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && (SceneManager.sceneCount == 1
-            || (SceneManager.sceneCount == 2 && SceneManager.GetActiveScene().name == "MaxstScene")))
-        {
-            if (GameObject.Find("Panel_ChooseWhole") != null)
-            {
-                GameObject.Find("Panel_ChooseWhole").SetActive(false);
-            }
-            else if (Stack.Instance.Count() > 0)
-            {
-                BackBtnOnClick();
-            }
-            else
-            {
-                backCount++;
-                if (!IsInvoking("ResetBackCount"))
-                    Invoke("ResetBackCount", 1.0f);
-                if (backCount == 2)
-                {
-                    CancelInvoke("ResetBackCount");
-                    Application.Quit();
-#if !UNITY_EDITOR
-	System.Diagnostics.Process.GetCurrentProcess().Kill();
-#endif
-                }
-#if UNITY_EDITOR
-                Debug.Log("한 번 더 누르시면 종료됩니다.");
-#elif UNITY_ANDROID
-			    Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
-#endif
-            }
-
-        }
-
         if (Time.time > nextTime)
         {
             nextTime = Time.time + timeLeft;
@@ -244,32 +211,6 @@ public class StoreSceneManager : MonoBehaviour
                 price = item_List[i - 1].itemPrice;
                 MenuPricePanel.transform.Find("TMP_MenuPrice" + i.ToString()).GetComponent<TextMeshProUGUI>().text = string.Format("{0:n0}", price) + "원";
             }
-        }
-    }
-
-    void BackBtnOnClick()
-    {
-        if (Stack.Instance.Count() == 0)
-        {
-            SceneManager.LoadScene("AllCategoryScene");
-            return;
-        }
-        SceneInfo before = Stack.Instance.Pop();
-        string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
-        if (beforePath.Contains("MaxstScene"))
-        {
-            Stack.Instance.Clear();
-            SceneManager.UnloadScene("StoreScene");
-        }
-        else
-        {
-            if (beforePath.Contains("SearchScene"))
-                DontDestroyManager.SearchScene.searchStr = before.storeName;
-            else if (beforePath.Contains("StoreListScene"))
-                DontDestroyManager.StoreListScene.categorySub = before.categorySub;
-            else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
-                Stack.Instance.Clear();
-            SceneManager.LoadScene(before.beforeScene);
         }
     }
 

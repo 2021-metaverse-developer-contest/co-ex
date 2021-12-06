@@ -132,8 +132,8 @@ public class RegisterBtnClick : MonoBehaviour
 
 	public void CloseOKBtnOnClick() //Panel_PopCloseRegister에 있는 확인 버튼 클릭 이벤트
 	{
-		SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
-		SceneManager.UnloadScene("RegisterScene");
+		SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
+		SceneManager.UnloadSceneAsync("RegisterScene");
 	}
 
 	public void PopErrOKBtnOnClick() //Panel_PopErrorRegister에 있는 확인 버튼 클릭 이벤틏
@@ -141,8 +141,8 @@ public class RegisterBtnClick : MonoBehaviour
 		GameObject.Find("Panel_PopErrorRegister").SetActive(false);
 		if (isDone)
 		{
-			SceneManager.UnloadScene("RegisterScene");
-			SceneManager.LoadScene("LoginScene", LoadSceneMode.Additive);
+			SceneManager.LoadSceneAsync("LoginScene", LoadSceneMode.Additive);
+			SceneManager.UnloadSceneAsync("RegisterScene");
 			isDone = false;
 		}
 

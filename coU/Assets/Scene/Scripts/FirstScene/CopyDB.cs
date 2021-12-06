@@ -89,6 +89,6 @@ public class CopyDB : MonoBehaviour
         print("Start()");
         print(persistentDBTotalPath);
         print($"Load Scene {homeSceneName}");
-        SceneManager.LoadScene(homeSceneName);
+        SceneManager.LoadSceneAsync(homeSceneName);
     }
 }

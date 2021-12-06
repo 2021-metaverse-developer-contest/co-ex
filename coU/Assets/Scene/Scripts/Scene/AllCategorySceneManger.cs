@@ -32,13 +32,14 @@ public class AllCategorySceneManger : MonoBehaviour
 
     void InitialCategoryMain()
     {
+        Debug.Log("AllCategory Init");
         string query = "Select distinct categoryMain as name, path from Stores, Categories where Stores.categoryMain = Categories.name";
         MainItem_List = GetDBData.getCategoryData(query);
 
         MainItems = new GameObject[MainItem_List.ToArray().Length];
         for (int i = 0; i < MainItems.Length; i++)
         {
-            MainItems[i] = Instantiate(MainItem, GameObject.Find("Content").transform);
+            MainItems[i] = Instantiate(MainItem, GameObject.Find("Content_All").transform);
             MainItems[i].GetComponentInChildren<TextMeshProUGUI>().text = MainItem_List[i].name;
             Texture2D texture = Resources.Load(MainItem_List[i].path, typeof(Texture)) as Texture2D;
             if (texture != null)
