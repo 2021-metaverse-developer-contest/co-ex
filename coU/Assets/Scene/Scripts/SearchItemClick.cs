@@ -14,7 +14,7 @@ public class SearchItemClick : MonoBehaviour
         TMP_InputField search = GameObject.Find("InputTMP_Search").GetComponent<TMP_InputField>();
 
         search.text = cur.GetComponentInChildren<TextMeshProUGUI>().text;
-        Button searchBtn = GameObject.Find("Btn_Search").GetComponent<Button>();
+        Button searchBtn = GameObject.Find("Btn_Search_Search").GetComponent<Button>();
         searchBtn.onClick.Invoke();
     }
 
