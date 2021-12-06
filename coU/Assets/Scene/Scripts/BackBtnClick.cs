@@ -20,6 +20,7 @@ public class BackBtnClick : MonoBehaviour
             case SceneName.AllCategoryScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
+                    Stack.Instance.Clear();
                     GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
                     foreach (var obj in gameObjects)
                         if (obj.name == "Canvas_Parent")
@@ -137,7 +138,8 @@ public class BackBtnClick : MonoBehaviour
             case SceneName.StoreListScene:
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    SceneManager.LoadSceneAsync("AllCategoryScene");
+                    Stack.Instance.Clear();
+                    SceneManager.LoadSceneAsync("AllCategoryScene", LoadSceneMode.Additive);
                     SceneManager.UnloadSceneAsync("StoreListScene");
                 }
                 break;
