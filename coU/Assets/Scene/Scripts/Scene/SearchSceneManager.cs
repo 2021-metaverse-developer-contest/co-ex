@@ -24,7 +24,7 @@ public class SearchSceneManager : MonoBehaviour
 
         inputObject = GameObject.Find("InputTMP_Search").gameObject;
         inputOuter = inputObject.GetComponent<TMP_InputField>();
-        btnSearch = GameObject.Find("Btn_Search").GetComponent<Button>();
+        btnSearch = GameObject.Find("Btn_Search_Search").GetComponent<Button>();
 
         inputOuter.onSubmit.AddListener(delegate { SearchBtnOnClick(inputOuter.text); });
         inputOuter.onValueChanged.AddListener(delegate { ShowList(inputOuter.text); });
