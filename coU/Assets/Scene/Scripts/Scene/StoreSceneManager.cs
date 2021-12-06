@@ -44,7 +44,7 @@ public class StoreSceneManager : MonoBehaviour
 		imgWidth = imgs[0].GetComponent<RectTransform>().rect.width;
         Screen.orientation = ScreenOrientation.Portrait;
 
-        if (Stack.Instance.Count() == 0)
+        if (Stack.Instance.Count() == 0 && SceneManager.sceneCount == 1)
             GameObject.Find("Btn_Back").SetActive(false);
         Scene s = SceneManager.GetSceneByName("StoreScene");
         GameObject[] gameObjects = s.GetRootGameObjects();

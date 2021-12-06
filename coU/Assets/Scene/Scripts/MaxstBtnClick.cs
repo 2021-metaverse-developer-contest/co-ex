@@ -31,7 +31,7 @@ public class MaxstBtnClick : MonoBehaviour
         SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
         DontDestroyManager.StoreScene.storeName = storeName.text;
         DontDestroyManager.StoreScene.categorySub = "";
-        DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
+        //DontDestroyManager.newPush(sceneName_: DontDestroyManager.getSceneName(EventSystem.current));
     }
 
     public void NaviQuitBtnOnClick()
