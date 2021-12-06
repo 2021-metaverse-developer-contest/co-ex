@@ -59,7 +59,7 @@ public class BackBtnClick : MonoBehaviour
                         #if UNITY_EDITOR
                                             Debug.Log("한 번 더 누르시면 종료됩니다.");
                         #elif UNITY_ANDROID
-			                                            Toast.ShowToastMessage("? ? ? ???? ?????.", Toast.Term.shortTerm);
+			                                            Toast.ShowToastMessage("한 번 더 누르시면 종료됩니다.", Toast.Term.shortTerm);
                         #endif
                 }
                 break;
