@@ -4,7 +4,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 
 [Table("Facilities")]
-public class Facility : MonoBehaviour
+public class Facility
 {
     [Column("floor")]
     public string floor { get; set; }

@@ -4,7 +4,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 
 [Table("Categories")]
-public class Category : MonoBehaviour
+public class Category
 {
     [Column("name")]
     [PrimaryKey]

@@ -4,7 +4,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 
 [Table("Stores")]
-public class Store : MonoBehaviour
+public class Store
 {
     private const float xScaler = 1.0f;
     private const float yScaler = 1.0f;
