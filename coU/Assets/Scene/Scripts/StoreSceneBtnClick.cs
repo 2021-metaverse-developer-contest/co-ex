@@ -15,8 +15,14 @@ public class StoreSceneBtnClick : MonoBehaviour
         string mapLink = "https://m.starfield.co.kr/coexmall/tenant/tenantDetail/"
                         + store[0].tntSeq + "?maps=" + store[0].mapKey;
         Debug.Log("mapLink " + store[0].mapKey);
+#if UNITY_EDITOR
         Application.OpenURL(mapLink);
-
+#elif !UNITY_EDITOR && UNITY_ANDROID
+        WebView temp = new WebView(storeName: store[0].name, url: mapLink);
+        temp.WebViewUnity();
+#else
+        Application.OpenURL(mapLink);
+#endif
     }
 
     public void CallBtnOnClick()
