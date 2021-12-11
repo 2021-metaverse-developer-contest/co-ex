@@ -78,7 +78,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
 #if UNITY_EDITOR
             Debug.Log("length == 3");
 #elif UNITY_ANDROID
-            Toast.ShowToastMessage("length == 3", 0);
+            // Toast.ShowToastMessage("length == 3", 0);
 #endif
             pk.scene = sceneName;
             pk.name = parameters[0];
@@ -88,10 +88,10 @@ public class ProcessDeepLinkMngr : MonoBehaviour
 
         if (validScene == true)
         {
-            SceneManager.LoadSceneAsync(pk.scene);
             DontDestroyManager.StoreScene.storeName = pk.name;
 			DontDestroyManager.StoreScene.categoryMain = pk.categoryMain;
             DontDestroyManager.StoreScene.categorySub = pk.categorySub;
+            SceneManager.LoadSceneAsync(pk.scene,LoadSceneMode.Additive);
             /*
              * StoreSceneManager에 있는 static 변수명
             public static string storeName = "사봉";
