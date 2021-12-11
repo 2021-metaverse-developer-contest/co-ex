@@ -62,7 +62,10 @@ public class LoginBtnClick : MonoBehaviour
 		if (DontDestroyManager.LoginScene.isLogin == true)
 		{
 			if (DontDestroyManager.LoginScene.isAdvertise)
+			{
 				SceneManager.LoadSceneAsync("UploadScene", LoadSceneMode.Additive);
+				DontDestroyManager.UploadScene.isBeforeMenu = true;
+			}
 			else
 				SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Additive);
 			SceneManager.UnloadSceneAsync("LoginScene");
