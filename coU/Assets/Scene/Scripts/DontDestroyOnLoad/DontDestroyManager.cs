@@ -26,9 +26,6 @@ public class DontDestroyManager : MonoBehaviour
 		else
 			Destroy(this);
         currentSceneName = "MaxstScene";
-	}
-    void Start()
-    {
         LoginScene = new DontDestroyData.LoginSceneData();
         UploadScene = new DontDestroyData.UploadSceneData();
         StoreListScene = new DontDestroyData.StoreListSceneData();
@@ -37,6 +34,9 @@ public class DontDestroyManager : MonoBehaviour
         RegisterScene = new DontDestroyData.RegisterSceneData();
         StoreScene = new DontDestroyData.StoreSceneData();
         MaxstScene = new DontDestroyData.MaxstSceneData();
+	}
+    void Start()
+    {
     }
 
 
