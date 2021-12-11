@@ -92,7 +92,8 @@ public class TopBtnClick : MonoBehaviour
     public void ARBtnOnClick()
     {
         Stack.Instance.Clear();
-        SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MenuScene"); //공간 인식 버튼은 메뉴씬에서 누를 수 밖에 없기 때문
+        //SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
     }
 
     public void MenuBtnOnclick()
