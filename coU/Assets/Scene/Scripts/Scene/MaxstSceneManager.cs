@@ -356,10 +356,10 @@ public class MaxstSceneManager : MonoBehaviour
 		{
 			CameraDevice.GetInstance().Stop();
 			TrackerManager.GetInstance().StopTracker();
-			if (SceneManager.sceneCount == 1)
-			{
-				SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
-			}
+			//if (SceneManager.sceneCount == 1)
+			//{
+			//	SceneManager.LoadSceneAsync("MaxstScene", LoadSceneMode.Single);
+			//}
 		}
 		else
 		{
