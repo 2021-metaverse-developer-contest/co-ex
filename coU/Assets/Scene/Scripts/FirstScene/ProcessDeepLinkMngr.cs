@@ -9,11 +9,12 @@ public class ProcessDeepLinkMngr : MonoBehaviour
     public string deeplinkURL;
     public static bool validScene = true;
 
-    private void Awake()
+    private void Start()
     {
         print("Awake함수 호출");
         if (Instance == null)
         {
+            Debug.Log("ProcessDeepLink instance == null");
             Instance = this;
             Application.deepLinkActivated += onDeepLinkActivated;
             if (!String.IsNullOrEmpty(Application.absoluteURL))
@@ -25,13 +26,19 @@ public class ProcessDeepLinkMngr : MonoBehaviour
             else deeplinkURL = "maxst://vpssdk?아쿠아리움,엔터테인먼트,아쿠아리움";
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (Instance != this)
         {
+            Debug.Log("ProcessDeepLink instance is not this");
             Destroy(gameObject);
+            Instance = null;
         }
+        else
+		{
+             
+		}
     }
 
-    class PrimaryKeys
+	class PrimaryKeys
     {
         public string scene { get; set; }
         public string name { get; set; }
@@ -68,6 +75,11 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         }
         else
         {
+#if UNITY_EDITOR
+            Debug.Log("length == 3");
+#elif UNITY_ANDROID
+            Toast.ShowToastMessage("length == 3", 0);
+#endif
             pk.scene = sceneName;
             pk.name = parameters[0];
             pk.categoryMain = parameters[1];
