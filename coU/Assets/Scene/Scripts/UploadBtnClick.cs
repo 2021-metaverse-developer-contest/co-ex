@@ -236,15 +236,36 @@ public class UploadBtnClick : MonoBehaviour
     public void OKCloseBtnOnClick()
     {
         SceneInfo before;
-        if (!DontDestroyManager.UploadScene.isBeforeMenu)
-        {
-            before = Stack.Instance.Pop();
-            SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
-            DontDestroyManager.StoreScene.storeName = before.storeName;
-            DontDestroyManager.StoreScene.categorySub = before.categorySub;
-        }
+        int stackCount = Stack.Instance.Count();
+        //if (!DontDestroyManager.UploadScene.isBeforeMenu)
+        //{
+        //    before = Stack.Instance.Pop();
+        //    SceneManager.LoadSceneAsync("StoreScene", LoadSceneMode.Additive);
+        //    DontDestroyManager.StoreScene.storeName = before.storeName;
+        //    DontDestroyManager.StoreScene.categorySub = before.categorySub;
+        //}
+        //else
+        //{
+            if (stackCount > 0)
+            {
+                before = Stack.Instance.Pop();
+                string beforePath = SceneUtility.GetScenePathByBuildIndex(before.beforeScene);
+                if (beforePath.Contains("StoreScene"))
+                {
+                    DontDestroyManager.StoreScene.storeName = before.storeName;
+                    DontDestroyManager.StoreScene.categorySub = before.categorySub;
+                }
+                else if (beforePath.Contains("StoreListScene"))
+                    DontDestroyManager.StoreListScene.categorySub = before.categorySub;
+                else if (beforePath.Contains("SearchScene"))
+                    DontDestroyManager.SearchScene.searchStr = before.storeName;
+                else //MaxstScene으로 가던, AllCategoryScene으로 가던 스택 비워줘야 함.
+                    Stack.Instance.Clear();
+                SceneManager.LoadSceneAsync(before.beforeScene, LoadSceneMode.Additive);
+            }
+        //}
         SceneManager.UnloadSceneAsync("UploadScene");
-        if (Stack.Instance.Count() == 0)
+        if (stackCount == 0)
         {
             GameObject[] gameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
             foreach (var obj in gameObjects)
