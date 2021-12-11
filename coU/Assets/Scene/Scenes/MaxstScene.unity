@@ -23173,7 +23173,7 @@ MonoBehaviour:
   storeNameTextBox: {fileID: 1860786493}
   storeFloorTextBox: {fileID: 408574386}
   marker: {fileID: 0}
-  prefabRendering: 1
+  prefabRendering: 0
   disableObjects:
   - {fileID: 1384829797}
   occlusionObjects: []
