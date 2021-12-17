@@ -41,27 +41,27 @@ public class SpeedControl : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-		//if (Input.touchCount > 0)
-		//{
-		//	Touch touch = Input.GetTouch(0);
+		if (Input.touchCount > 0)
+		{
+			Touch touch = Input.GetTouch(0);
 
-		//	if (touch.phase == TouchPhase.Ended)
-		//	{
-		//		Ray ray = Camera.main.ScreenPointToRay(touch.position);
-		//		RaycastHit hit;
+			if (touch.phase == TouchPhase.Ended)
+			{
+				Ray ray = Camera.main.ScreenPointToRay(touch.position);
+				RaycastHit hit;
 
-		//		if (Physics.Raycast(ray, out hit))
-		//		{
-		//			if (hit.collider.tag == "Character")
-		//			{
-		//				touchCount = (touchCount + 1) % 4;
-		//				changedSpeed = 1f + (0.5f * touchCount);
-		//				GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
-		//				Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
-		//			}
-		//		}
-		//	}
-		//}
+				if (Physics.Raycast(ray, out hit))
+				{
+					if (hit.collider.tag == "Character")
+					{
+						touchCount = (touchCount + 1) % 4;
+						changedSpeed = 1f + (0.5f * touchCount);
+						GameObject.Find("SceneManager").GetComponent<NavigationController>().characterMoveSpeed = changedSpeed;
+						Toast.ShowToastMessage($"{GetCharacterName()} 속도: {changedSpeed}배속", Toast.Term.shortTerm);
+					}
+				}
+			}
+		}
 #endif
 	}
 
