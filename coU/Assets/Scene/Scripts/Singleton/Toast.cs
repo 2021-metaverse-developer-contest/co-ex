@@ -63,6 +63,7 @@ public class Toast
             }
         }
 #endif
+	    yield break;
     }
 }
 
