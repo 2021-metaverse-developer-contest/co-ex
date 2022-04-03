@@ -49,3 +49,4 @@
 /coU/Assets/Firebase/Plugins/x86_64/** filter=lfs diff=lfs merge=lfs -text
 /coU/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-8_5_0.so filter=lfs diff=lfs merge=lfs -text
 coU/Assets/Rabbits/Model/Rabbit.fbx filter=lfs diff=lfs merge=lfs -text
+/coU/VPSData/** filter=lfs diff=lfs merge=lfs -text
